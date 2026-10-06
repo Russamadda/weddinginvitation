@@ -14,7 +14,9 @@
 
 :root { --cream: #fffef4; --brown: #402825; --slate: #4c535b; --silver: #92969c; }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--cream); color: var(--brown); font-family: "Cormorant Garamond", Georgia, serif; }
+html { background: #9aa5b6; }
+body { margin: 0; background: #9aa5b6; color: var(--brown); font-family: "Cormorant Garamond", Georgia, serif; }
+main { background: var(--cream); }
 h1, h2, p { margin: 0; font-weight: 400; }
 a { color: inherit; text-decoration: none; }
 a:focus-visible { outline: 2px solid #1d2e4d; outline-offset: 5px; }
@@ -106,11 +108,11 @@ img { display: block; max-width: none; }
 @media (max-width: 600px) {
   .site-header { height: calc(64px + env(safe-area-inset-top, 0px)); }
   .site-header nav { gap: 16px; font-size: 12px; }
-  .hero { height: calc(100svh - 64px - env(safe-area-inset-top, 0px)); min-height: 440px; }
+  .hero { height: 100lvh; min-height: 540px; }
   .hero-art { background-size: cover; background-position: center; }
   .invitation-artboard, .countdown-artboard, .rsvp-artboard { margin: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 600px)); transform-origin: center top; }
-  .hero-content { width: 100%; height: 100%; padding: 32px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 48px; }
-  .hero h1 { width: 100%; font-size: clamp(54px, 16vw, 84px); line-height: 1.12; }
+  .hero-content { width: 100%; height: 100%; padding: clamp(110px, 20svh, 180px) 24px 32px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 36px; }
+  .hero h1 { width: 100%; font-size: clamp(40px, 11vw, 56px); line-height: 1.12; }
   .hero h1 span { position: static; display: block; }
   .hero h1 .name-and { font-size: .95em; line-height: .8; }
   .marriage-line { position: static; font-size: clamp(20px, 5.5vw, 28px); line-height: 1.3; }
