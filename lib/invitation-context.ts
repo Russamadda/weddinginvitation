@@ -5,7 +5,7 @@ export type GuestSearch = Promise<{ invite?: string }>;
 export async function guestContext(searchParams: GuestSearch) {
   const { invite } = await searchParams;
   if (!invite) return { token: undefined, record: null };
-  const record = findInvitation(invite);
+  const record = await findInvitation(invite);
   if (!record) notFound();
   return { token: invite, record };
 }

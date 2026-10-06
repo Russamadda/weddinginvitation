@@ -1,5 +1,5 @@
 import "server-only";
-import { DatabaseSync } from "node:sqlite";
+import { weddingDatabase as db, dataDirectory, type InvitationRow } from "./wedding-database";
 import { randomBytes, randomUUID, createHash, timingSafeEqual, scryptSync } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
@@ -7,38 +7,21 @@ import type { Invitation, RsvpDraft } from "./rsvp";
 import { buildResponse, validateRsvp } from "./rsvp";
 
 export type StoredInvitation = Invitation & { demo?: boolean; label: string; token: string; createdAt: string; enabled: boolean; response: ReturnType<typeof buildResponse> | null; respondedAt: string | null; draft: RsvpDraft | null };
-type Row = { id: string; token: string; body: string; created_at: string; enabled: number; response: string | null; responded_at: string | null; draft: string | null };
-const globalStore = globalThis as typeof globalThis & { weddingDatabase?: DatabaseSync };
-const dataDirectory = () => path.resolve(/* turbopackIgnore: true */ process.env.WEDDING_DATA_DIR || path.join(process.cwd(), ".local-data"));
-
-function db() {
-  if (!globalStore.weddingDatabase) {
-    mkdirSync(dataDirectory(), { recursive: true, mode: 0o700 });
-    const database = new DatabaseSync(path.join(dataDirectory(), "wedding.sqlite"));
-    database.exec(`PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000;
-      CREATE TABLE IF NOT EXISTS invitations (id TEXT PRIMARY KEY, token TEXT UNIQUE NOT NULL, body TEXT NOT NULL, created_at TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 1, response TEXT, responded_at TEXT, draft TEXT);
-      CREATE TABLE IF NOT EXISTS sessions (hash TEXT PRIMARY KEY, expires INTEGER NOT NULL);
-      CREATE TABLE IF NOT EXISTS login_failures (created_at INTEGER NOT NULL);`);
-    globalStore.weddingDatabase = database;
-  }
-  return globalStore.weddingDatabase;
-}
-
-function unpack(row: Row): StoredInvitation {
+function unpack(row: InvitationRow): StoredInvitation {
   return { ...JSON.parse(row.body), id: row.id, token: row.token, createdAt: row.created_at, enabled: !!row.enabled, response: row.response ? JSON.parse(row.response) : null, respondedAt: row.responded_at, draft: row.draft ? JSON.parse(row.draft) : null };
 }
 
-export function listInvitations() {
-  return (db().prepare("SELECT * FROM invitations ORDER BY created_at DESC").all() as Row[]).map(unpack).filter(invitation => !invitation.demo);
+export async function listInvitations() {
+  return (await db().list()).map(unpack).filter(invitation => !invitation.demo);
 }
 
-export function findInvitation(token: string): StoredInvitation | null {
+export async function findInvitation(token: string): Promise<StoredInvitation | null> {
   if (!/^[A-Za-z0-9_-]{32}$/.test(token)) return null;
-  const row = db().prepare("SELECT * FROM invitations WHERE token=? AND enabled=1").get(token) as Row | undefined;
+  const row = await db().find(token);
   return row && !JSON.parse(row.body).demo ? unpack(row) : null;
 }
 
-export function createInvitation(value: unknown) {
+export async function createInvitation(value: unknown) {
   const data = value as Record<string, unknown>;
   if (!data || !Array.isArray(data.names) || !data.names.length || data.names.length > 20 || data.names.some(name => typeof name !== "string" || !name.trim() || name.trim().length > 100)) throw new Error("Enter 1–20 guest names, up to 100 characters each.");
   if (!["traveling", "local"].includes(String(data.travelProfile)) || !["en", "no", "lt"].includes(String(data.language))) throw new Error("Choose a valid guest category and language.");
@@ -48,12 +31,13 @@ export function createInvitation(value: unknown) {
   if (data.label !== undefined && (typeof data.label !== "string" || data.label.length > 150)) throw new Error("Group label must be at most 150 characters.");
   const invitation: Invitation & { label: string } = { id: randomUUID(), guests: names.map(name => ({ id: randomUUID(), name })), travelProfile: data.travelProfile as Invitation["travelProfile"], language: data.language as Invitation["language"], additionalGuestAllowance: Number(data.additionalGuestAllowance), label: typeof data.label === "string" && data.label.trim() ? data.label.trim() : names.join(" & ").slice(0, 150) };
   const token = randomBytes(24).toString("base64url");
-  db().prepare("INSERT INTO invitations(id,token,body,created_at) VALUES(?,?,?,?)").run(invitation.id, token, JSON.stringify(invitation), new Date().toISOString());
-  return findInvitation(token)!;
+  const createdAt = new Date().toISOString();
+  await db().insert({ id: invitation.id, token, body: JSON.stringify(invitation), created_at: createdAt, enabled: 1, response: null, responded_at: null, draft: null });
+  return { ...invitation, token, createdAt, enabled: true, response: null, respondedAt: null, draft: null } as StoredInvitation;
 }
 
-export function setInvitationEnabled(id: string, enabled: boolean) {
-  return db().prepare("UPDATE invitations SET enabled=? WHERE id=?").run(enabled ? 1 : 0, id).changes > 0;
+export async function setInvitationEnabled(id: string, enabled: boolean) {
+  return db().enable(id, enabled);
 }
 
 export function publicInvitation(record: StoredInvitation): Invitation {
@@ -81,16 +65,17 @@ export function parseDraft(invitation: Invitation, value: unknown): RsvpDraft {
   return draft;
 }
 
-export function saveReply(record: StoredInvitation, value: unknown) {
+export async function saveReply(record: StoredInvitation, value: unknown) {
   const draft = parseDraft(record, value);
   const response = buildResponse(record, draft);
-  const changed = db().prepare("UPDATE invitations SET response=?, draft=?, responded_at=? WHERE id=? AND enabled=1").run(JSON.stringify(response), JSON.stringify(draft), new Date().toISOString(), record.id).changes;
+  const changed = await db().reply(record.id, { response: JSON.stringify(response), draft: JSON.stringify(draft), responded_at: new Date().toISOString() });
   if (!changed) throw new Error("This invitation is no longer active.");
   return response;
 }
 
 function adminPassword() {
   if (process.env.ADMIN_PASSWORD) return process.env.ADMIN_PASSWORD;
+  if (process.env.SUPABASE_SECRET_KEY || process.env.VERCEL) throw new Error("Set ADMIN_PASSWORD before using the hosted wedding database.");
   const file = path.join(dataDirectory(), "admin-password.txt");
   mkdirSync(dataDirectory(), { recursive: true, mode: 0o700 });
   if (!existsSync(file)) { try { writeFileSync(file, randomBytes(24).toString("base64url"), { mode: 0o600, flag: "wx" }); } catch (error) { if (!existsSync(file)) throw error; } }
@@ -98,23 +83,21 @@ function adminPassword() {
 }
 
 const hash = (value: string) => createHash("sha256").update(value).digest("hex");
-export function loginAdmin(password: string) {
+export async function loginAdmin(password: string) {
   const database = db();
-  database.prepare("DELETE FROM login_failures WHERE created_at<?").run(Date.now() - 15 * 60 * 1000);
-  const failures = database.prepare("SELECT COUNT(*) AS total FROM login_failures").get() as { total: number };
-  if (failures.total >= 10) throw new Error("Too many sign-in attempts. Please try again in 15 minutes.");
+  if (await database.failures(Date.now() - 15 * 60 * 1000) >= 10) throw new Error("Too many sign-in attempts. Please try again in 15 minutes.");
   const expected = scryptSync(adminPassword(), "wedding-admin-password", 32);
   const supplied = scryptSync(password, "wedding-admin-password", 32);
-  if (!timingSafeEqual(expected, supplied)) { database.prepare("INSERT INTO login_failures(created_at) VALUES(?)").run(Date.now()); return null; }
-  database.exec("DELETE FROM login_failures");
+  if (!timingSafeEqual(expected, supplied)) { await database.addFailure(Date.now()); return null; }
+  await database.clearFailures();
   const token = randomBytes(32).toString("base64url");
-  database.prepare("INSERT INTO sessions(hash,expires) VALUES(?,?)").run(hash(token), Date.now() + 7 * 24 * 60 * 60 * 1000);
+  await database.addSession(hash(token), Date.now() + 7 * 24 * 60 * 60 * 1000);
   return token;
 }
 
-export function validAdminSession(token?: string) {
+export async function validAdminSession(token?: string) {
   if (!token || !/^[A-Za-z0-9_-]{43}$/.test(token)) return false;
-  return !!db().prepare("SELECT hash FROM sessions WHERE hash=? AND expires>?").get(hash(token), Date.now());
+  return db().hasSession(hash(token), Date.now());
 }
-export function logoutAdmin(token: string) { db().prepare("DELETE FROM sessions WHERE hash=?").run(hash(token)); }
+export async function logoutAdmin(token: string) { await db().removeSession(hash(token)); }
 export function ensureAdminPassword() { adminPassword(); }

@@ -4,7 +4,7 @@
 
 Open `/admin` to create invitations; `/admin/replies` shows replies and categories. The pages and their APIs require an admin session. The generated local password is in `.local-data/admin-password.txt` (created on the first admin login-page visit). This file and the database are ignored by Git and never served as public assets. Alternatively, set a strong `ADMIN_PASSWORD` in `.env.local`. Never put credentials in `public` or use a NEXT_PUBLIC variable for them.
 
-Requires Node 24 or newer; the current environment uses Node 24.14.0. Run `npm run dev`, or `npm run build` then `npm start` for production. The backend uses Node's built-in SQLite; no additional runtime dependencies were installed.
+Requires Node 24 or newer; the current environment uses Node 24.14.0. Run `npm run dev`, or `npm run build` then `npm start` for production. The backend uses Supabase over HTTPS when configured, with built-in SQLite as a local development fallback. See `SUPABASE_SETUP.md`. A configured cloud database requires `ADMIN_PASSWORD`.
 
 ## Create and send invitations
 
@@ -24,7 +24,9 @@ Links can be revoked/restored without deleting attendance history. Invalid/revok
 
 ## Storage and hosting
 
-Local SQLite: `.local-data/wedding.sqlite`, with WAL/SHM sidecars. Back up the database with SQLite's backup tooling or stop the server before copying the entire data directory. `WEDDING_DATA_DIR` can point to a persistent private directory on the hosting server. Do not use ephemeral/serverless storage for this implementation; deploy to a Node server with a persistent volume, or migrate the store to a hosted database before choosing a serverless host. Sessions and login-failure throttling are also stored in SQLite. Deleting this directory loses invitation links and replies.
+Supabase stores invitations/replies, hashed admin sessions, and login-failure throttling when `SUPABASE_URL` and `SUPABASE_SECRET_KEY` are configured. Run `supabase/wedding-schema.sql` in Supabase's SQL Editor first. These tables deny anonymous and signed-in Supabase clients all access; server APIs enforce admin sessions or invitation tokens. See `SUPABASE_SETUP.md` for local/Vercel setup. `npm run db:migrate-local` copies existing non-demo invitations/replies without replacing cloud replies.
+
+Local SQLite fallback: `.local-data/wedding.sqlite`, with WAL/SHM sidecars. Back up with SQLite tooling or stop the server before copying the entire data directory. `WEDDING_DATA_DIR` can change its location. Vercel requires Supabase credentials and does not fall back to local SQLite. Keep local data if you need to migrate previously created invitation links.
 
 Admin passwords are checked with constant-time derived-key comparison. Sessions have random, hashed tokens, HttpOnly/SameSite cookies and a seven-day expiry. Failed login attempts are throttled. Mutation endpoints check request origin, cap JSON payloads at 32KB, validate all guest IDs/choices/allowances/text limits on the server, and ignore irrelevant accommodation/dietary/email answers when producing a reply. Authenticated APIs use no-store responses.
 
@@ -40,4 +42,7 @@ Set `SITE_URL=https://your-public-domain` in the hosting environment (see `.env.
 
 `tests/rsvp-state.cjs` retains the old-state crash regression. `tests/rsvp-preview.cjs` checks the demo toggle and server-send flow. Use the bundled Playwright through NODE_PATH or an existing Playwright installation; start the dev server for the preview tests. Screenshots in docs/screenshots include admin desktop/replies/mobile and both RSVP previews. Test fixtures use an isolated .local-data/integration-* directory and synthetic guest names; they do not create real guest records.
 
-Build trace verification: next.config.ts explicitly excludes private .local-data, local environment files, and read-only Reference files from deployment tracing. Inspected all NFT trace manifests and found zero private/reference entries; the integration test includes this check. The database remains runtime storage on its persistent private directory, never a bundled asset. Mobile admin tables were corrected to stacked labeled rows so expanded replies remain visible without horizontal scrolling.
+Build trace verification: next.config.ts explicitly excludes private .local-data, local environment files, and read-only Reference files from deployment tracing. Inspected all NFT trace manifests and found zero private/reference entries; the integration test includes this check. Local database files remain private runtime storage, never bundled assets; production data lives in Supabase when configured. Mobile admin tables were corrected to stacked labeled rows so expanded replies remain visible without horizontal scrolling.
+
+
+Supabase integration verification: production build and the isolated SQLite regression checks pass. `tests/supabase-integration.cjs` is an opt-in live test that creates synthetic traveling/local invitations, verifies password sessions, saved/updated replies, accommodation/email/dietary/child notes, personalization, revocation, and logout, then removes its own fixtures. `npm run db:check` checks the live schema and verifies public clients cannot read these tables when the publishable key is configured.

@@ -11,7 +11,7 @@ for (const file of fs.readdirSync('.next/server', { recursive: true }).filter(fi
 }
 const password = randomBytes(24).toString('base64url');
 const dataDir = path.resolve('.local-data', 'integration-' + Date.now());
-const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3001'], { windowsHide: true, env: { ...process.env, SITE_URL: base, ADMIN_PASSWORD: password, WEDDING_DATA_DIR: dataDir }, stdio: ['ignore', 'pipe', 'pipe'] });
+const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3001'], { windowsHide: true, env: { ...process.env, SITE_URL: base, ADMIN_PASSWORD: password, WEDDING_DATA_DIR: dataDir, SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_URL: '', SUPABASE_SECRET_KEY: '', VERCEL: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
 let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.on('data', chunk => logs += chunk);
 (async () => {
  let browser;
