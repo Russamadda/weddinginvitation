@@ -39,15 +39,22 @@ img { display: block; max-width: none; }
 
 .marriage-line { width: 100%; font-size: 20px; line-height: 24px; }
 .marriage-line time { font-weight: 700; font-style: italic; }
-.home-intro { height: 950px; }
-.invitation-artboard { width: 600px; height: 950px; position: relative; margin: auto; text-align: center; }
-.curtain-crop { position: absolute; width: 580px; height: 860px; left: 10px; top: 40px; overflow: hidden; opacity: .75; }
-.curtain-crop img { position: absolute; width: 635.5px; height: 908px; left: -24px; top: -14px; }
-.home-intro h2 { position: absolute; top: 278px; left: 150px; width: 300px; font: 400 28px/36px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
-.invitation-copy { position: absolute; top: 390px; left: 130px; width: 340px; font: 400 44px/60px "Allison", cursive; color: var(--slate); }
-.monogram { position: absolute; top: 740px; left: 255.46px; width: 68.3318px; height: 118.854px; color: var(--silver); font-family: "Pinyon Script", cursive; }
-.monogram span { position: absolute; left: 0; top: -7.697px; font-size: 76.9725px; line-height: 106.142px; }
-.monogram span + span { left: 5.26876px; top: 22.891px; font-size: 74.5345px; line-height: 103.416px; }
+/* The greeting controls the height; only the curtain sides stretch with it. */
+.home-intro { width: min(600px, 100%); margin: auto; container-type: inline-size; }
+.invitation-artboard { width: 100%; position: relative; padding: 46.333333cqw 0 15cqw; text-align: center; }
+.curtain-crop { position: absolute; width: 96.666667cqw; left: 1.666667cqw; top: 6.666667cqw; bottom: 8.333333cqw; overflow: hidden; opacity: .75; pointer-events: none; }
+.curtain-crop > div { position: absolute; left: 0; width: 100%; overflow: hidden; }
+.curtain-top { top: 0; height: 36.666667cqw; }
+.curtain-middle { top: 36.666667cqw; bottom: 30cqw; }
+.curtain-bottom { bottom: 0; height: 30cqw; }
+.curtain-crop img { position: absolute; width: 105.916667cqw; height: 151.333333cqw; left: -4cqw; top: -2.333333cqw; }
+.curtain-middle img { height: calc(100% * 908 / 460); top: calc(100% * -234 / 460); }
+.curtain-bottom img { top: -115.666667cqw; }
+.home-intro h2 { position: relative; width: 33.333333cqw; margin: 0 auto; overflow-wrap: anywhere; font: 400 4.666667cqw/6cqw "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.invitation-copy { position: relative; width: 56.666667cqw; margin: 6.666667cqw auto 0; font: 400 7.333333cqw/10cqw "Allison", cursive; color: var(--slate); }
+.monogram { position: relative; width: 11.388633cqw; height: 19.809cqw; margin: 8.333333cqw auto 0; transform: translateX(-1.723cqw); color: var(--silver); font-family: "Pinyon Script", cursive; }
+.monogram span { position: absolute; left: 0; top: -1.282833cqw; font-size: 12.82875cqw; line-height: 17.690333cqw; }
+.monogram span + span { left: .878127cqw; top: 3.815167cqw; font-size: 12.422417cqw; line-height: 17.236cqw; }
 .countdown { height: 132px; color: var(--silver); }
 .countdown-artboard { width: 600px; height: 132px; position: relative; margin: auto; }
 .countdown-clock { position: absolute; top: 13.2px; left: 223.35px; width: 153.292px; height: 38.3231px; transform: scale(1.15); transform-origin: center top; display: flex; justify-content: center; font-family: "Times New Roman", serif; }
@@ -110,14 +117,13 @@ img { display: block; max-width: none; }
   .site-header nav { gap: 16px; font-size: 12px; }
   .hero { height: 100lvh; min-height: 540px; }
   .hero-art { background-size: cover; background-position: center; }
-  .invitation-artboard, .countdown-artboard, .rsvp-artboard { margin: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 600px)); transform-origin: center top; }
+  .countdown-artboard, .rsvp-artboard { margin: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 600px)); transform-origin: center top; }
   .hero-content { width: 100%; padding: 32px 24px; gap: 36px; }
   .hero h1 { width: 100%; font-size: clamp(40px, 11vw, 56px); line-height: 1.12; }
   .hero h1 span { position: static; display: block; }
   .hero h1 .name-and { font-size: .95em; line-height: .8; }
   .marriage-line { position: static; font-size: clamp(20px, 5.5vw, 28px); line-height: 1.3; }
   .marriage-line time { display: inline-block; margin-top: 6px; font-size: .9em; }
-  .home-intro { height: calc(100vw * 950 / 600); }
   .countdown { height: calc(100vw * 132 / 600); }
   .home-rsvp { height: calc(100vw * 925 / 600); }
   .love-story-main { min-height: 0; }
@@ -364,7 +370,6 @@ img { display: block; max-width: none; }
 .invitation-unavailable { max-width: 500px; margin: 100px auto; padding: 24px; text-align: center; }
 .invitation-unavailable h1 { font: 400 32px/42px 'Cormorant SC', Georgia, serif; margin-bottom: 20px; }
 .invitation-unavailable p { margin-bottom: 20px; }
-.home-intro h2.personalized-greeting { left: 150px; width: 300px; overflow-wrap: anywhere; }
 .rsvp-review h3 { text-align: center; }
 .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #8a827d; opacity: .75; font-style: italic; }
 .rsvp-invitation-required { max-width: 440px; margin: 35px auto; font-size: 20px; line-height: 28px; text-align: center; }
