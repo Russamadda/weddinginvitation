@@ -39,7 +39,8 @@ let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.o
   assert.equal(await guest.locator('meta[property="og:image"]').getAttribute('content'), base + '/images/invitation-envelope.png');
   const html = await (await guestContext.request.get(`${base}/?invite=${invitation.token}`, { headers: { 'User-Agent': 'facebookexternalhit/1.1' } })).text(); assert.match(html, /property="og:image"/); assert.match(html, /invitation-envelope.png/);
   assert.equal((await guestContext.request.get(base + '/images/invitation-envelope.png')).status(), 200);
-  for (const name of ['Love Story', 'Details', 'FAQ', 'RSVP']) { await guest.getByRole('navigation').getByRole('link', { name, exact: true }).click(); assert.ok(guest.url().includes(invitation.token)); }
+  for (const [name, route] of [['Love Story', '/love-story'], ['Details', '/details'], ['FAQ', '/faq'], ['RSVP', '/rsvp']]) { await guest.getByRole('navigation').getByRole('link', { name, exact: true }).click(); await guest.waitForURL(url => url.pathname === route); assert.ok(guest.url().includes(invitation.token)); }
+  await guest.locator('#venueStay').waitFor();
   assert.equal(await guest.getByRole('button', { name: 'Local guests', exact: true }).count(), 0);
   assert.equal(await guest.locator('#hotelOffer').count(), 0); assert.equal(await guest.locator('#venueStay').count(), 1);
   assert.equal(await guest.locator('#childrenNotes').getAttribute('placeholder'), 'Name and dietary restrictions/allergies');
