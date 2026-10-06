@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="hero-art" aria-hidden="true" />
       <div className="hero-content">
         <h1 id="couple-names" aria-label="Marthe and Deivi"><span className="name-marthe" aria-hidden="true"><WrittenText text="Marthe" start={0.2} interval={0.15} /></span><span className="name-and" aria-hidden="true"><WrittenText text="and" start={1.2} interval={0.15} /></span><span className="name-deivi" aria-hidden="true"><WrittenText text="Deivi" start={1.8} interval={0.15} /></span></h1>
-        <p className="marriage-line"><span className="sr-only">are getting married</span><span aria-hidden="true"><WrittenText text="are getting married" start={3.3} /></span><br /><time dateTime="2027-09-04" aria-label="September 4, 2027"><span aria-hidden="true"><WrittenText text="04.09.27" start={4.7} /></span></time></p>
+        <p className="marriage-line"><span className="sr-only">are getting married</span><span aria-hidden="true"><WrittenText text="are getting married" start={3.65} interval={0.03} /></span><br /><time dateTime="2027-09-04" aria-label="September 4, 2027"><span aria-hidden="true"><WrittenText text="04.09.27" start={4.7} interval={0.04} /></span></time></p>
       </div>
     </section>
   );

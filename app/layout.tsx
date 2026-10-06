@@ -1,6 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import PageAnimations from "@/components/PageAnimations";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#9aa5b6",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://127.0.0.1:3000"),
