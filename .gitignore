@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+tmp-*
+.local-data/
+.env.local
+.env.*.local
+
+# Private source references and environment files
+/Reference/
+.env
+.env.*
+!.env.example

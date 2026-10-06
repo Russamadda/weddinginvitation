@@ -1,0 +1,394 @@
+@font-face { font-family: "Cormorant SC"; src: url("/fonts/cormorant-sc.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Cormorant SC"; src: url("/fonts/cormorant-sc-bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/cormorant-garamond-bold-italic.woff") format("woff"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Shelley Script"; src: url("/fonts/shelley-script.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Allison"; src: url("/fonts/allison.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Pinyon Script"; src: url("/fonts/pinyon-script.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Garamond"; src: url("/fonts/garamond.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Garamond"; src: url("/fonts/garamond-bold.woff") format("woff"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond.woff") format("woff"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond-italic.woff") format("woff"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "EB Garamond"; src: url("/fonts/eb-garamond-semibold.woff") format("woff"); font-weight: 600; font-display: swap; }
+
+:root { --cream: #fffef4; --brown: #402825; --slate: #4c535b; --silver: #92969c; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--brown); font-family: "Cormorant Garamond", Georgia, serif; }
+h1, h2, p { margin: 0; font-weight: 400; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 2px solid #1d2e4d; outline-offset: 5px; }
+img { display: block; max-width: none; }
+.site-header { height: 84px; background: #9aa5b6; display: grid; place-items: center; }
+.site-header nav { display: flex; align-items: center; gap: 20.484px; color: #1d2e4d; font: 400 13.3333px/18px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.site-header nav a { text-align: center; flex-shrink: 0; }
+.site-header nav a:nth-child(1) { width: 47.8929px; }
+.site-header nav a:nth-child(2) { width: 82.3797px; }
+.site-header nav a:nth-child(3) { width: 53.4004px; }
+.site-header nav a:nth-child(4) { width: 28.0102px; }
+.site-header nav a:nth-child(5) { width: 35.4425px; }
+.hero { height: 893px; position: relative; overflow: hidden; }
+.hero-art { position: absolute; inset: 0; background: url("/images/hero-background.jpg") center 38.943% / 100% auto no-repeat; opacity: .6; }
+.hero-content { position: relative; height: 893px; width: 600px; margin: auto; text-align: center; }
+.hero h1 { font: 400 60px/84px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.hero h1 span { position: absolute; left: 0; width: 100%; }
+.name-marthe { top: 288.676px; }
+.hero h1 .name-and { top: 338.493px; font-family: "Shelley Script", cursive; text-transform: none; }
+.name-deivi { top: 388.31px; }
+.marriage-line { position: absolute; top: 552.036px; width: 100%; font-size: 20px; line-height: 24px; }
+.marriage-line time { font-weight: 700; font-style: italic; }
+.home-intro { height: 798px; }
+.invitation-artboard { width: 600px; height: 798px; position: relative; margin: auto; text-align: center; }
+.curtain-crop { position: absolute; width: 547.954px; height: 709.284px; left: 26.023px; top: 36.7579px; overflow: hidden; opacity: .75; }
+.curtain-crop img { position: absolute; width: 600.37px; height: 748.992px; left: -22.4939px; top: -11.3861px; }
+.home-intro h2 { position: absolute; top: 232.03px; left: 226.8515px; width: 146.297px; font: 400 20px/28px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.invitation-copy { position: absolute; top: 312.013px; left: 169.67px; width: 260.658px; font: 400 33.097px/45.922px "Allison", cursive; color: var(--slate); }
+.monogram { position: absolute; top: 567.31px; left: 255.46px; width: 68.3318px; height: 118.854px; color: var(--silver); font-family: "Pinyon Script", cursive; }
+.monogram span { position: absolute; left: 0; top: -7.697px; font-size: 76.9725px; line-height: 106.142px; }
+.monogram span + span { left: 5.26876px; top: 22.891px; font-size: 74.5345px; line-height: 103.416px; }
+.countdown { height: 132px; color: var(--silver); }
+.countdown-artboard { width: 600px; height: 132px; position: relative; margin: auto; }
+.countdown-clock { position: absolute; top: 13.2px; left: 223.35px; width: 153.292px; height: 38.3231px; transform: scale(1.15); transform-origin: center top; display: flex; justify-content: center; font-family: "Times New Roman", serif; }
+.countdown-unit { position: relative; display: flex; flex-direction: column; align-items: center; flex: 1; }
+.countdown-unit + .countdown-unit::before { content: ":"; position: absolute; left: -2px; font-size: 21.628px; line-height: 30.646px; }
+.countdown-value { font-size: 21.628px; line-height: 30.646px; }
+.countdown-label { font-size: 6.601px; line-height: 7.661px; text-transform: uppercase; }
+.countdown-caption { position: absolute; left: 174.74px; top: 63px; font: 400 23px/32px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.countdown-caption span { position: absolute; white-space: nowrap; left: 80.536px; top: 23.237px; font: 400 30.6665px/42.55px "Shelley Script", cursive; text-transform: none; }
+.home-rsvp { height: 852px; }
+.rsvp-artboard { width: 600px; height: 852px; position: relative; margin: auto; text-align: center; }
+.envelope-composition { position: absolute; width: 382.778px; height: 464.565px; left: 108.61px; top: 24.2572px; }
+.envelope-crop { position: absolute; inset: 0; overflow: hidden; }
+.envelope-crop img { position: absolute; width: 420.552px; height: 577.767px; left: -18.0522px; top: -47.8384px; }
+.photo-frame-crop { position: absolute; left: 103.483px; top: 142.991px; width: 175.812px; height: 156.992px; overflow: hidden; opacity: .91; }
+.photo-frame-crop img { position: absolute; width: 262.46px; height: 349.946px; left: -46.7397px; top: -77.0988px; }
+.couple-photo-crop { position: absolute; left: 120.118px; top: 164.179px; width: 138.418px; height: 135.804px; overflow: hidden; }
+.couple-photo-crop img { position: absolute; width: 138.418px; height: 191.284px; top: -27.739px; left: 0; }
+.celebration-line { position: absolute; top: 534.79px; left: 100px; width: 400px; font: 400 23.9999px/33px "Shelley Script", cursive; color: var(--slate); }
+.rsvp-link { position: absolute; left: 155.643px; top: 573.759px; width: 288.714px; height: 70.3212px; color: var(--silver); text-transform: uppercase; }
+.rsvp-link img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
+.rsvp-link span { position: absolute; top: 12.26px; left: 0; width: 100%; font: 400 20px/27px "Cormorant SC", Georgia, serif; }
+.rsvp-link small { position: absolute; top: 35.66px; left: 0; width: 100%; font: 400 16px/22px "Garamond", Georgia, serif; }
+.swans-crop { position: absolute; width: 244.503px; height: 138.924px; left: 177.75px; top: 688.819px; overflow: hidden; }
+.swans-crop img { position: absolute; width: 264.471px; height: 264.471px; left: -9.4293px; top: -64.3496px; }
+.site-footer { height: 49px; background: #e9ecf1; display: grid; place-items: center; color: var(--slate); font-size: 20px; line-height: 28px; }
+
+.story-header nav { color: var(--slate); }
+.love-story-main { position: relative; min-height: 2486.35px; }
+.love-story-background { position: absolute; inset: 0; background: url("/images/love-story-background.jpg") center / cover no-repeat; opacity: .04; }
+.love-story-content { position: relative; width: 600px; height: 2486.35px; margin: auto; color: var(--silver); }
+.love-story-content h1 { position: absolute; top: 102.2667px; width: 100%; text-align: center; font: 400 26.6665px/37px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.love-story-content h1 span { position: absolute; top: -40px; left: 0; width: 100%; font: 400 33.333px/46px "Shelley Script", cursive; text-transform: none; }
+.love-story-content p { position: absolute; left: 110.5085px; width: 378.983px; text-align: justify; font: italic 400 21.3333px/29px "Cormorant Garamond", Georgia, serif; }
+.story-opening { top: 253.03567px; }
+.story-cafeteria { top: 868.80567px; }
+.story-friends { top: 1080.80567px; }
+.story-hometown { top: 1321.49667px; }
+.story-looking-back { top: 1533.49667px; }
+.story-next-chapter { top: 1687.49667px; }
+.story-gratitude { top: 1841.49667px; }
+.story-portrait { position: absolute; top: 417.004px; left: 169.6625px; width: 260.675px; height: 374.833px; }
+.story-portrait-frame { position: absolute; inset: 0; overflow: hidden; transform: rotate(180deg); opacity: .6; }
+.story-portrait-frame img { position: absolute; width: 420.943px; height: 525.991px; left: -82.0216px; top: -80.0247px; }
+.story-portrait-photo { position: absolute; left: 39.0379px; top: 39.6183px; width: 187.687px; height: 299.749px; border-radius: 50%; overflow: hidden; }
+.story-portrait-photo img { position: absolute; width: 389.2924px; height: 408.0952px; left: -138.7428px; top: -51.8522px; }
+.story-rings { position: absolute; top: 2015.84px; left: 117.2285px; width: 365.543px; height: 215.339px; }
+.story-rings-frame { position: absolute; inset: 0; overflow: hidden; opacity: .6; }
+.story-rings-frame img { position: absolute; width: 433.846px; height: 542.115px; left: -33.5469px; top: -166.157px; }
+.story-rings-photo { position: absolute; width: 260.077px; height: 167.819px; left: 52.7328px; top: 23.7598px; border-radius: 50%; overflow: hidden; }
+.story-rings-photo img { position: absolute; width: 260.077px; height: 390.817px; left: 0; top: -117.970px; }
+.story-monogram { position: absolute; top: 2306.72px; left: 275.26px; width: 49.4801px; height: 86.0639px; font-family: "Pinyon Script", cursive; }
+.story-monogram span { position: absolute; left: 0; top: -5.574px; font-size: 55.7383px; line-height: 76.8587px; }
+.story-monogram span + span { left: 3.81519px; top: 16.5663px; font-size: 54.0649px; line-height: 75.0149px; }
+.story-footer { height: 50px; }
+
+/* Scale the original centered composition, retaining its artwork and line breaks. */
+@media (max-width: 600px) {
+  .site-header { height: 64px; }
+  .site-header nav { gap: 16px; font-size: 12px; }
+  .hero { height: 580px; }
+  .hero-art { background-size: cover; background-position: center; }
+  .hero-content, .invitation-artboard, .countdown-artboard, .rsvp-artboard { margin: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 600px)); transform-origin: center top; }
+  .home-intro { height: calc(100vw * 798 / 600); }
+  .countdown { height: calc(100vw * 132 / 600); }
+  .home-rsvp { height: calc(100vw * 852 / 600); }
+  .love-story-main { min-height: 0; }
+  .love-story-content { width: 100%; height: auto; padding: 62.2666px 24px 100px; }
+  .love-story-content h1 { position: relative; top: 40px; margin-bottom: 151px; }
+  .love-story-content p { position: relative; top: auto; left: auto; width: min(378.983px, 100%); margin: 0 auto; }
+  .story-portrait, .story-rings, .story-monogram { position: relative; left: auto; top: auto; margin-left: auto; margin-right: auto; }
+  .story-portrait { margin-top: 76.96833px; margin-bottom: 76.96867px; }
+  .love-story-content .story-friends { margin-top: 38px; }
+  .love-story-content .story-hometown { margin-top: 38px; }
+  .love-story-content .story-looking-back,
+  .love-story-content .story-next-chapter,
+  .love-story-content .story-gratitude { margin-top: 38px; }
+  .story-rings { margin-top: 87.34333px; }
+  .story-monogram { margin-top: 75.541px; }
+}
+@media (max-width: 413px) {
+  .story-rings { width: 100%; height: calc((100vw - 48px) * 215.339 / 365.543); }
+  .story-rings-frame, .story-rings-photo { transform: scale(calc((100vw - 48px) / 365.543px)); transform-origin: top left; }
+  .story-rings-frame { width: 365.543px; height: 215.339px; }
+  .story-rings-photo { left: calc((100vw - 48px) * 52.7328 / 365.543); top: calc((100vw - 48px) * 23.7598 / 365.543); }
+}
+/* Details: fixed centered desktop measurements, fluid text on small screens. */
+.details-section { position: relative; overflow: hidden; background: var(--cream); }
+.details-background { position: absolute; inset: 0; background: url('/images/details-leaves.jpg') center 57.643% / cover no-repeat; opacity: .06; }
+.details-canvas { position: relative; width: 700px; height: 100%; margin: auto; text-align: center; font: 400 17.3333px/24px 'EB Garamond', Georgia, serif; }
+.details-canvas h1, .details-canvas h2 { position: absolute; width: 100%; margin: 0; font: 400 33.3333px/46px 'Cormorant SC', Georgia, serif; text-transform: uppercase; }
+.details-canvas h1 span, .details-canvas h2 span { font-family: 'Shelley Script', cursive; text-transform: none; }
+.details-canvas h1 span { font-size: 26.6667px; }
+.details-canvas h1 span { margin: 0 2px; }
+.details-canvas h3 { margin: 0; font-weight: 400; }
+.details-divider { width: 82.3119px; height: 5.92319px; margin: auto; }
+.details-button { display: grid; place-items: center; border: 1px solid #806b66; background: transparent; color: var(--brown); font: 400 10.6667px/15px 'Cormorant Garamond', Georgia, serif; letter-spacing: .138em; text-transform: uppercase; padding: 0; }
+.details-button:disabled { opacity: 1; cursor: default; }
+.details-venue { height: 1099px; }
+.details-venue h1 { top: 152.83267px; }
+.details-date { position: absolute; top: 263.24767px; width: 100%; font-weight: 600; text-transform: uppercase; }
+.details-venue-photo { position: absolute; top: 354.997px; left: 218.3995px; width: 263.201px; height: 356.487px; margin: 0; }
+.details-venue-frame { position: absolute; top: -35.32933px; width: 263.201px; height: 287.821px; overflow: hidden; }
+.details-venue-frame img { position: absolute; width: 397.81px; height: 530.413px; left: -72.4819px; top: -116.859px; }
+.details-villa-crop { position: absolute; left: 32.454px; top: -.62493px; width: 198.293px; height: 218.412px; overflow: hidden; }
+.details-villa-crop img { position: absolute; width: 388.7586px; height: 218.412px; left: -95.233px; top: 0; }
+.details-venue-photo figcaption { position: absolute; top: 285.15433px; left: 27.2539px; width: 208.693px; font: 400 26.6665px/37px 'Shelley Script', cursive; }
+.details-ceremony { position: absolute; top: 770.55168px; left: 178.288px; width: 343.424px; }
+.details-map { position: absolute; top: 892.629px; left: 278.592px; width: 142.816px; height: 34.7389px; }
+.details-travel { height: 1016px; background: var(--brown); color: #fffdf0; }
+.details-travel .details-background { background-image: url('/images/details-swans.jpg'); background-position: center; opacity: .1; }
+.details-travel h2 { top: 111.80567px; }
+.details-travel h3 { font: 400 26.6667px/37px 'Shelley Script', cursive; }
+.details-by-car { position: absolute; top: 171.86235px; left: 221.9125px; width: 256.175px; }
+.details-by-car .details-divider { margin-top: 2.85525px; margin-bottom: 20.121px; }
+.details-by-car p + p { margin-top: 6.2167px; }
+.details-traveling h3 { position: relative; top: 9.62px; }
+.details-traveling { position: absolute; top: 357.95733px; left: 95.528px; width: 508.944px; }
+.details-traveling .details-divider { margin-top: 12.475px; margin-bottom: 17.66px; }
+.details-travel-copy p + p { margin-top: 24px; }
+.details-speeches { position: absolute; top: 749.09633px; left: 155.2045px; width: 389.591px; }
+.details-speeches .details-divider { margin-top: 2.85525px; margin-bottom: 10.351px; }
+.details-timeline { height: 752px; }
+.details-timeline .details-background { background-position: center 56.776%; }
+.details-timeline h2 { top: 90.61487px; }
+.details-timeline h3 { font: 700 13.3333px/18px 'Garamond', Georgia, serif; text-transform: uppercase; }
+.details-timeline p { font-size: 18.6667px; line-height: 26px; }
+.details-friday { position: absolute; top: 177.47862px; left: 100.199px; width: 499.602px; }
+.details-friday p { margin-top: -1.39795px; }
+.details-saturday { position: absolute; top: 314.08567px; left: 68.545px; width: 562.91px; }
+.details-saturday p { margin-top: 5.90448px; }
+.details-sunday { position: absolute; top: 442.19167px; left: 102.9365px; width: 494.127px; }
+.details-sunday p { margin-top: 5.83926px; }
+.details-timeline-note { position: absolute; top: 604.728px; width: 100%; }
+.details-timeline-note p { margin-top: 13.80048px; font-size: 13.3333px; line-height: 18px; text-transform: uppercase; }
+.details-accommodations { height: 859px; background: #e9ecf1; }
+.details-accommodations .details-background { background-image: url('/images/details-flowers.jpg'); background-position: center; opacity: .1; }
+.details-accommodations h2 { top: 142.39367px; }
+.details-stays { position: absolute; left: 15.861px; top: 262.647px; display: flex; gap: 90.845px; }
+.details-stay { width: 288.714px; }
+.details-stay h3 { position: relative; height: 70.3212px; font: 400 26.6667px/37px 'Shelley Script', cursive; }
+.details-stay h3 img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
+.details-stay h3 span { position: absolute; left: 0; width: 100%; top: 16.66063px; }
+.details-stay-date { margin-top: 16.35547px; font: 400 13.3333px/18px 'Cormorant SC', Georgia, serif; text-transform: uppercase; }
+.details-stay-copy { margin-top: 12.65933px; }
+.details-kaunas .details-stay-copy { width: 265.961px; margin-left: 9.02458px; }
+.details-stay-copy p + p { margin-top: 24px; }
+.details-villa-stay .details-stay-copy { margin-top: 15.05333px; }
+.details-visit { display: inline-block; margin-top: 24px; font: 400 10.667px/15px 'Cormorant SC', Georgia, serif; letter-spacing: .138em; padding: 9px 18px; border: 1px solid #806b66; text-transform: uppercase; }
+.details-stay-note { position: absolute; top: 642.7px; left: 212.8355px; width: 274.329px; font-size: 16px; line-height: 22px; font-style: italic; }
+.details-stay-note p + p { margin-top: 22px; }
+.details-dress { height: 651px; }
+.details-dress .details-background { background-position: center 56.559%; }
+.details-dress h2 { top: 127.16767px; }
+.details-formal { position: absolute; top: 229.18066px; width: 100%; text-transform: uppercase; }
+.details-dress-copy { position: absolute; top: 288.80816px; left: 212.2475px; width: 275.505px; }
+.details-dress-copy p + p { margin-top: 24px; }
+.details-palette { position: absolute; top: 494.075px; left: 286.5492px; display: flex; gap: 10.2275px; }
+.details-palette img { width: 35.33px; height: 35.33px; }
+.details-gifts { height: 651px; background: #dde1e6; }
+.details-gifts .details-background { background-position: center 60.004%; }
+.details-gifts h2 { top: 182.76467px; }
+.details-gifts-copy { position: absolute; top: 280.89666px; left: 172.4645px; width: 355.071px; }
+.details-registry { position: absolute; top: 430.163px; left: 252.8175px; width: 194.365px; height: 34.7389px; }
+
+@media (max-width: 700px) {
+  .details-section { height: auto; }
+  .details-canvas { width: 100%; height: auto; padding: 90px 24px 100px; }
+  .details-canvas h1, .details-canvas h2 { position: relative; top: auto; font-size: 30px; }
+  .details-date, .details-ceremony, .details-formal, .details-gifts-copy { position: relative; top: auto; left: auto; width: min(100%, 355.071px); margin: 60px auto 0; }
+  .details-venue-photo { position: relative; left: auto; top: auto; margin: 75px auto 0; }
+  .details-venue-frame { top: -38.83714px; }
+  .details-villa-crop { top: -4.13274px; }
+  .details-ceremony { margin-top: 60px; }
+  .details-map, .details-registry { position: relative; left: auto; top: auto; margin: 50px auto 0; }
+  .details-by-car, .details-traveling, .details-speeches { position: relative; top: auto; left: auto; width: min(100%, 508.944px); margin: 45px auto 0; }
+  .details-by-car { max-width: 256.175px; margin-top: 28px; }
+  .details-traveling h3 { top: 5.145px; }
+  .details-traveling .details-divider { margin-top: 8px; margin-bottom: 22px; }
+  .details-speeches { max-width: 389.591px; }
+  .details-friday, .details-saturday, .details-sunday, .details-timeline-note { position: relative; top: auto; left: auto; width: 100%; margin: 50px auto 0; }
+  .details-timeline h3 { line-height: 20px; }
+  .details-timeline h3 + p { margin-top: 10px; }
+  .details-stays { position: relative; top: auto; left: auto; flex-direction: column; align-items: center; gap: 65px; margin-top: 65px; }
+  .details-stay-note { position: relative; top: auto; left: auto; width: min(100%, 274.329px); margin: 75px auto 0; }
+  .details-dress-copy { position: relative; top: auto; left: auto; width: min(100%, 275.505px); margin: 45px auto 0; }
+  .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
+}
+/* FAQ: original artwork and typography, with closer question groups. */
+.faq-main { position: relative; min-height: calc(100svh - 134px); overflow: hidden; color: var(--silver); background: var(--cream); text-align: center; }
+.faq-background { position: absolute; inset: 0; background: url('/images/love-story-background.jpg') center / cover no-repeat; opacity: .04; }
+.faq-hero { position: relative; height: 310px; }
+.faq-hero h1 { position: absolute; top: 30px; width: 100%; font: 400 33.3332px/46px 'Pinyon Script', cursive; }
+.faq-bouquet { position: absolute; top: 92.561px; left: calc(50% - 157.287px); width: 314.574px; height: 218.768px; }
+.faq-bouquet-frame { position: absolute; width: 218.768px; height: 314.574px; left: 47.9031px; top: -47.9031px; transform: rotate(-90deg); overflow: hidden; opacity: .5; }
+.faq-bouquet-frame img { position: absolute; width: 353.271px; height: 441.432px; left: -68.8358px; top: -67.1598px; }
+.faq-bouquet-photo { position: absolute; width: 248.101px; height: 157.828px; left: 33.2367px; top: 30.4703px; overflow: hidden; border-radius: 50%; }
+.faq-bouquet-photo img { position: absolute; width: 303.2163px; height: 455.6534px; left: -28.17px; top: -198.9459px; }
+.faq-questions { position: relative; display: flex; flex-direction: column; gap: clamp(14px, calc((100svh - 834px) / 2), 50px); width: min(303px, calc(100% - 48px)); margin: auto; padding: 20px 0 24px; }
+.faq-questions h2 { font: 700 20px/28px 'Cormorant SC', Georgia, serif; }
+.faq-questions p { margin-top: 16px; font: italic 400 17.3334px/24px 'Cormorant Garamond', Georgia, serif; }
+.faq-questions address { margin-top: 22px; font: italic 400 16px/22px 'Cormorant Garamond', Georgia, serif; }
+.faq-questions address a { display: block; }
+@media (max-width: 600px) {
+  .faq-main { min-height: calc(100svh - 114px); }
+  .faq-questions { gap: clamp(14px, calc((100svh - 814px) / 2), 50px); }
+}
+@media (max-width: 350px) {
+  .faq-bouquet { transform: scale(.9); transform-origin: center; }
+  .faq-questions br { display: none; }
+}
+/* RSVP: original cream stationery, monogram, and subdued form controls. */
+.rsvp-page { position: relative; overflow: hidden; background: var(--cream); }
+.rsvp-page-background { position: absolute; inset: 0; background: url('/images/rsvp-background.jpg') center / cover no-repeat; opacity: .06; }
+.rsvp-page-content { position: relative; width: min(100% - 40px, 460px); margin: auto; padding: 48px 0 70px; }
+.rsvp-page-monogram { position: relative; width: 60px; height: 86px; margin: 0 auto 40px; color: var(--silver); font-family: 'Pinyon Script', cursive; }
+.rsvp-page-monogram span { position: absolute; top: -5px; left: 3px; font-size: 56px; line-height: 77px; }
+.rsvp-page-monogram span + span { top: 17px; left: 7px; font-size: 54px; line-height: 75px; }
+.rsvp-page h1 { text-align: center; font: 400 40px/56px 'Cormorant SC', Georgia, serif; }
+.rsvp-page-intro { margin: 30px auto 40px; text-align: center; font: italic 400 17.3333px/24px 'Cormorant Garamond', Georgia, serif; }
+.rsvp-page-intro strong { font-weight: 700; }
+.rsvp-form-wrap { width: min(100%, 420px); margin: auto; font-size: 16px; line-height: 22px; }
+.rsvp-greeting { font: 400 25px/34px 'Cormorant SC', Georgia, serif; text-align: center; margin-bottom: 34px; overflow-wrap: anywhere; }
+.rsvp-form-section { margin: 0 0 32px; border: 0; padding: 0; min-width: 0; }
+.rsvp-form h3, .rsvp-form-section > legend, .rsvp-review h3 { font: 400 21px/28px 'Cormorant SC', Georgia, serif; margin: 0 0 10px; padding: 0; }
+.rsvp-help { font-style: italic; margin: 0 0 16px; }
+.rsvp-email-help { font-size: 14px; line-height: 20px; font-style: italic; margin-top: 8px; }
+.rsvp-form input:not([type='radio']), .rsvp-form textarea, .rsvp-form select { display: block; width: 100%; min-height: 40px; padding: 8px 10px; border: 1px solid #aa9d92; border-radius: 4px; background: #fffef4b8; font: inherit; color: var(--brown); }
+.rsvp-form textarea { resize: vertical; }
+.rsvp-form label:not(.rsvp-options label) { display: block; margin: 16px 0 7px; }
+.rsvp-form input:focus-visible, .rsvp-form textarea:focus-visible, .rsvp-form select:focus-visible, .rsvp-form-wrap button:focus-visible { outline: 2px solid #4c535b; outline-offset: 3px; }
+.rsvp-form [aria-invalid='true']:not([type='radio']) { border-color: #934936; }
+.rsvp-form-wrap button { font: inherit; color: inherit; cursor: pointer; }
+.rsvp-add-button { border: 1px solid #aa9d92; border-radius: 4px; background: transparent; padding: 8px 12px; min-height: 40px; }
+.rsvp-person { border: 0; border-top: 1px solid #aa9d9255; padding: 16px 0 0; margin: 0 0 22px; min-width: 0; }
+.rsvp-person legend { padding-right: 10px; font-size: 19px; }
+.rsvp-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.rsvp-options label { display: flex; align-items: center; gap: 8px; flex: 1 1 170px; min-height: 44px; padding: 9px 10px; border: 1px solid transparent; border-radius: 4px; background: #e8e4da; cursor: pointer; }
+.rsvp-options label:has(input:checked) { border-color: #71635c; background: #e9ecf1; }
+.rsvp-options input { accent-color: #71635c; margin: 0; width: 15px; height: 15px; flex-shrink: 0; }
+.rsvp-options-stacked { flex-direction: column; }
+.rsvp-options-stacked label { flex-basis: auto; }
+.rsvp-added-guest { margin: 20px 0; padding: 16px; border: 1px solid #aa9d9266; border-radius: 4px; }
+.rsvp-form .rsvp-added-guest label:first-child { margin-top: 0; }
+.rsvp-plus-one-help { margin-top: 12px; }
+.rsvp-submit { width: 100%; min-height: 44px; padding: 10px 16px; border: 0; border-radius: 16px; background: #e9ecf1; font-size: 18px !important; }
+.rsvp-submit:hover { background: #dce1e8; }
+.rsvp-error { color: #873b2d; font-size: 15px; margin: 7px 0 12px; }
+.rsvp-review { overflow-wrap: anywhere; }
+.rsvp-review ul { list-style: none; padding: 0; margin: 24px 0; }
+.rsvp-review li { padding: 12px 0; border-bottom: 1px solid #aa9d9255; }
+.rsvp-review li span { display: block; font-style: italic; }
+.rsvp-review p { margin-bottom: 16px; }
+.rsvp-review-comments { white-space: pre-wrap; }
+.rsvp-review .rsvp-add-button { width: 100%; margin-top: 12px; }
+.rsvp-page-contact { margin-top: 60px; text-align: center; font-size: 14px; line-height: 19px; }
+.rsvp-page-contact p { margin-bottom: 18px; }
+.rsvp-page-contact a { display: block; }
+@media (max-width: 600px) {
+  .rsvp-page-content { padding-top: 36px; }
+  .rsvp-greeting { font-size: 23px; }
+  .rsvp-options { flex-direction: column; }
+  .rsvp-options label { flex-basis: auto; }
+}
+/* Admin: private invitation management and reply tracking. */
+.admin-page { width: min(1180px, calc(100% - 40px)); margin: 40px auto; color: var(--brown); font-size: 17px; line-height: 24px; }
+.admin-page h1 { font: 400 36px/44px 'Cormorant SC', Georgia, serif; }
+.admin-page h2 { font: 400 26px/34px 'Cormorant SC', Georgia, serif; margin-bottom: 14px; }
+.admin-page p { margin-bottom: 16px; }
+.admin-eyebrow { color: var(--slate); font-style: italic; }
+.admin-heading, .admin-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 24px; }
+.admin-section-heading > div { display: flex; gap: 8px; }
+.admin-nav { display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid #aa9d9277; }
+.admin-nav [aria-current] { font-weight: bold; text-decoration: underline; text-underline-offset: 6px; }
+.admin-page button { font: inherit; border: 1px solid #aa9d92; border-radius: 5px; background: #e9ecf1; color: var(--brown); padding: 8px 14px; cursor: pointer; min-height: 42px; }
+.admin-page button:disabled, .rsvp-form-wrap button:disabled { opacity: .6; cursor: wait; }
+.admin-page button:focus-visible, .admin-page input:focus-visible, .admin-page textarea:focus-visible, .admin-page select:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+.admin-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.admin-stats > div { padding: 20px; background: #e9ecf1; border-radius: 6px; }
+.admin-stats strong { display: block; font-size: 30px; line-height: 36px; }
+.admin-card { padding: 26px; border: 1px solid #aa9d9266; border-radius: 6px; margin-bottom: 28px; background: #fffef4; }
+.admin-page label { display: block; margin: 12px 0 6px; }
+.admin-page input:not([type='checkbox']), .admin-page textarea, .admin-page select { width: 100%; display: block; border: 1px solid #aa9d92; border-radius: 4px; padding: 9px 12px; min-height: 42px; background: transparent; color: var(--brown); font: inherit; }
+.admin-form-grid, .admin-filters { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 20px; }
+.admin-hint { font-size: 15px; line-height: 21px; color: var(--slate); }
+.admin-table-wrap { overflow-x: auto; }
+.admin-page table { width: 100%; border-collapse: collapse; text-align: left; }
+.admin-page table { table-layout: fixed; min-width: 1000px; }
+.admin-page th:nth-child(1) { width: 17%; }
+.admin-page th:nth-child(2) { width: 13%; }
+.admin-page th:nth-child(3) { width: 22%; }
+.admin-page th:nth-child(4) { width: 12%; }
+.admin-page th:nth-child(5) { width: 14%; }
+.admin-page th:nth-child(6) { width: 22%; }
+.admin-page td { overflow-wrap: anywhere; }
+.admin-page th { font-family: 'Cormorant SC', Georgia, serif; }
+.admin-page td, .admin-page th { padding: 14px 12px; border-bottom: 1px solid #aa9d9255; vertical-align: top; }
+.admin-page td > span, .admin-page li span { display: block; font-size: 15px; }
+.admin-badge { display: inline-block !important; padding: 3px 7px; background: #e9ecf1; border-radius: 3px; margin-bottom: 6px; white-space: nowrap; }
+.admin-invite-url { display: block; max-width: 390px; overflow-wrap: anywhere; font-size: 14px; line-height: 20px; text-decoration: underline; }
+.admin-row-actions { display: flex; gap: 8px; margin-top: 10px; }
+.admin-notes { white-space: pre-wrap; overflow-wrap: anywhere; }
+.admin-page summary { cursor: pointer; text-decoration: underline; }
+.admin-page details ul { padding-left: 20px; }
+.admin-login { max-width: 420px; margin: 100px auto; }
+.admin-login button { width: 100%; margin-top: 18px; }
+.admin-login > a { display: inline-block; margin-top: 25px; text-decoration: underline; }
+.invitation-unavailable { max-width: 500px; margin: 100px auto; padding: 24px; text-align: center; }
+.invitation-unavailable h1 { font: 400 32px/42px 'Cormorant SC', Georgia, serif; margin-bottom: 20px; }
+.invitation-unavailable p { margin-bottom: 20px; }
+.home-intro h2.personalized-greeting { left: 150px; width: 300px; overflow-wrap: anywhere; }
+.rsvp-review h3 { text-align: center; }
+.rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #8a827d; opacity: .75; font-style: italic; }
+.rsvp-invitation-required { max-width: 440px; margin: 35px auto; font-size: 20px; line-height: 28px; text-align: center; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.hero-letter { display: inline-block; font-style: inherit; animation: written-reveal .75s cubic-bezier(.22,.61,.36,1) both; animation-delay: var(--letter-delay); }
+.hero h1 .hero-letter { animation-duration: 1.2s; }
+@keyframes written-reveal { from { opacity: 0; clip-path: inset(0 100% 0 0); translate: 0 3px; } to { opacity: 1; clip-path: inset(0 -35% 0 -35%); translate: 0 0; } }
+.reveal-ready { opacity: 0; translate: 0 10px; transition: opacity .85s ease, translate .85s cubic-bezier(.22,.61,.36,1); }
+.reveal-visible { opacity: 1; translate: 0 0; }
+.admin-name-entry { display: flex; gap: 10px; }
+.admin-name-entry input { flex: 1; min-width: 0; }
+.admin-added-names { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.admin-added-names li { display: flex; align-items: center; gap: 12px; padding: 6px 10px; border: 1px solid #aa9d9255; border-radius: 4px; }
+.admin-added-names button { font-size: 13px; padding: 4px 8px; }
+.admin-guest-replies { margin: 0 0 10px; padding: 0; list-style: none; min-width: 150px; }
+.admin-guest-replies li { margin-bottom: 6px; }
+.admin-email { overflow-wrap: anywhere; text-decoration: underline; }
+.admin-page td[data-label='Invitation link'] { min-width: 190px; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-letter { animation: none; }
+  .reveal-ready { opacity: 1; translate: none; transition: none; }
+}
+@media (max-width: 700px) {
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .admin-form-grid, .admin-filters { grid-template-columns: 1fr; gap: 4px; }
+  .admin-heading, .admin-section-heading { align-items: flex-start; flex-direction: column; }
+  .admin-card { padding: 18px; }
+  .admin-page table, .admin-page tbody, .admin-page tr, .admin-page td { display: block; width: 100%; }
+  .admin-page table { min-width: 0; }
+  .admin-page thead { display: none; }
+  .admin-page tr { border-bottom: 1px solid #aa9d9255; padding: 12px 0; }
+  .admin-page td { padding: 8px 0; border: 0; overflow-wrap: anywhere; }
+  .admin-page td::before { content: attr(data-label); display: block; font: 400 16px/22px 'Cormorant SC', Georgia, serif; color: var(--slate); margin-bottom: 5px; }
+  .admin-row-actions { flex-wrap: wrap; }
+}

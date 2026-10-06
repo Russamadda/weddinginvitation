@@ -1,0 +1,72 @@
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+const { spawn } = require('node:child_process');
+const { randomBytes } = require('node:crypto');
+const path = require('node:path');
+const fs = require('node:fs');
+const base = 'http://127.0.0.1:3001';
+for (const file of fs.readdirSync('.next/server', { recursive: true }).filter(file => file.endsWith('.nft.json'))) {
+ const traced = JSON.parse(fs.readFileSync(path.join('.next/server', file), 'utf8')).files;
+ assert.ok(!traced.some(file => file.includes('.local-data') || file.includes('/Reference/') || file.includes('.env.local')), 'Private files must not be bundled');
+}
+const password = randomBytes(24).toString('base64url');
+const dataDir = path.resolve('.local-data', 'integration-' + Date.now());
+const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3001'], { windowsHide: true, env: { ...process.env, SITE_URL: base, ADMIN_PASSWORD: password, WEDDING_DATA_DIR: dataDir }, stdio: ['ignore', 'pipe', 'pipe'] });
+let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.on('data', chunk => logs += chunk);
+(async () => {
+ let browser;
+ try {
+  let ready = false; for (let n = 0; n < 60; n++) { try { if ((await fetch(base + '/admin/login')).ok) { ready = true; break; } } catch {} await new Promise(resolve => setTimeout(resolve, 250)); }
+  if (!ready) throw new Error('Test server not ready: ' + logs.slice(-2000));
+  browser = await chromium.launch({ headless: true, executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' });
+  const adminContext = await browser.newContext({ viewport: { width: 1470, height: 950 } });
+  const admin = await adminContext.newPage(); const browserErrors = []; admin.on('pageerror', error => browserErrors.push(error.message));
+  assert.equal((await adminContext.request.get(base + '/api/admin/invitations')).status(), 401);
+  await admin.goto(base + '/admin'); assert.match(admin.url(), /admin\/login/);
+  await admin.locator('#admin-password').fill(password); await admin.getByRole('button', { name: 'Sign in', exact: true }).click(); await admin.waitForURL(base + '/admin');
+  await admin.locator('#guest-names').fill('TestGuest One'); await admin.getByRole('button', { name: 'Add', exact: true }).click(); await admin.locator('#guest-names').fill('TestGuest Two'); await admin.locator('#guest-names').press('Enter'); assert.equal(await admin.locator('#group-label').count(), 0);
+  await admin.locator('#travel-profile').selectOption('local'); await admin.locator('#invitation-language').selectOption('lt');
+  await admin.getByRole('button', { name: 'Create invitation link', exact: true }).click(); await admin.getByText('Invitation created. Copy its link below to send by SMS.').waitFor();
+  let records = (await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations;
+  const invitation = records.find(record => record.label === 'TestGuest One & TestGuest Two'); assert.ok(invitation); assert.equal(invitation.language, 'lt');
+  const headers = { Origin: base };
+  let bad = await adminContext.request.post(base + '/api/admin/invitations', { headers: { Origin: 'https://invalid.example' }, data: { names: ['Bad'], language: 'en', travelProfile: 'local', additionalGuestAllowance: 1 } }); assert.equal(bad.status(), 400);
+  const second = await adminContext.request.post(base + '/api/admin/invitations', { headers, data: { names: ['Travel Guest'], language: 'en', travelProfile: 'traveling', additionalGuestAllowance: 0 } }); assert.equal(second.status(), 201); const traveler = (await second.json()).invitation; assert.notEqual(traveler.token, invitation.token);
+  await admin.reload(); await admin.locator('table tbody tr').first().waitFor(); for (const row of await admin.locator('table tbody tr').all()) { for (const label of ['Reply', 'Group option', 'Email address']) assert.equal((await row.locator(`td[data-label="${label}"]`).innerText()).trim(), ''); } await admin.screenshot({ path: 'docs/screenshots/admin-desktop.png', fullPage: true });
+  const guestContext = await browser.newContext({ viewport: { width: 1470, height: 950 } }); const guest = await guestContext.newPage(); guest.on('pageerror', error => browserErrors.push(error.message));
+  await guest.goto(base + '/rsvp?preview=family'); assert.equal(await guest.locator('.rsvp-form').count(), 0); assert.match(await guest.locator('.rsvp-invitation-required').innerText(), /personal invitation link/); assert.equal((await guestContext.request.post(base + '/api/rsvp-demo', { data: {} })).status(), 404);
+  await guest.goto(`${base}/?invite=${invitation.token}`); assert.match(await guest.locator('#invitation-heading').innerText(), /Dear TestGuest One & TestGuest Two,/i);
+  assert.equal(await guest.locator('meta[property="og:image"]').getAttribute('content'), base + '/images/invitation-envelope.png');
+  const html = await (await guestContext.request.get(`${base}/?invite=${invitation.token}`, { headers: { 'User-Agent': 'facebookexternalhit/1.1' } })).text(); assert.match(html, /property="og:image"/); assert.match(html, /invitation-envelope.png/);
+  assert.equal((await guestContext.request.get(base + '/images/invitation-envelope.png')).status(), 200);
+  for (const name of ['Love Story', 'Details', 'FAQ', 'RSVP']) { await guest.getByRole('navigation').getByRole('link', { name, exact: true }).click(); assert.ok(guest.url().includes(invitation.token)); }
+  assert.equal(await guest.getByRole('button', { name: 'Local guests', exact: true }).count(), 0);
+  assert.equal(await guest.locator('#hotelOffer').count(), 0); assert.equal(await guest.locator('#venueStay').count(), 1);
+  assert.equal(await guest.locator('#childrenNotes').getAttribute('placeholder'), 'Name and dietary restrictions/allergies');
+  await guest.locator(`input[name="attendance-${invitation.guests[0].id}"][value="yes"]`).check(); await guest.locator(`input[name="attendance-${invitation.guests[1].id}"][value="no"]`).check();
+  await guest.locator(`#dietary-${invitation.guests[0].id}`).fill('Vegetarian'); await guest.locator('input[name="plusOne"]').nth(1).check(); await guest.locator('#venueStay').check(); await guest.locator('#childrenNotes').fill('Robin, 2, no nuts');
+  await guest.getByRole('button', { name: 'Review your reply', exact: true }).click(); assert.equal(await guest.locator('.rsvp-review-count').count(), 0);
+  assert.equal(await guest.locator('#rsvp-review-title').evaluate(el => getComputedStyle(el).textAlign), 'center');
+  await guest.route('**/api/rsvp/*', route => route.abort()); await guest.getByRole('button', { name: 'Send reply', exact: true }).click(); await guest.locator('.rsvp-review .rsvp-error').waitFor(); assert.equal(await guest.getByText('Your reply has been sent to Marthe and Deivi', { exact: true }).count(), 0);
+  await guest.unroute('**/api/rsvp/*'); await guest.getByRole('button', { name: 'Send reply', exact: true }).click(); await guest.getByText('Your reply has been sent to Marthe and Deivi', { exact: true }).waitFor();
+  assert.equal(await guest.getByText('Saved on this device only.', { exact: false }).count(), 0);
+  records = (await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations; let reply = records.find(record => record.id === invitation.id); assert.equal(reply.response.guests[0].dietary, 'Vegetarian'); assert.equal(reply.response.guests[1].attending, false); assert.equal(reply.response.venueStay, 'yes'); assert.equal(reply.response.hotelOffer, null); assert.equal(reply.response.childrenNotes, 'Robin, 2, no nuts');
+  await guest.reload(); assert.equal(await guest.locator(`#dietary-${invitation.guests[0].id}`).inputValue(), 'Vegetarian'); await guest.locator('#venueStay-no').check(); await guest.getByRole('button', { name: 'Review your reply', exact: true }).click(); await guest.getByRole('button', { name: 'Send reply', exact: true }).click(); await guest.getByText('Your reply has been sent to Marthe and Deivi', { exact: true }).waitFor();
+  records = (await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations; assert.equal(records.length, 2); assert.equal(records.find(record => record.id === invitation.id).response.venueStay, 'no');
+  await admin.goto(base + '/admin/replies'); await admin.locator('table').getByText('TestGuest One', { exact: true }).first().waitFor(); await admin.locator('details').first().locator('summary').click(); assert.match(await admin.locator('table').innerText(), /Vegetarian/); assert.match(await admin.locator('table').innerText(), /TestGuest One: Yes/); assert.match(await admin.locator('table').innerText(), /TestGuest Two: No/);
+  await admin.screenshot({ path: 'docs/screenshots/admin-replies-desktop.png', fullPage: true }); await admin.setViewportSize({ width: 390, height: 844 }); await admin.screenshot({ path: 'docs/screenshots/admin-mobile.png', fullPage: true }); assert.equal(await admin.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  const draft = reply.draft; const forbidden = { ...draft, attendance: { ...draft.attendance, foreign: 'yes' } }; assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: forbidden })).status(), 400);
+  assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers: { Origin: 'https://invalid.example' }, data: draft })).status(), 400);
+  await guest.goto(`${base}/rsvp?invite=${traveler.token}`); assert.equal(await guest.locator('#venueStay').count(), 0); assert.equal(await guest.locator('#hotelOffer').count(), 1);
+  await guest.locator(`input[name="attendance-${traveler.guests[0].id}"][value="yes"]`).check(); await guest.locator('#hotelOffer').check(); await guest.locator('#email').fill('travel@example.com'); await guest.getByRole('button', { name: 'Review your reply', exact: true }).click(); await guest.getByRole('button', { name: 'Send reply', exact: true }).click(); await guest.getByText('Your reply has been sent to Marthe and Deivi', { exact: true }).waitFor();
+  await admin.reload(); await admin.locator('table').getByText('Travel Guest', { exact: true }).first().waitFor();
+  const travelingRow = admin.locator('table tbody tr').filter({ hasText: 'Travel Guest' }); assert.match(await travelingRow.locator('td[data-label="Reply"]').innerText(), /Travel Guest: Yes/); assert.match(await travelingRow.locator('td[data-label="Group option"]').innerText(), /Yes/); assert.equal(await travelingRow.locator('td[data-label="Email address"]').innerText(), 'travel@example.com');
+  await adminContext.request.patch(base + '/api/admin/invitations', { headers, data: { id: invitation.id, enabled: false } }); assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: draft })).status(), 404); const revoked = await guest.goto(`${base}/?invite=${invitation.token}`); assert.equal(revoked.status(), 404);
+  await adminContext.request.delete(base + '/api/admin/session', { headers }); assert.equal((await adminContext.request.get(base + '/api/admin/invitations')).status(), 401);
+  assert.deepEqual(browserErrors, []); assert.ok(fs.existsSync(path.join(dataDir, 'wedding.sqlite')));
+  const { DatabaseSync } = require('node:sqlite'); const persisted = new DatabaseSync(path.join(dataDir, 'wedding.sqlite'), { readOnly: true });
+  const persistedReply = JSON.parse(persisted.prepare('SELECT response FROM invitations WHERE id=?').get(invitation.id).response);
+  assert.equal(persistedReply.venueStay, 'no'); persisted.close();
+  console.log('PASS: admin authentication, invitation creation/language/category, unique tokens, personalized greeting and navigation, envelope OG/image, live save failure/success/reload/upsert, categorized admin replies, dietary/child notes, traveling/local logic, unauthorized/foreign/cross-origin rejection, revoked links, logout and mobile layout.');
+ } finally { if (browser) await browser.close(); server.kill(); }
+})().catch(error => { console.error(error); process.exitCode = 1; });
