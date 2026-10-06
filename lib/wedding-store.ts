@@ -40,6 +40,10 @@ export async function setInvitationEnabled(id: string, enabled: boolean) {
   return db().enable(id, enabled);
 }
 
+export async function deleteInvitation(id: string) {
+  return db().remove(id);
+}
+
 export function publicInvitation(record: StoredInvitation): Invitation {
   return { id: record.id, guests: record.guests, language: record.language, travelProfile: record.travelProfile, additionalGuestAllowance: record.additionalGuestAllowance };
 }

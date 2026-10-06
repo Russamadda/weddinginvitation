@@ -70,10 +70,17 @@ async function json(response, status) {
       await json(await request('/api/admin/invitations', 'PATCH', { id: invitation.id, enabled: false }, true), 200);
       assert.equal((await request('/api/rsvp/' + invitation.token, 'POST', draft)).status, 404);
       assert.equal((await request('/?invite=' + invitation.token)).status, 404);
+      await json(await request('/api/admin/invitations', 'DELETE', { id: invitation.id }, true), 200);
+      const deleted = await client.from('wedding_invitations').select('id').eq('id', invitation.id).maybeSingle();
+      assert.equal(deleted.error, null); assert.equal(deleted.data, null);
+      const remaining = await json(await request('/api/admin/invitations', 'GET', undefined, true), 200);
+      assert.equal(remaining.invitations.some(item => item.id === invitation.id), false);
+      assert.equal((await request('/api/rsvp/' + invitation.token, 'POST', draft)).status, 404);
+
     }
     await json(await request('/api/admin/session', 'DELETE', undefined, true), 200);
     assert.equal((await request('/api/admin/invitations', 'GET', undefined, true)).status, 401);
-    console.log('PASS: live Supabase admin authentication, local/traveling invitations, personalization, RSVP persistence/update, dietary/plus-one/child notes, hotel email, language, revoked links, and logout.');
+    console.log('PASS: live Supabase admin authentication, local/traveling invitations, personalization, RSVP persistence/update, dietary/plus-one/child notes, hotel email, language, revoked links, permanent deletion, and logout.');
   } finally {
     server.kill();
     if (invitationIds.length) {

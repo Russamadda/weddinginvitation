@@ -11,6 +11,7 @@ type Database = {
   find(token: string): Promise<InvitationRow | undefined>;
   insert(row: InvitationRow): Promise<void>;
   enable(id: string, enabled: boolean): Promise<boolean>;
+  remove(id: string): Promise<boolean>;
   reply(id: string, update: ReplyUpdate): Promise<boolean>;
   failures(cutoff: number): Promise<number>;
   addFailure(time: number): Promise<void>;
@@ -34,6 +35,7 @@ function localDatabase(): Database {
     async find(token) { return db.prepare("SELECT * FROM invitations WHERE token=? AND enabled=1").get(token) as InvitationRow | undefined; },
     async insert(row) { db.prepare("INSERT INTO invitations(id,token,body,created_at,enabled,response,responded_at,draft) VALUES(?,?,?,?,?,?,?,?)").run(row.id, row.token, row.body, row.created_at, row.enabled, row.response, row.responded_at, row.draft); },
     async enable(id, enabled) { return db.prepare("UPDATE invitations SET enabled=? WHERE id=?").run(enabled ? 1 : 0, id).changes > 0; },
+    async remove(id) { return db.prepare("DELETE FROM invitations WHERE id=?").run(id).changes > 0; },
     async reply(id, update) { return db.prepare("UPDATE invitations SET response=?,draft=?,responded_at=? WHERE id=? AND enabled=1").run(update.response, update.draft, update.responded_at, id).changes > 0; },
     async failures(cutoff) { db.prepare("DELETE FROM login_failures WHERE created_at<?").run(cutoff); return (db.prepare("SELECT COUNT(*) AS total FROM login_failures").get() as { total: number }).total; },
     async addFailure(time) { db.prepare("INSERT INTO login_failures(created_at) VALUES(?)").run(time); },
@@ -62,6 +64,7 @@ function cloudDatabase(url: string, secret: string): Database {
     async find(token) { return (checked(await client.from("wedding_invitations").select("*").eq("token", token).eq("enabled", 1).maybeSingle()) as InvitationRow | null) || undefined; },
     async insert(row) { checked(await client.from("wedding_invitations").insert(row)); },
     async enable(id, enabled) { return !!checked(await client.from("wedding_invitations").update({ enabled: enabled ? 1 : 0 }).eq("id", id).select("id").maybeSingle()); },
+    async remove(id) { return !!checked(await client.from("wedding_invitations").delete().eq("id", id).select("id").maybeSingle()); },
     async reply(id, update) { return !!checked(await client.from("wedding_invitations").update(update).eq("id", id).eq("enabled", 1).select("id").maybeSingle()); },
     async failures(cutoff) {
       checked(await client.from("wedding_login_failures").delete().lt("created_at", cutoff));

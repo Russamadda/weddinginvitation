@@ -22,6 +22,7 @@ let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.o
   const adminContext = await browser.newContext({ viewport: { width: 1470, height: 950 } });
   const admin = await adminContext.newPage(); const browserErrors = []; admin.on('pageerror', error => browserErrors.push(error.message));
   assert.equal((await adminContext.request.get(base + '/api/admin/invitations')).status(), 401);
+  assert.equal((await adminContext.request.delete(base + '/api/admin/invitations', { data: { id: 'unauthorized' } })).status(), 401);
   await admin.goto(base + '/admin'); assert.match(admin.url(), /admin\/login/);
   await admin.locator('#admin-password').fill(password); await admin.getByRole('button', { name: 'Sign in', exact: true }).click(); await admin.waitForURL(base + '/admin');
   await admin.locator('#guest-names').fill('TestGuest One'); await admin.getByRole('button', { name: 'Add', exact: true }).click(); await admin.locator('#guest-names').fill('TestGuest Two'); await admin.locator('#guest-names').press('Enter'); assert.equal(await admin.locator('#group-label').count(), 0);
@@ -63,11 +64,24 @@ let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.o
   await admin.reload(); await admin.locator('table').getByText('Travel Guest', { exact: true }).first().waitFor();
   const travelingRow = admin.locator('table tbody tr').filter({ hasText: 'Travel Guest' }); assert.match(await travelingRow.locator('td[data-label="Reply"]').innerText(), /Travel Guest: Yes/); assert.match(await travelingRow.locator('td[data-label="Group option"]').innerText(), /Yes/); assert.equal(await travelingRow.locator('td[data-label="Email address"]').innerText(), 'travel@example.com');
   await adminContext.request.patch(base + '/api/admin/invitations', { headers, data: { id: invitation.id, enabled: false } }); assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: draft })).status(), 404); const revoked = await guest.goto(`${base}/?invite=${invitation.token}`); assert.equal(revoked.status(), 404);
+  assert.equal((await adminContext.request.delete(base + '/api/admin/invitations', { headers: { Origin: 'https://invalid.example' }, data: { id: invitation.id } })).status(), 400);
+  assert.equal((await adminContext.request.delete(base + '/api/admin/invitations', { headers, data: { id: 'invalid' } })).status(), 400);
+  await admin.reload(); await admin.locator('table').getByText('TestGuest One', { exact: true }).first().waitFor();
+  const deletedRow = admin.locator('table tbody tr').filter({ hasText: 'TestGuest One' });
+  assert.equal(await admin.getByRole('button', { name: /Revoke|Restore/ }).count(), 0);
+  admin.once('dialog', dialog => dialog.dismiss()); await deletedRow.getByRole('button', { name: 'Delete invitation', exact: true }).click();
+  assert.equal((await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations.length, 2);
+  admin.once('dialog', dialog => { assert.match(dialog.message(), /permanently/); void dialog.accept(); });
+  await deletedRow.getByRole('button', { name: 'Delete invitation', exact: true }).click(); await deletedRow.waitFor({ state: 'detached' });
+  assert.equal((await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations.length, 1);
+  assert.equal((await adminContext.request.delete(base + '/api/admin/invitations', { headers, data: { id: invitation.id } })).status(), 404);
+  assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: draft })).status(), 404);
   await adminContext.request.delete(base + '/api/admin/session', { headers }); assert.equal((await adminContext.request.get(base + '/api/admin/invitations')).status(), 401);
   assert.deepEqual(browserErrors, []); assert.ok(fs.existsSync(path.join(dataDir, 'wedding.sqlite')));
   const { DatabaseSync } = require('node:sqlite'); const persisted = new DatabaseSync(path.join(dataDir, 'wedding.sqlite'), { readOnly: true });
-  const persistedReply = JSON.parse(persisted.prepare('SELECT response FROM invitations WHERE id=?').get(invitation.id).response);
-  assert.equal(persistedReply.venueStay, 'no'); persisted.close();
-  console.log('PASS: admin authentication, invitation creation/language/category, unique tokens, personalized greeting and navigation, envelope OG/image, live save failure/success/reload/upsert, categorized admin replies, dietary/child notes, traveling/local logic, unauthorized/foreign/cross-origin rejection, revoked links, logout and mobile layout.');
+  const persistedReply = JSON.parse(persisted.prepare('SELECT response FROM invitations WHERE id=?').get(traveler.id).response);
+  assert.equal(persistedReply.hotelOffer, 'yes');
+  assert.equal(persisted.prepare('SELECT id FROM invitations WHERE id=?').get(invitation.id), undefined); persisted.close();
+  console.log('PASS: admin authentication, invitation creation/language/category, unique tokens, personalized greeting and navigation, envelope OG/image, live save failure/success/reload/upsert, categorized admin replies, dietary/child notes, traveling/local logic, unauthorized/foreign/cross-origin rejection, revoked links, confirmed deletion/cancellation and database removal, logout and mobile layout.');
  } finally { if (browser) await browser.close(); server.kill(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

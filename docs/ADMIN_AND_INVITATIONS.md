@@ -20,7 +20,7 @@ Traveling invitations show only the Kaunas group hotel offer for September 3–4
 
 Both admin lists show six columns: Guests, Category / language, Reply, Group option, Email address, and Invitation link. Individual guest Yes/No answers (including plus ones) are visible directly. Reply, accommodation and email cells stay empty until a reply is received. Group option identifies the relevant Kaunas hotel or venue stay. More details expands dietary notes, under-five details, comments and reply time. Search/status/category filters, refresh, and CSV export are included. Export omits invitation tokens and escapes spreadsheet formula prefixes. Under-fives are notes, not included in the structured listed-guest attendance total.
 
-Links can be revoked/restored without deleting attendance history. Invalid/revoked links show an unavailable page and cannot submit replies.
+The Delete invitation action asks for confirmation, then permanently removes the invitation and its saved reply and draft. Deleted links show an unavailable page and cannot submit replies.
 
 ## Storage and hosting
 
