@@ -83,30 +83,30 @@ img { display: block; max-width: none; }
 .site-footer { height: 49px; background: #e9ecf1; display: grid; place-items: center; color: var(--slate); font-size: 20px; line-height: 28px; }
 
 .story-header nav { color: var(--slate); }
-.love-story-main { position: relative; min-height: 2486.35px; }
+.love-story-main { position: relative; min-height: 2438.35px; }
 .love-story-background { position: absolute; inset: 0; background: url("/images/love-story-background.jpg") center / cover no-repeat; opacity: .04; }
-.love-story-content { position: relative; width: 600px; height: 2486.35px; margin: auto; color: var(--silver); }
+.love-story-content { position: relative; width: 600px; height: 2438.35px; margin: auto; color: var(--silver); }
 .love-story-content h1 { position: absolute; top: 102.2667px; width: 100%; text-align: center; font: 400 26.6665px/37px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
 .love-story-content h1 span { position: absolute; top: -40px; left: 0; width: 100%; font: 400 33.333px/46px "Shelley Script", cursive; text-transform: none; }
-.love-story-content p { position: absolute; left: 110.5085px; width: 378.983px; text-align: justify; font: italic 400 21.3333px/29px "Cormorant Garamond", Georgia, serif; }
-.story-opening { top: 253.03567px; }
-.story-cafeteria { top: 868.80567px; }
-.story-friends { top: 1080.80567px; }
-.story-hometown { top: 1321.49667px; }
-.story-looking-back { top: 1533.49667px; }
-.story-next-chapter { top: 1687.49667px; }
-.story-gratitude { top: 1841.49667px; }
-.story-portrait { position: absolute; top: 417.004px; left: 169.6625px; width: 260.675px; height: 374.833px; }
+.love-story-content p { color: #7a818a; position: absolute; left: 110.5085px; width: 378.983px; text-align: justify; font: italic 400 21.3333px/29px "Cormorant Garamond", Georgia, serif; }
+.story-opening { top: 205.03567px; }
+.story-cafeteria { top: 820.80567px; }
+.story-friends { top: 1032.80567px; }
+.story-hometown { top: 1273.49667px; }
+.story-looking-back { top: 1485.49667px; }
+.story-next-chapter { top: 1639.49667px; }
+.story-gratitude { top: 1793.49667px; }
+.story-portrait { position: absolute; top: 369.004px; left: 169.6625px; width: 260.675px; height: 374.833px; }
 .story-portrait-frame { position: absolute; inset: 0; overflow: hidden; transform: rotate(180deg); opacity: .6; }
 .story-portrait-frame img { position: absolute; width: 420.943px; height: 525.991px; left: -82.0216px; top: -80.0247px; }
 .story-portrait-photo { position: absolute; left: 39.0379px; top: 39.6183px; width: 187.687px; height: 299.749px; border-radius: 50%; overflow: hidden; }
 .story-portrait-photo img { position: absolute; width: 389.2924px; height: 408.0952px; left: -138.7428px; top: -51.8522px; }
-.story-rings { position: absolute; top: 2015.84px; left: 117.2285px; width: 365.543px; height: 215.339px; }
+.story-rings { position: absolute; top: 1967.84px; left: 117.2285px; width: 365.543px; height: 215.339px; }
 .story-rings-frame { position: absolute; inset: 0; overflow: hidden; opacity: .6; }
 .story-rings-frame img { position: absolute; width: 433.846px; height: 542.115px; left: -33.5469px; top: -166.157px; }
 .story-rings-photo { position: absolute; width: 260.077px; height: 167.819px; left: 52.7328px; top: 23.7598px; border-radius: 50%; overflow: hidden; }
 .story-rings-photo img { position: absolute; width: 260.077px; height: 390.817px; left: 0; top: -117.970px; }
-.story-monogram { position: absolute; top: 2306.72px; left: 275.26px; width: 49.4801px; height: 86.0639px; font-family: "Pinyon Script", cursive; }
+.story-monogram { position: absolute; top: 2258.72px; left: 275.26px; width: 49.4801px; height: 86.0639px; font-family: "Pinyon Script", cursive; }
 .story-monogram span { position: absolute; left: 0; top: -5.574px; font-size: 55.7383px; line-height: 76.8587px; }
 .story-monogram span + span { left: 3.81519px; top: 16.5663px; font-size: 54.0649px; line-height: 75.0149px; }
 .story-footer { height: 50px; }
@@ -128,7 +128,7 @@ img { display: block; max-width: none; }
   .home-rsvp { height: calc(100vw * 925 / 600); }
   .love-story-main { min-height: 0; }
   .love-story-content { width: 100%; height: auto; padding: 62.2666px 24px 100px; }
-  .love-story-content h1 { position: relative; top: 40px; margin-bottom: 151px; }
+  .love-story-content h1 { position: relative; top: 40px; margin-bottom: 103px; }
   .love-story-content p { position: relative; top: auto; left: auto; width: min(378.983px, 100%); margin: 0 auto; }
   .story-portrait, .story-rings, .story-monogram { position: relative; left: auto; top: auto; margin-left: auto; margin-right: auto; }
   .story-portrait { margin-top: 76.96833px; margin-bottom: 76.96867px; }
