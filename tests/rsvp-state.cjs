@@ -6,7 +6,9 @@ const vm = require('node:vm');
 const compiled = ts.transpileModule(fs.readFileSync('lib/rsvp.ts', 'utf8'), {
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2017 },
 }).outputText;
-const context = { exports: {} };
+const languageContext = { exports: {}, require: () => ({ default: JSON.parse(fs.readFileSync('lib/guest-messages.json', 'utf8')) }) };
+vm.runInNewContext(ts.transpileModule(fs.readFileSync('lib/guest-language.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2017 } }).outputText, languageContext);
+const context = { exports: {}, require: () => languageContext.exports };
 vm.runInNewContext(compiled, context);
 const { normalizeDraft, buildResponse, emptyDraft } = context.exports;
 const invitation = { id: 'test-couple', guests: [{ id: 'alex', name: 'Alex' }, { id: 'sam', name: 'Sam' }], language: 'en', travelProfile: 'traveling', additionalGuestAllowance: 1 };

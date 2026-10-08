@@ -1,3 +1,4 @@
+import { guestText as t, type GuestLanguage } from "./guest-language";
 export type TravelProfile = "traveling" | "local";
 export type Attendance = "" | "yes" | "no";
 export type Invitation = {
@@ -20,9 +21,10 @@ export type RsvpDraft = {
   comments: string;
 };
 
-export function invitationGreeting(invitation: Invitation) {
+export function invitationGreeting(invitation: Invitation, language: GuestLanguage = invitation.language === "no" ? "no" : "en") {
   const names = invitation.guests.map(guest => guest.name);
-  return `Dear ${names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")} & ${names[names.length - 1]}`},`;
+  const joined = names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")}${language === "no" ? " og " : " & "}${names[names.length - 1]}`;
+  return `${language === "no" ? "Kjære" : "Dear"} ${joined},`;
 }
 
 export function emptyDraft(invitation: Invitation): RsvpDraft {
@@ -39,27 +41,27 @@ export function normalizeDraft(invitation: Invitation, draft: Partial<RsvpDraft>
   };
 }
 
-export function validateRsvp(invitation: Invitation, draft: RsvpDraft) {
+export function validateRsvp(invitation: Invitation, draft: RsvpDraft, language: GuestLanguage = invitation.language === "no" ? "no" : "en") {
   const errors: Record<string, string> = {};
   for (const guest of invitation.guests) {
-    if (!["yes", "no"].includes(draft.attendance[guest.id])) errors[`attendance-${guest.id}`] = `Please choose whether ${guest.name} is attending.`;
+    if (!["yes", "no"].includes(draft.attendance[guest.id])) errors[`attendance-${guest.id}`] = t(language, "E001", { name: guest.name });
   }
   if (invitation.guests.some(guest => draft.attendance[guest.id] === "yes")) {
-    if (invitation.additionalGuestAllowance > 0 && !["yes", "no"].includes(draft.bringPlusOne)) errors.plusOne = "Please choose whether you will bring a plus one.";
+    if (invitation.additionalGuestAllowance > 0 && !["yes", "no"].includes(draft.bringPlusOne)) errors.plusOne = t(language, "E002");
     const additions = draft.bringPlusOne === "yes" ? draft.additionalGuests : [];
-    if (additions.length > invitation.additionalGuestAllowance) errors.plusOne = "This invitation's additional guest allowance has been exceeded.";
-    if (draft.bringPlusOne === "yes" && !additions.length) errors.plusOne = "Please add your plus one's name.";
+    if (additions.length > invitation.additionalGuestAllowance) errors.plusOne = t(language, "E003");
+    if (draft.bringPlusOne === "yes" && !additions.length) errors.plusOne = t(language, "E004");
     const invitedNames = invitation.guests.map(guest => guest.name.trim().toLowerCase());
     const addedNames = new Set<string>();
     for (const guest of additions) {
       const name = guest.name.trim().toLowerCase();
-      if (!name) errors[`name-${guest.id}`] = "Please enter their name.";
-      else if (invitedNames.includes(name) || addedNames.has(name)) errors[`name-${guest.id}`] = "This name is already listed. Please use a full name if two people share a name.";
+      if (!name) errors[`name-${guest.id}`] = t(language, "E005");
+      else if (invitedNames.includes(name) || addedNames.has(name)) errors[`name-${guest.id}`] = t(language, "E006");
       addedNames.add(name);
     }
-    if (invitation.travelProfile !== "local" && !["yes", "no"].includes(draft.hotelOffer)) errors.hotelOffer = "Please choose whether you would like the Kaunas hotel offer.";
-    if (invitation.travelProfile === "local" && !["yes", "no"].includes(draft.venueStay)) errors.venueStay = "Please choose whether your party would like to stay at the venue.";
-    if (invitation.travelProfile !== "local" && draft.hotelOffer === "yes" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email.trim())) errors.email = "Please enter a valid email for group hotel updates.";
+    if (invitation.travelProfile !== "local" && !["yes", "no"].includes(draft.hotelOffer)) errors.hotelOffer = t(language, "E007");
+    if (invitation.travelProfile === "local" && !["yes", "no"].includes(draft.venueStay)) errors.venueStay = t(language, "E008");
+    if (invitation.travelProfile !== "local" && draft.hotelOffer === "yes" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email.trim())) errors.email = t(language, "E009");
   }
   return errors;
 }

@@ -420,3 +420,54 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
   .admin-page td::before { content: attr(data-label); display: block; font: 600 12px/20px system-ui, sans-serif; color: #65758b; margin-bottom: 5px; }
   .admin-row-actions { flex-wrap: wrap; }
 }
+
+/* Temporary language preview; invitation language remains the default. */
+.site-header { position: relative; }
+.language-preview { position: absolute; right: 16px; bottom: 4px; display: flex; align-items: center; gap: 8px; color: #1d2e4d; font: 11px/16px system-ui, sans-serif; }
+.language-preview > span { opacity: .65; }
+.language-preview a { padding: 1px 5px; border-radius: 3px; }
+.language-preview [aria-current] { background: #ffffff70; font-weight: 600; }
+.guest-site[data-language='no'] .site-header nav a { width: auto; }
+.guest-site[data-language='no'] .invitation-copy { text-wrap: pretty; }
+.guest-site[data-language='no'] .rsvp-link { left: 75px; width: 450px; height: 110px; }
+.guest-site[data-language='no'] .rsvp-link img { height: 110px; }
+.guest-site[data-language='no'] .rsvp-link > span { left: 25px; width: 400px; top: 14px; font-size: 24px; line-height: 28px; text-wrap: balance; }
+.guest-site[data-language='no'] .rsvp-link small { top: 80px; }
+.guest-site[data-language='no'] .swans-crop { top: 775px; }
+.guest-site[data-language='no'] .home-rsvp, .guest-site[data-language='no'] .rsvp-artboard { height: 950px; }
+/* Norwegian paragraphs are longer. Let the page flow grow with the text. */
+.guest-site[data-language='no'] .love-story-main { min-height: 0; }
+.guest-site[data-language='no'] .love-story-content { width: min(600px, 100%); height: auto; padding: 62.2666px 24px 100px; }
+.guest-site[data-language='no'] .love-story-content h1 { position: relative; top: 40px; margin-bottom: 103px; font-size: clamp(21px, 5vw, 26.6665px); }
+.guest-site[data-language='no'] .love-story-content p { position: relative; top: auto; left: auto; width: min(378.983px, 100%); margin: 0 auto; }
+.guest-site[data-language='no'] :is(.story-portrait, .story-rings, .story-monogram) { position: relative; top: auto; left: auto; margin-left: auto; margin-right: auto; }
+.guest-site[data-language='no'] .story-portrait { margin-top: 76.96833px; margin-bottom: 76.96867px; }
+.guest-site[data-language='no'] .love-story-content :is(.story-friends, .story-hometown, .story-looking-back, .story-next-chapter, .story-gratitude) { margin-top: 38px; }
+.guest-site[data-language='no'] .story-rings { margin-top: 87.34333px; }
+.guest-site[data-language='no'] .story-monogram { margin-top: 75.541px; }
+.guest-site[data-language='no'] .details-section { height: auto; }
+.guest-site[data-language='no'] .details-canvas { width: min(700px, 100%); height: auto; padding: 90px 24px 100px; }
+.guest-site[data-language='no'] .details-canvas :is(h1, h2) { position: relative; top: auto; font-size: 30px; }
+.guest-site[data-language='no'] :is(.details-date, .details-ceremony, .details-formal, .details-gifts-copy) { position: relative; top: auto; left: auto; width: min(100%, 355.071px); margin: 60px auto 0; }
+.guest-site[data-language='no'] .details-venue-photo { position: relative; left: auto; top: auto; margin: 75px auto 0; }
+.guest-site[data-language='no'] :is(.details-map, .details-registry) { position: relative; left: auto; top: auto; margin: 50px auto 0; }
+.guest-site[data-language='no'] :is(.details-by-car, .details-traveling, .details-speeches) { position: relative; top: auto; left: auto; width: min(100%, 508.944px); margin: 45px auto 0; }
+.guest-site[data-language='no'] .details-by-car { max-width: 256.175px; margin-top: 28px; }
+.guest-site[data-language='no'] .details-speeches { max-width: 389.591px; }
+.guest-site[data-language='no'] :is(.details-friday, .details-saturday, .details-sunday, .details-timeline-note) { position: relative; top: auto; left: auto; width: 100%; margin: 50px auto 0; }
+.guest-site[data-language='no'] .details-timeline h3 { line-height: 20px; }
+.guest-site[data-language='no'] .details-timeline h3 + p { margin-top: 10px; }
+.guest-site[data-language='no'] .details-stays { position: relative; top: auto; left: auto; justify-content: center; gap: 48px; margin-top: 65px; }
+.guest-site[data-language='no'] .details-stay { width: min(288.714px, 100%); min-width: 0; }
+.guest-site[data-language='no'] .details-stay-note { position: relative; top: auto; left: auto; width: min(100%, 320px); margin: 75px auto 0; }
+.guest-site[data-language='no'] .details-dress-copy { position: relative; top: auto; left: auto; width: min(100%, 275.505px); margin: 45px auto 0; }
+.guest-site[data-language='no'] .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
+@media (max-width: 600px) {
+  .language-preview { right: 10px; bottom: 2px; gap: 5px; font-size: 10px; line-height: 14px; }
+  .language-preview > span { display: none; }
+}
+
+.guest-site[data-language='no'] .details-accommodations h2 { font-size: clamp(18px, 5.5vw, 30px); }
+@media (max-width: 600px) {
+  .guest-site[data-language='no'] .home-rsvp { height: calc(100vw * 950 / 600); }
+}

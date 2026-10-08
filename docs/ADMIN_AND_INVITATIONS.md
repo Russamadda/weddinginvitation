@@ -10,9 +10,9 @@ Requires Node 24 or newer; the current environment uses Node 24.14.0. Run `npm r
 
 Enter a guest name and press Add (or Enter), then repeat for each person. Names can be removed before creating the invitation. A name still in the input is included on creation. There is no separate group label to fill in. A couple/group shares an invitation while retaining individual attendance and dietary answers. Choose Local/Traveling, English/Norwegian/Lithuanian, and an additional guest allowance. Copy the generated unique invitation link. The link opens Home with a personalized greeting and retains its token through Love Story, Details, FAQ, RSVP and the back links.
 
-Language is stored now. Translations are deliberately not implemented yet: guests currently see English. There is no guest-facing language picker. The admin form makes this limitation explicit.
+English and Norwegian are available. Norwegian invitations open in Norwegian automatically; Lithuanian is pending and currently opens in English. A temporary English/Norsk preview switcher is available for reviewing the translations.
 
-Traveling invitations show only the Kaunas group hotel offer for September 3–4. Local invitations show only the venue overnight stay for September 4–5. RSVP requires a valid invitation; `/rsvp` without one asks guests to open their personal link. All demo forms, switches and the demo submission endpoint have been removed. Historical demo records remain in private storage but cannot be opened or shown in admin.
+Traveling invitations show only the Kaunas group hotel offer for September 3–4. Local invitations show only the venue overnight stay for September 4–5. RSVP requires a valid invitation; `/rsvp` without one asks guests to open their personal link. Demo RSVP forms, guest-category switches and the demo submission endpoint have been removed; the temporary language preview switcher does not create an invitation or change its category. Historical demo records remain in private storage but cannot be opened or shown in admin.
 
 ## Replies
 
@@ -46,3 +46,7 @@ Build trace verification: next.config.ts explicitly excludes private .local-data
 
 
 Supabase integration verification: production build and the isolated SQLite regression checks pass. `tests/supabase-integration.cjs` is an opt-in live test that creates synthetic traveling/local invitations, verifies password sessions, saved/updated replies, accommodation/email/dietary/child notes, personalization, revocation, and logout, then removes its own fixtures. `npm run db:check` checks the live schema and verifies public clients cannot read these tables when the publishable key is configured.
+
+## Guest languages
+
+English and Norwegian guest pages are implemented. An invitation with language `no` opens in Norwegian automatically. The temporary English/Norsk preview links override the displayed language with `lang=en` or `lang=no`, without editing the stored invitation. The invitation token and selected language follow guest navigation. Local/traveling accommodation logic is independent of language. Lithuanian still falls back to English. The private admin remains in English.

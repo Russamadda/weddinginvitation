@@ -1,11 +1,14 @@
 import "server-only";
 import { notFound } from "next/navigation";
 import { findInvitation } from "./wedding-store";
-export type GuestSearch = Promise<{ invite?: string }>;
-export async function guestContext(searchParams: GuestSearch) {
-  const { invite } = await searchParams;
-  if (!invite) return { token: undefined, record: null };
-  const record = await findInvitation(invite);
+import { cache } from "react";
+import type { GuestLanguage } from "./guest-language";
+export type GuestSearch = Promise<{ invite?: string; lang?: string }>;
+export const guestContext = cache(async (searchParams: GuestSearch) => {
+  const { invite, lang } = await searchParams;
+  const record = invite ? await findInvitation(invite) : null;
+  const language: GuestLanguage = lang === "en" || lang === "no" ? lang : record?.language === "no" ? "no" : "en";
+  if (!invite) return { token: undefined, record: null, language };
   if (!record) notFound();
-  return { token: invite, record };
-}
+  return { token: invite, record, language };
+});
