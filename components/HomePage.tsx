@@ -20,7 +20,7 @@ export default function HomePage({ inviteToken, greeting, guestCount, language =
               <div className="photo-frame-crop" aria-hidden="true"><img src="/decorations/photo-frame.png" alt="" /></div>
               <div className="couple-photo-crop"><img src="/images/couple-photo.jpg" alt={t(language, "A003")} /></div>
             </div>
-            <p className="celebration-line">{t(language, "H011")}</p>
+            <p className="celebration-line">{t(language, "H011").replace("deg/dere", guestCount === 1 ? "deg" : "dere")}</p>
             <a className="rsvp-link" href={guestHref("/rsvp", inviteToken, language)}>
               <img src="/decorations/rsvp-frame.svg" alt="" aria-hidden="true" />
               <span>{t(language, "H012")}</span><small>{t(language, "H013")}</small>

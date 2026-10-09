@@ -5,6 +5,11 @@ const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','
 for(let n=0;n<80;n++){try{if((await fetch(base+'/admin/login')).ok)break}catch{}await new Promise(r=>setTimeout(r,250));}
 browser=await chromium.launch({headless:true,executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});const context=await browser.newContext({reducedMotion:'reduce'});const p=await context.newPage();const errors=[];p.on('pageerror',e=>errors.push(e.message));const headers={Origin:base};assert.equal((await context.request.post(base+'/api/admin/session',{headers,data:{password}})).status(),200);
 const fixtures=[];for(const profile of ['traveling','local']){const r=await context.request.post(base+'/api/admin/invitations',{headers,data:{names:['Alexandra-Christine Andersen','Christopher Pettersen'],language:'no',travelProfile:profile,additionalGuestAllowance:2}});assert.equal(r.status(),201);fixtures.push((await r.json()).invitation)}
+for (const count of [1, 2]) {
+ const r=await context.request.post(base+'/api/admin/invitations',{headers,data:{names:count===1?['Single Guest']:['First Guest','Second Guest'],language:'no',travelProfile:'traveling'}});assert.equal(r.status(),201);const fixture=(await r.json()).invitation;
+ await p.goto(`${base}/?invite=${fixture.token}`);const pronoun=count===1?'deg':'dere';assert.ok((await p.locator('.invitation-copy').innerText()).includes(`Vi inviterer ${pronoun} til`));assert.equal(await p.locator('.celebration-line').innerText(),`Vi gleder oss til å feire med ${pronoun}`);
+ await p.goto(`${base}/rsvp?invite=${fixture.token}`);assert.equal(await p.locator('.rsvp-page-intro strong').innerText(),`Vi gleder oss til å feire med ${pronoun}`);
+}
 const invite=fixtures[0];await p.goto(`${base}/?invite=${invite.token}`);assert.equal(await p.locator('.guest-site').getAttribute('lang'),'nb');assert.match(await p.locator('#invitation-heading').innerText(),/Kjære Alexandra-Christine Andersen og Christopher Pettersen/i);assert.equal(await p.locator('meta[property="og:title"]').getAttribute('content'),'Din invitasjon');
 await p.emulateMedia({reducedMotion:'no-preference'});
 for(const lang of ['en','no']){

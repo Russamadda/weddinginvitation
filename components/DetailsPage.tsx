@@ -40,7 +40,7 @@ export default function DetailsPage({ inviteToken, language = "en" }: { inviteTo
               <p>{t(language, "D011")}</p>
               <p>{t(language, "D012")}</p>
             </div></div>
-            <div className="details-speeches"><h3>{t(language, "D013")}</h3><Divider /><p>{t(language, "D014").split(language === "no" ? " Telefon:" : " Phone:")[0]}<br />{language === "no" ? "Telefon:" : "Phone:"} <a href="tel:+4794896863">+47 948 96 863</a></p></div>
+            <div className="details-speeches"><h3>{t(language, "D013")}</h3><Divider /><p>{t(language, "D014").split(language === "no" ? " Telefon:" : " Phone:")[0]}<span className="details-toastmaster-phone">{language === "no" ? "Telefon:" : "Phone:"} <a href="tel:+4794896863">+47 948 96 863</a></span></p></div>
           </div>
         </section>
         <section className="details-section details-timeline" aria-labelledby="timeline-heading">
