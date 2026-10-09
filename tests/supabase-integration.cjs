@@ -8,12 +8,13 @@ const { createClient } = require('@supabase/supabase-js');
 loadEnvConfig(process.cwd());
 const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const secret = process.env.SUPABASE_SECRET_KEY;
-assert.ok(url && secret && process.env.ADMIN_PASSWORD, 'Configure Supabase and ADMIN_PASSWORD first.');
+const adminPassword = (process.env.WEDDING_TEST_BASE_URL && process.env.WEDDING_TEST_ADMIN_PASSWORD) || process.env.ADMIN_PASSWORD;
+assert.ok(url && secret && adminPassword, 'Configure Supabase and the admin test password first.');
 const client = createClient(url, secret, { auth: { persistSession: false, autoRefreshToken: false } });
 const base = process.env.WEDDING_TEST_BASE_URL || 'http://127.0.0.1:3002';
 const server = process.env.WEDDING_TEST_BASE_URL ? null : spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3002'], { windowsHide: true, env: { ...process.env, SITE_URL: base }, stdio: 'ignore' });
 const invitationIds = [];
-let cookie = '', sessionHash = '';
+let cookie = '', sessionHash = '', phase = 'startup';
 async function request(path, method = 'GET', data, admin = false) {
   return fetch(base + path, { method, headers: { Origin: base, ...(data ? { 'Content-Type': 'application/json' } : {}), ...(admin ? { Cookie: cookie } : {}) }, body: data ? JSON.stringify(data) : undefined });
 }
@@ -30,15 +31,18 @@ async function json(response, status) {
     }
     assert.ok(ready, 'Production test server must start.');
     assert.equal((await request('/api/admin/invitations')).status, 401);
-    const login = await request('/api/admin/session', 'POST', { password: process.env.ADMIN_PASSWORD });
+    phase = 'admin sign-in';
+    const login = await request('/api/admin/session', 'POST', { password: adminPassword });
     assert.equal(login.status, 200);
     cookie = login.headers.get('set-cookie').split(';')[0];
+    sessionHash = createHash('sha256').update(cookie.split('=')[1]).digest('hex');
+    phase = 'public invitation domain';
     if (process.env.WEDDING_TEST_BASE_URL) {
       const adminHtml = await (await request('/admin', 'GET', undefined, true)).text();
       assert.ok(adminHtml.includes(base) || adminHtml.includes('https://martheogdeivi.no'), 'Hosted admin must generate links on the public wedding domain.');
     }
-    sessionHash = createHash('sha256').update(cookie.split('=')[1]).digest('hex');
     for (const profile of ['traveling', 'local']) {
+      phase = 'synthetic ' + profile + ' invitation';
       const { invitation } = await json(await request('/api/admin/invitations', 'POST', { names: ['Supabase Test One', 'Supabase Test Two'], travelProfile: profile, language: 'no', additionalGuestAllowance: 1 }, true), 201);
       invitationIds.push(invitation.id);
       const draft = {
@@ -97,4 +101,4 @@ async function json(response, status) {
       assert.equal(error, null, 'Remove synthetic session fixture.');
     }
   }
-})().catch(() => { console.error('Live Supabase integration check failed. Synthetic records are cleaned up when possible; no credentials were printed.'); process.exitCode = 1; });
+})().catch(error => { console.error('Live Supabase integration check failed at: ' + phase + '. Synthetic records are cleaned up when possible; no credentials were printed.'); if (typeof error.actual === 'number' && typeof error.expected === 'number') console.error('Status: ' + error.actual + '; expected: ' + error.expected); process.exitCode = 1; });

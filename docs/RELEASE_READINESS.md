@@ -24,3 +24,9 @@ Gjennomgangen gjelder gjeldende versjon før invitasjoner sendes ut. Språkvelge
 Bruk Copy link på riktig invitasjon i admin. Kontroller navn, språk og Local/Traveling før lenken sendes. Lenken er personlig for den inviterte gruppen; alle med lenken kan se og oppdatere gruppens RSVP. Svar vises under Replies og kan eksporteres til CSV. Barn oppgis i fritekst og må tas med manuelt i planleggingen; de inngår ikke i telleren for navngitte gjester.
 
 Bankinformasjonen er fortsatt teksten dere ba om: opplysninger kommer snart. Vipps er en vanlig lenke og krever ingen betalingsintegrasjon på nettsiden. Ingen reell betaling eller faktisk SMS-utsending er gjennomført som del av kontrollen.
+
+## Publisert versjon
+
+Versjonen uten språkvelger er bekreftet på https://www.martheogdeivi.no/. Full test mot Supabase gjennom lokal produksjonsserver består. Den videre testen via selve produksjonsdomenet stoppet ved admininnlogging: lokalt konfigurert passord ble avvist med 401. Produksjonens adminpassord må brukes for å bekrefte Vercel → RSVP → Supabase fra ende til ende. Det ble ikke opprettet noen invitasjoner i dette forsøket.
+
+Testskriptet støtter `WEDDING_TEST_BASE_URL` og et separat, privat `WEDDING_TEST_ADMIN_PASSWORD` for denne kontrollen. Passordet skal kun ligge i lokal miljøkonfigurasjon og aldri i Git eller dokumentasjon.
