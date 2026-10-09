@@ -25,7 +25,7 @@ export default function DetailsPage({ inviteToken, language = "en" }: { inviteTo
               <div className="details-villa-crop"><img src="/images/venue-villa.jpg" alt={t(language, "A008")} /></div>
               <figcaption><a href={venueWebsite} target="_blank" rel="noopener noreferrer">Villa 9 Vejai</a><br />{t(language, "D044")}</figcaption>
             </figure>
-            <p className="details-ceremony">{t(language, "D003")}</p>
+            <div className="details-ceremony"><p>{t(language, "D003")}</p><p className="details-arrival">{t(language, "D045")}</p></div>
             <a className="details-button details-map" href={venueMap} target="_blank" rel="noopener noreferrer">{t(language, "D040")}</a>
           </div>
         </section>

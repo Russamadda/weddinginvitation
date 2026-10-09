@@ -35,7 +35,7 @@
     "L008": "Most of all, we’re grateful to share this day with the people who have been part of our story from the very beginning, middle and end.",
     "D001": "Date and Venue",
     "D002": "Saturday, 4 September 2027",
-    "D003": "Both our ceremony and celebration will take place at Villa 9 Vejai, where you are warmly invited to stay overnight too. Your stay from Saturday to Sunday is our treat, so we can enjoy the celebration and a relaxed morning together. Please arrive 30 minutes before the ceremony begins.",
+    "D003": "Both our ceremony and celebration will take place at Villa 9 Vejai. We have also arranged and covered an overnight stay for all our guests from Saturday to Sunday, so we can stay together and celebrate for as long as we wish.",
     "D004": "How to Get There",
     "D005": "By car",
     "D006": "Knygnešio P. Varkalos g. 44",
@@ -180,7 +180,8 @@
     "A014": "{days} days, {hours} hours, {minutes} minutes, {seconds} seconds until our wedding",
     "A015": "Wedding countdown loading",
     "S013": "Next →",
-    "R017": "Children are warmly welcome"
+    "R017": "Children are warmly welcome",
+    "D045": "Please arrive 30 minutes before the ceremony begins."
   },
   "no": {
     "S001": "Hjem",
@@ -218,7 +219,7 @@
     "L008": "Men mest av alt er vi takknemlige for å tilbringe denne store dagen med de menneskene som betyr mest for oss: de som har vært her med oss fra starten, de vi har møtt underveis, og de som skal være med oss videre på reisen.",
     "D001": "Dato og lokale",
     "D002": "Lørdag 4. september 2027",
-    "D003": "Både vielsen og festen finner sted på Villa 9 Vejai, hvor dere også er hjertelig velkomne til å overnatte. Vi spanderer overnattingen fra lørdag til søndag på våre gjester, så vi kan nyte feiringen og våkne til en rolig morgen sammen. Vi ber om at alle gjester er på plass 30 minutter før vielsen begynner.",
+    "D003": "Både vielsen og festen finner sted på Villa 9 Vejai. Her har vi også ordnet og dekket overnatting til alle gjester fra lørdag til søndag, slik at vi kan være samlet og feire så lenge vi måtte ønske.",
     "D004": "Hvordan komme seg dit",
     "D005": "Med bil",
     "D006": "Knygnešio P. Varkalos g. 44",
@@ -363,6 +364,7 @@
     "A014": "{days} dager, {hours} timer, {minutes} minutter og {seconds} sekunder til bryllupet vårt",
     "A015": "Nedtellingen til bryllupet lastes inn",
     "S013": "Neste →",
-    "R017": "Barn er hjertelig velkomne"
+    "R017": "Barn er hjertelig velkomne",
+    "D045": "Vi ber alle gjester om å være på plass 30 minutter før vielsen begynner."
   }
 }

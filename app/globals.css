@@ -473,3 +473,5 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 }
 
 @media (min-width: 701px) { .admin-form-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.details-ceremony .details-arrival { margin-top: 28px; }
