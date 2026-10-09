@@ -33,3 +33,7 @@ Den norske lenkeforhåndsvisningen heter «Din invitasjon». Konvoluttbildet er 
 ## Layout
 
 Norske avsnitt får vokse naturlig, slik at lengre tekst ikke overlapper bilder eller andre avsnitt. Farger, skrifttyper og illustrasjoner er beholdt. Overskriften for overnattingsmuligheter og RSVP-knappen har fått plass til den norske teksten.
+
+## Klar for utsending
+
+Språkvelgeren for forhåndsvisning er nå fjernet fra gjestesidene. Velg språk i admin før invitasjonen sendes. Lenken åpner automatisk dette språket; lagrede svar og eksisterende invitasjoner er beholdt.

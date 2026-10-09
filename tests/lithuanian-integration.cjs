@@ -31,7 +31,7 @@ const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','
   for(const route of ['/','/love-story','/details','/faq','/rsvp']){
    await p.goto(`${base}${route}?invite=${invite.token}`);await p.evaluate(()=>document.fonts.ready);
    assert.equal(await p.locator('.guest-site').getAttribute('lang'),'lt');assert.equal(await p.evaluate(()=>document.documentElement.lang),'lt');
-   assert.equal(await p.locator('.language-preview [aria-current]').innerText(),'Lietuvių');
+   assert.equal(await p.locator('.language-preview').count(),0);
    assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'Overflow '+width+route);
    const clipped=await p.locator('main h1, main h2, .rsvp-link > span, .rsvp-link small').evaluateAll(es=>es.flatMap(e=>{const range=document.createRange();range.selectNodeContents(e);const box=e.getBoundingClientRect();return [...range.getClientRects()].some(r=>r.left<box.left-2||r.right>box.right+2||r.bottom>box.bottom+4)?[e.textContent]:[]}));assert.deepEqual(clipped,[],'Clipped text '+width+route);
    if(route==='/details'){
@@ -56,12 +56,9 @@ const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','
   await p.locator(profile==='local'?'#venueStay':'#hotelOffer').check();
   if(profile==='traveling')await p.locator('#email').fill('synthetic@example.com');
   await p.locator('#comments').fill('Iki pasimatymo!');
-  // Switching languages preserves unsaved answers and the invitation category.
-  await p.getByRole('link',{name:'English',exact:true}).click();assert.equal(await p.locator('#childrenNotes').inputValue(),'Miglė, 4 m., alergija pienui');
-  await p.getByRole('link',{name:'Lietuvių',exact:true}).click();
   await p.getByRole('button',{name:messages.lt.C003,exact:true}).click();await p.getByRole('button',{name:messages.lt.C004,exact:true}).click();await p.getByRole('heading',{name:messages.lt.C007,exact:true}).waitFor();
   await p.reload();assert.equal(await p.locator('#childrenNotes').inputValue(),'Miglė, 4 m., alergija pienui');assert.equal(await p.locator(`#dietary-${fixture.guests[0].id}`).inputValue(),'Be riešutų');
  }
  assert.deepEqual(errors,[],'No browser errors');
- console.log('PASS all dictionary keys, invitation languages and crawler metadata, navigation, local/traveling RSVP, Unicode persistence and language switching');
+ console.log('PASS all dictionary keys, invitation languages and crawler metadata, navigation, local/traveling RSVP, Unicode persistence and no guest language preview');
 }finally{if(browser)await browser.close();server.kill();await new Promise(r=>server.once('exit',r));if(dataDir.startsWith(path.resolve('.local-data')+path.sep))fs.rmSync(dataDir,{recursive:true,force:true});}})().catch(e=>{console.error(e);process.exitCode=1;});

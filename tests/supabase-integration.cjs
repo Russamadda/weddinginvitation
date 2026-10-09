@@ -10,8 +10,8 @@ const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
 const secret = process.env.SUPABASE_SECRET_KEY;
 assert.ok(url && secret && process.env.ADMIN_PASSWORD, 'Configure Supabase and ADMIN_PASSWORD first.');
 const client = createClient(url, secret, { auth: { persistSession: false, autoRefreshToken: false } });
-const base = 'http://127.0.0.1:3002';
-const server = spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3002'], { windowsHide: true, env: { ...process.env, SITE_URL: base }, stdio: 'ignore' });
+const base = process.env.WEDDING_TEST_BASE_URL || 'http://127.0.0.1:3002';
+const server = process.env.WEDDING_TEST_BASE_URL ? null : spawn(process.execPath, ['node_modules/next/dist/bin/next', 'start', '-p', '3002'], { windowsHide: true, env: { ...process.env, SITE_URL: base }, stdio: 'ignore' });
 const invitationIds = [];
 let cookie = '', sessionHash = '';
 async function request(path, method = 'GET', data, admin = false) {
@@ -33,6 +33,10 @@ async function json(response, status) {
     const login = await request('/api/admin/session', 'POST', { password: process.env.ADMIN_PASSWORD });
     assert.equal(login.status, 200);
     cookie = login.headers.get('set-cookie').split(';')[0];
+    if (process.env.WEDDING_TEST_BASE_URL) {
+      const adminHtml = await (await request('/admin', 'GET', undefined, true)).text();
+      assert.ok(adminHtml.includes(base) || adminHtml.includes('https://martheogdeivi.no'), 'Hosted admin must generate links on the public wedding domain.');
+    }
     sessionHash = createHash('sha256').update(cookie.split('=')[1]).digest('hex');
     for (const profile of ['traveling', 'local']) {
       const { invitation } = await json(await request('/api/admin/invitations', 'POST', { names: ['Supabase Test One', 'Supabase Test Two'], travelProfile: profile, language: 'no', additionalGuestAllowance: 1 }, true), 201);
@@ -45,7 +49,8 @@ async function json(response, status) {
         email: profile === 'traveling' ? 'test@example.com' : '', childrenNotes: 'Test child, 2, no allergies', comments: 'Synthetic integration check',
       };
       const home = await (await request('/?invite=' + invitation.token)).text();
-      assert.match(home, /Dear Supabase Test One &amp; Supabase Test Two/);
+      assert.match(home, /Kjære Supabase Test One og Supabase Test Two/);
+      assert.ok(!home.includes('class="language-preview"'));
       await json(await request('/api/rsvp/' + invitation.token, 'POST', draft), 200);
       const stored = await client.from('wedding_invitations').select('*').eq('id', invitation.id).single();
       assert.equal(stored.error, null);
@@ -80,9 +85,9 @@ async function json(response, status) {
     }
     await json(await request('/api/admin/session', 'DELETE', undefined, true), 200);
     assert.equal((await request('/api/admin/invitations', 'GET', undefined, true)).status, 401);
-    console.log('PASS: live Supabase admin authentication, local/traveling invitations, personalization, RSVP persistence/update, dietary/plus-one/child notes, hotel email, language, revoked links, permanent deletion, and logout.');
+    console.log('PASS: live Supabase admin authentication, local/traveling invitations, personalization, RSVP persistence/update, dietary/child notes, hotel email, language, revoked links, permanent deletion, and logout.');
   } finally {
-    server.kill();
+    server?.kill();
     if (invitationIds.length) {
       const { error } = await client.from('wedding_invitations').delete().in('id', invitationIds);
       assert.equal(error, null, 'Remove synthetic invitation fixtures.');

@@ -423,12 +423,7 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
   .admin-row-actions { flex-wrap: wrap; }
 }
 
-/* Temporary language preview; invitation language remains the default. */
-.site-header { position: relative; }
-.language-preview { position: absolute; right: 16px; bottom: 4px; display: flex; align-items: center; gap: 8px; color: #1d2e4d; font: 11px/16px system-ui, sans-serif; }
-.language-preview > span { opacity: .65; }
-.language-preview a { padding: 1px 5px; border-radius: 3px; }
-.language-preview [aria-current] { background: #ffffff70; font-weight: 600; }
+/* Layout for translated guest text. */
 .guest-site:is([data-language='no'], [data-language='lt']) .site-header nav a { width: auto; }
 .guest-site:is([data-language='no'], [data-language='lt']) .invitation-copy { text-wrap: pretty; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link { left: 75px; width: 450px; height: 110px; }
@@ -464,10 +459,6 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .guest-site:is([data-language='no'], [data-language='lt']) .details-stay-note { position: relative; top: auto; left: auto; width: min(100%, 320px); margin: 75px auto 0; }
 .guest-site:is([data-language='no'], [data-language='lt']) .details-dress-copy { position: relative; top: auto; left: auto; width: min(100%, 275.505px); margin: 45px auto 0; }
 .guest-site:is([data-language='no'], [data-language='lt']) .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
-@media (max-width: 600px) {
-  .language-preview { right: 10px; bottom: 2px; gap: 5px; font-size: 10px; line-height: 14px; }
-  .language-preview > span { display: none; }
-}
 
 .guest-site:is([data-language='no'], [data-language='lt']) .details-accommodations h2 { font-size: clamp(18px, 5.5vw, 30px); }
 @media (max-width: 600px) {

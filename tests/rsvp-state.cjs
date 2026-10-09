@@ -41,3 +41,27 @@ assert.equal(currentResponse.guests[0].dietary, 'No nuts');
 assert.equal(currentResponse.additionalGuests.length, 0);
 assert.equal(context.exports.validateRsvp(invitation, current).additionalGuests, 'Too many additional guests for this invitation.');
 console.log('PASS: legacy draft without dietary fields renders safely, preserves named guests and dietary notes, strips retired plus ones, and rejects unnamed guests.');
+
+for (const language of ['en', 'no', 'lt']) for (const travelProfile of ['traveling', 'local']) {
+  const invite = { ...invitation, language, travelProfile, additionalGuestAllowance: 0 };
+  const draft = emptyDraft(invite);
+  draft.attendance = { alex: 'no', sam: 'no' };
+  draft.email = 'stale@example.com';
+  draft.dietary = { alex: 'Old dietary answer' };
+  draft.childrenNotes = 'Old children answer';
+  draft.hotelOffer = 'yes'; draft.venueStay = 'yes';
+  assert.equal(Object.keys(context.exports.validateRsvp(invite, draft)).length, 0);
+  const declined = buildResponse(invite, draft);
+  assert.equal(declined.guests.every(g => !g.attending && !g.dietary), true);
+  assert.equal(declined.hotelOffer, null); assert.equal(declined.venueStay, null);
+  assert.equal(declined.email, ''); assert.equal(declined.childrenNotes, '');
+  draft.attendance.alex = 'yes'; draft.hotelOffer = ''; draft.venueStay = '';
+  const option = travelProfile === 'local' ? 'venueStay' : 'hotelOffer';
+  assert.ok(context.exports.validateRsvp(invite, draft)[option]);
+  draft[option] = 'yes'; draft.email = '';
+  assert.equal(!!context.exports.validateRsvp(invite, draft).email, travelProfile === 'traveling');
+  draft[option] = 'no';
+  assert.equal(Object.keys(context.exports.validateRsvp(invite, draft)).length, 0);
+  assert.equal(buildResponse(invite, draft).email, '');
+}
+console.log('PASS: all-declining clears stale dietary, child, hotel and email data; relevant accommodation choices are required; email only required for hotel offers, in all three languages.');

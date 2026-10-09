@@ -1158,3 +1158,7 @@ Norsk: Nedtellingen til bryllupet lastes inn
 
 Litauisk: Įkeliamas laikas iki vestuvių
 
+
+## Klar for utsending
+
+Språkvelgeren for forhåndsvisning er nå fjernet fra gjestesidene. Velg språk i admin før invitasjonen sendes. Lenken åpner automatisk dette språket; lagrede svar og eksisterende invitasjoner er beholdt.
