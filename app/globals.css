@@ -158,7 +158,7 @@ img { display: block; max-width: none; }
 .details-divider { width: 82.3119px; height: 5.92319px; margin: auto; }
 .details-button { display: grid; place-items: center; border: 1px solid #806b66; background: transparent; color: var(--brown); font: 400 10.6667px/15px 'Cormorant Garamond', Georgia, serif; letter-spacing: .138em; text-transform: uppercase; padding: 0; }
 .details-button:disabled { opacity: 1; cursor: default; }
-.details-venue { height: 1099px; }
+.details-venue { height: 1200px; }
 .details-venue h1 { top: 152.83267px; }
 .details-date { position: absolute; top: 263.24767px; width: 100%; font-weight: 600; text-transform: uppercase; }
 .details-venue-photo { position: absolute; top: 354.997px; left: 218.3995px; width: 263.201px; height: 356.487px; margin: 0; }
@@ -168,7 +168,7 @@ img { display: block; max-width: none; }
 .details-villa-crop img { position: absolute; width: 388.7586px; height: 218.412px; left: -95.233px; top: 0; }
 .details-venue-photo figcaption { position: absolute; top: 285.15433px; left: 27.2539px; width: 208.693px; font: 400 26.6665px/37px 'Shelley Script', cursive; }
 .details-ceremony { position: absolute; top: 770.55168px; left: 178.288px; width: 343.424px; }
-.details-map { position: absolute; top: 892.629px; left: 278.592px; width: 142.816px; height: 34.7389px; }
+.details-map { position: absolute; top: 1040px; left: 278.592px; width: 142.816px; height: 34.7389px; }
 .details-travel { height: 1016px; background: var(--brown); color: #fffdf0; }
 .details-travel .details-background { background-image: url('/images/details-swans.jpg'); background-position: center; opacity: .1; }
 .details-travel h2 { top: 111.80567px; }
@@ -383,10 +383,10 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #8a827d; opacity: .75; font-style: italic; }
 .rsvp-invitation-required { max-width: 440px; margin: 35px auto; font-size: 20px; line-height: 28px; text-align: center; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.hero-glyph { display: inline-block; animation: hero-ink-in .55s cubic-bezier(.22,.61,.36,1) both; animation-delay: var(--glyph-delay); }
-@keyframes hero-ink-in {
-  from { opacity: 0; clip-path: inset(-25% 100% -25% -35%); }
-  to { opacity: 1; clip-path: inset(-25% -35% -25% -35%); }
+.hero-glyph { display: inline-block; animation: hero-letter-in .35s ease-out both; animation-delay: var(--glyph-delay); }
+@keyframes hero-letter-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 .hero-fade { animation: hero-fade-in .75s ease-out 3.2s both; }
 @keyframes hero-fade-in { from { opacity: 0; } to { opacity: 1; } }
@@ -471,3 +471,5 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 @media (max-width: 600px) {
   .guest-site[data-language='no'] .home-rsvp { height: calc(100vw * 950 / 600); }
 }
+
+@media (min-width: 701px) { .admin-form-grid { grid-template-columns: repeat(2, 1fr); } }

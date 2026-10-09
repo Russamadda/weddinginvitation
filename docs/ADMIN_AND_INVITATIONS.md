@@ -8,7 +8,7 @@ Requires Node 24 or newer; the current environment uses Node 24.14.0. Run `npm r
 
 ## Create and send invitations
 
-Enter a guest name and press Add (or Enter), then repeat for each person. Names can be removed before creating the invitation. A name still in the input is included on creation. There is no separate group label to fill in. A couple/group shares an invitation while retaining individual attendance and dietary answers. Choose Local/Traveling, English/Norwegian/Lithuanian, and an additional guest allowance. Copy the generated unique invitation link. The link opens Home with a personalized greeting and retains its token through Love Story, Details, FAQ, RSVP and the back links.
+Enter a guest name and press Add (or Enter), then repeat for each person. Names can be removed before creating the invitation. A name still in the input is included on creation. There is no separate group label to fill in. A couple/group shares an invitation while retaining individual attendance and dietary answers. Choose Local/Traveling, English/Norwegian/Lithuanian. Only the named guests are invited; new invitations have no plus-one allowance. Copy the generated unique invitation link. The link opens Home with a personalized greeting and retains its token through Love Story, Details, FAQ and RSVP. Footer Next links follow that order and preserve the invitation and language.
 
 English and Norwegian are available. Norwegian invitations open in Norwegian automatically; Lithuanian is pending and currently opens in English. A temporary English/Norsk preview switcher is available for reviewing the translations.
 
@@ -16,9 +16,9 @@ Traveling invitations show only the Kaunas group hotel offer for September 3–4
 
 ## Replies
 
-“Send reply” posts to the server and displays “Your reply has been sent to Marthe and Deivi” only after a successful database write. Failure preserves the form and shows an error. Repeat submissions update the same invitation row. Reopening the private link loads the saved draft for editing. Review/sent headings are centered; the guest-facing attendance count and local-only confirmation text are removed. Under-five details have a dedicated field with the placeholder “Name and dietary restrictions/allergies”.
+“Send reply” posts to the server and displays “Your reply has been sent to Marthe and Deivi” only after a successful database write. Failure preserves the form and shows an error. Repeat submissions update the same invitation row. Reopening the private link loads the saved draft for editing. Review/sent headings are centered; the guest-facing attendance count and local-only confirmation text are removed. Children of all ages are warmly welcome and have a dedicated optional field for names, ages and dietary needs/allergies. There is no plus-one choice. Old saved drafts discard additional-guest entries when reopened, and the server rejects attempts to submit extra adult guests.
 
-Both admin lists show six columns: Guests, Category / language, Reply, Group option, Email address, and Invitation link. Individual guest Yes/No answers (including plus ones) are visible directly. Reply, accommodation and email cells stay empty until a reply is received. Group option identifies the relevant Kaunas hotel or venue stay. More details expands dietary notes, under-five details, comments and reply time. Search/status/category filters, refresh, and CSV export are included. Export omits invitation tokens and escapes spreadsheet formula prefixes. Under-fives are notes, not included in the structured listed-guest attendance total.
+Both admin lists show six columns: Guests, Category / language, Reply, Group option, Email address, and Invitation link. Individual named guest Yes/No answers are visible directly. Reply, accommodation and email cells stay empty until a reply is received. Group option identifies the relevant Kaunas hotel or venue stay. More details expands dietary notes, children’s details, comments and reply time. Search/status/category filters, refresh, and CSV export are included. Export omits invitation tokens and escapes spreadsheet formula prefixes. Children entered in this field are notes, not included in the structured listed-guest attendance total.
 
 The Delete invitation action asks for confirmation, then permanently removes the invitation and its saved reply and draft. Deleted links show an unavailable page and cannot submit replies.
 
@@ -28,7 +28,7 @@ Supabase stores invitations/replies, hashed admin sessions, and login-failure th
 
 Local SQLite fallback: `.local-data/wedding.sqlite`, with WAL/SHM sidecars. Back up with SQLite tooling or stop the server before copying the entire data directory. `WEDDING_DATA_DIR` can change its location. Vercel requires Supabase credentials and does not fall back to local SQLite. Keep local data if you need to migrate previously created invitation links.
 
-Admin passwords are checked with constant-time derived-key comparison. Sessions have random, hashed tokens, HttpOnly/SameSite cookies and a seven-day expiry. Failed login attempts are throttled. Mutation endpoints check request origin, cap JSON payloads at 32KB, validate all guest IDs/choices/allowances/text limits on the server, and ignore irrelevant accommodation/dietary/email answers when producing a reply. Authenticated APIs use no-store responses.
+Admin passwords are checked with constant-time derived-key comparison. Sessions have random, hashed tokens, HttpOnly/SameSite cookies and a seven-day expiry. Failed login attempts are throttled. Mutation endpoints check request origin, cap JSON payloads at 32KB, validate all guest IDs/choices/text limits on the server, and ignore irrelevant accommodation/dietary/email answers when producing a reply. Authenticated APIs use no-store responses.
 
 ## Envelope previews in SMS
 
@@ -50,3 +50,5 @@ Supabase integration verification: production build and the isolated SQLite regr
 ## Guest languages
 
 English and Norwegian guest pages are implemented. An invitation with language `no` opens in Norwegian automatically. The temporary English/Norsk preview links override the displayed language with `lang=en` or `lang=no`, without editing the stored invitation. The invitation token and selected language follow guest navigation. Local/traveling accommodation logic is independent of language. Lithuanian still falls back to English. The private admin remains in English.
+
+Historical additional-guest replies remain readable in admin; this change does not rewrite existing replies or require a schema migration.

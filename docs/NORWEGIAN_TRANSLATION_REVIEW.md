@@ -11,10 +11,11 @@ Deres tone er beholdt, inkludert «Ska gift sæ», «Love Story» i menyen og «
 ## Utfyllinger og presiseringer
 
 - D009: Den ufullstendige reisesetningen er utfylt. Togtiden på 45 minutter er korrigert til «rundt én time eller mer, avhengig av avgang». [Litauens samferdselsdepartement](https://sumin.lrv.lt/en/news/from-vilnius-to-kaunas-without-stops-ltg-link-express-train-began-operating-on-march-29-aMfX/) oppgir fra 59 minutter med ekspresstog og 1 time 10–20 minutter for øvrige avganger. Rutetider i 2027 kan endres. Transportforslaget er formulert generelt som taxi eller en annen transporttjeneste.
+- D003 (oppdatert 9. oktober): Innledningen forklarer også at gjestene er velkomne til å overnatte på lokalet, og at brudeparet spanderer overnattingen fra lørdag til søndag.
 - D021: Den avbrutte setningen om hjemreise på søndag er fullført med «kan dra når det passer for dem».
 - R006: Det er tydeliggjort at man skal svare for hver navngitte person, også dem som ikke kommer.
 - R009/R015: Matpreferanser er beholdt sammen med allergier, slik at blant annet vegetariske behov kan oppgis. Feltene er valgfrie og vises for navngitte gjester først når de velger å komme.
-- R011: Barn i alle aldre er velkomne. Barn fra 5 år registreres som ekstra gjester dersom de ikke allerede er navngitt; barn under 5 oppgis i eget felt.
+- R011 (oppdatert 9. oktober): Barn i alle aldre er hjertelig velkomne og oppgis i eget tekstfelt med navn, alder og matpreferanser/allergier. Pluss én er fjernet fra FAQ og RSVP.
 - T002: Presiseringen om at et ja til hotelltilbudet ikke reserverer et rom, er beholdt.
 - D006/D044: Adresse og stedsnavn er utfylt; Lithuania er oversatt til Litauen.
 - Tomme gjestefeilmeldinger, nettlesertitler, lenkeforhåndsvisning og skjermlesertekster er oversatt.

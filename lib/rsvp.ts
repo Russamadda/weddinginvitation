@@ -28,7 +28,7 @@ export function invitationGreeting(invitation: Invitation, language: GuestLangua
 }
 
 export function emptyDraft(invitation: Invitation): RsvpDraft {
-  return { attendance: Object.fromEntries(invitation.guests.map(guest => [guest.id, ""])), dietary: {}, bringPlusOne: "", email: "", additionalGuests: [], hotelOffer: "", venueStay: "", childrenNotes: "", comments: "" };
+  return { attendance: Object.fromEntries(invitation.guests.map(guest => [guest.id, ""])), dietary: {}, bringPlusOne: "no", email: "", additionalGuests: [], hotelOffer: "", venueStay: "", childrenNotes: "", comments: "" };
 }
 
 // Fast Refresh can retain a draft from before new form fields were added.
@@ -37,7 +37,9 @@ export function normalizeDraft(invitation: Invitation, draft: Partial<RsvpDraft>
     ...emptyDraft(invitation),
     ...draft,
     dietary: draft.dietary ?? {},
-    additionalGuests: (draft.additionalGuests ?? []).map(guest => ({ ...guest, dietary: guest.dietary ?? "" })),
+    // Old drafts may contain plus ones; the current form accepts named invitees only.
+    bringPlusOne: "no",
+    additionalGuests: [],
   };
 }
 
@@ -47,22 +49,11 @@ export function validateRsvp(invitation: Invitation, draft: RsvpDraft, language:
     if (!["yes", "no"].includes(draft.attendance[guest.id])) errors[`attendance-${guest.id}`] = t(language, "E001", { name: guest.name });
   }
   if (invitation.guests.some(guest => draft.attendance[guest.id] === "yes")) {
-    if (invitation.additionalGuestAllowance > 0 && !["yes", "no"].includes(draft.bringPlusOne)) errors.plusOne = t(language, "E002");
-    const additions = draft.bringPlusOne === "yes" ? draft.additionalGuests : [];
-    if (additions.length > invitation.additionalGuestAllowance) errors.plusOne = t(language, "E003");
-    if (draft.bringPlusOne === "yes" && !additions.length) errors.plusOne = t(language, "E004");
-    const invitedNames = invitation.guests.map(guest => guest.name.trim().toLowerCase());
-    const addedNames = new Set<string>();
-    for (const guest of additions) {
-      const name = guest.name.trim().toLowerCase();
-      if (!name) errors[`name-${guest.id}`] = t(language, "E005");
-      else if (invitedNames.includes(name) || addedNames.has(name)) errors[`name-${guest.id}`] = t(language, "E006");
-      addedNames.add(name);
-    }
     if (invitation.travelProfile !== "local" && !["yes", "no"].includes(draft.hotelOffer)) errors.hotelOffer = t(language, "E007");
     if (invitation.travelProfile === "local" && !["yes", "no"].includes(draft.venueStay)) errors.venueStay = t(language, "E008");
     if (invitation.travelProfile !== "local" && draft.hotelOffer === "yes" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(draft.email.trim())) errors.email = t(language, "E009");
   }
+  if (draft.additionalGuests.length) errors.additionalGuests = t(language, "E022");
   return errors;
 }
 
@@ -75,7 +66,7 @@ export function buildResponse(invitation: Invitation, inputDraft: Partial<RsvpDr
     travelProfile: invitation.travelProfile ?? "traveling",
     guests: invitation.guests.map(guest => ({ guestId: guest.id, name: guest.name, attending: draft.attendance[guest.id] === "yes", dietary: draft.attendance[guest.id] === "yes" ? (draft.dietary[guest.id] || "").trim() : "" })),
     email: groupHotel ? draft.email.trim() : "",
-    additionalGuests: attending && draft.bringPlusOne === "yes" ? draft.additionalGuests.map(guest => ({ ...guest, name: guest.name.trim(), dietary: guest.dietary.trim() })) : [],
+    additionalGuests: [] as AddedGuest[],
     hotelOffer: attending && invitation.travelProfile !== "local" ? draft.hotelOffer : null,
     venueStay: attending && invitation.travelProfile === "local" ? draft.venueStay : null,
     childrenNotes: attending ? (draft.childrenNotes || "").trim() : "",

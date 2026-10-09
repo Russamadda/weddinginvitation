@@ -25,11 +25,10 @@ export async function createInvitation(value: unknown) {
   const data = value as Record<string, unknown>;
   if (!data || !Array.isArray(data.names) || !data.names.length || data.names.length > 20 || data.names.some(name => typeof name !== "string" || !name.trim() || name.trim().length > 100)) throw new Error("Enter 1–20 guest names, up to 100 characters each.");
   if (!["traveling", "local"].includes(String(data.travelProfile)) || !["en", "no", "lt"].includes(String(data.language))) throw new Error("Choose a valid guest category and language.");
-  if (!Number.isInteger(data.additionalGuestAllowance) || Number(data.additionalGuestAllowance) < 0 || Number(data.additionalGuestAllowance) > 10) throw new Error("Additional guest allowance must be from 0 to 10.");
   const names = (data.names as string[]).map(name => name.trim());
   if (new Set(names.map(name => name.toLowerCase())).size !== names.length) throw new Error("Guest names must be distinct. Use full names to distinguish people sharing a first name.");
   if (data.label !== undefined && (typeof data.label !== "string" || data.label.length > 150)) throw new Error("Group label must be at most 150 characters.");
-  const invitation: Invitation & { label: string } = { id: randomUUID(), guests: names.map(name => ({ id: randomUUID(), name })), travelProfile: data.travelProfile as Invitation["travelProfile"], language: data.language as Invitation["language"], additionalGuestAllowance: Number(data.additionalGuestAllowance), label: typeof data.label === "string" && data.label.trim() ? data.label.trim() : names.join(" & ").slice(0, 150) };
+  const invitation: Invitation & { label: string } = { id: randomUUID(), guests: names.map(name => ({ id: randomUUID(), name })), travelProfile: data.travelProfile as Invitation["travelProfile"], language: data.language as Invitation["language"], additionalGuestAllowance: 0, label: typeof data.label === "string" && data.label.trim() ? data.label.trim() : names.join(" & ").slice(0, 150) };
   const token = randomBytes(24).toString("base64url");
   const createdAt = new Date().toISOString();
   await db().insert({ id: invitation.id, token, body: JSON.stringify(invitation), created_at: createdAt, enabled: 1, response: null, responded_at: null, draft: null });
@@ -45,7 +44,7 @@ export async function deleteInvitation(id: string) {
 }
 
 export function publicInvitation(record: StoredInvitation): Invitation {
-  return { id: record.id, guests: record.guests, language: record.language, travelProfile: record.travelProfile, additionalGuestAllowance: record.additionalGuestAllowance };
+  return { id: record.id, guests: record.guests, language: record.language, travelProfile: record.travelProfile, additionalGuestAllowance: 0 };
 }
 
 export function parseDraft(invitation: Invitation, value: unknown): RsvpDraft {
@@ -56,13 +55,13 @@ export function parseDraft(invitation: Invitation, value: unknown): RsvpDraft {
   const dietary = raw.dietary as Record<string, unknown>;
   if (Object.keys(attendance).some(id => !invitation.guests.some(guest => guest.id === id))) throw new Error("This reply contains a guest who is not on this invitation.");
   const choice = (input: unknown) => { if (!["", "yes", "no"].includes(String(input))) throw new Error("Please select a valid answer."); return input as "" | "yes" | "no"; };
-  if (raw.additionalGuests.length > invitation.additionalGuestAllowance) throw new Error("Too many additional guests for this invitation.");
+  if (raw.additionalGuests.length > 0) throw new Error("Too many additional guests for this invitation.");
   const draft: RsvpDraft = {
     attendance: Object.fromEntries(invitation.guests.map(guest => [guest.id, choice(attendance[guest.id])])),
     dietary: Object.fromEntries(invitation.guests.map(guest => [guest.id, text(dietary[guest.id] ?? "", 500)])),
-    bringPlusOne: choice(raw.bringPlusOne), hotelOffer: choice(raw.hotelOffer), venueStay: choice(raw.venueStay),
+    bringPlusOne: "no", hotelOffer: choice(raw.hotelOffer), venueStay: choice(raw.venueStay),
     email: text(raw.email, 254), childrenNotes: text(raw.childrenNotes, 1000), comments: text(raw.comments, 2000),
-    additionalGuests: raw.additionalGuests.map((item: unknown) => { const guest = item as Record<string, unknown>; if (!guest) throw new Error("Invalid additional guest."); return { id: text(guest.id, 100), name: text(guest.name, 100), dietary: text(guest.dietary, 500) }; }),
+    additionalGuests: [],
   };
   const errors = validateRsvp(invitation, draft);
   if (Object.keys(errors).length) throw new Error(Object.values(errors)[0]);

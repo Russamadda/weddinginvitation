@@ -78,25 +78,12 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
           </fieldset>)}
         </section>
         {!allDeclining && <>
-          {invitation.additionalGuestAllowance > 0 && <fieldset className="rsvp-form-section" aria-describedby="rsvp-plus-one-help">
-            <legend>{t(language, "R010")}</legend>
-            <div className="rsvp-options">
-              <label><input id="plusOne" type="radio" name="plusOne" checked={draft.bringPlusOne === "yes"} onChange={() => update({ bringPlusOne: "yes", additionalGuests: draft.additionalGuests.length ? draft.additionalGuests : [{ id: crypto.randomUUID(), name: "", dietary: "" }] })} aria-describedby={errors.plusOne ? "plusOne-error" : "rsvp-plus-one-help"} aria-invalid={!!errors.plusOne} />{t(language, "S011")}</label>
-              <label><input type="radio" name="plusOne" checked={draft.bringPlusOne === "no"} onChange={() => update({ bringPlusOne: "no" })} />{t(language, "S012")}</label>
-            </div>
-            <p className="rsvp-help rsvp-plus-one-help" id="rsvp-plus-one-help">{t(language, "R011")}</p>
+          <section className="rsvp-form-section" aria-labelledby="rsvp-children-title">
+            <h3 id="rsvp-children-title">{t(language, "R017")}</h3>
+            <p className="rsvp-help">{t(language, "R011")}</p>
             <label htmlFor="childrenNotes">{t(language, "R012")}</label>
-            <textarea id="childrenNotes" placeholder={t(language, "R013")} rows={2} maxLength={1000} value={draft.childrenNotes || ""} onChange={event => update({ childrenNotes: event.target.value })} />
-            {error("plusOne")}
-            {draft.bringPlusOne === "yes" && draft.additionalGuests.map(guest => <div className="rsvp-added-guest" key={guest.id}>
-              <label htmlFor={`name-${guest.id}`}>{t(language, "R014")}</label>
-              <input id={`name-${guest.id}`} maxLength={100} value={guest.name} onChange={event => update({ additionalGuests: draft.additionalGuests.map(item => item.id === guest.id ? { ...item, name: event.target.value } : item) })} aria-invalid={!!errors[`name-${guest.id}`]} aria-describedby={errors[`name-${guest.id}`] ? `name-${guest.id}-error` : undefined} />
-              {error(`name-${guest.id}`)}
-              <label htmlFor={`dietary-${guest.id}`}>{t(language, "R015")}</label>
-              <input id={`dietary-${guest.id}`} maxLength={500} value={guest.dietary} onChange={event => update({ additionalGuests: draft.additionalGuests.map(item => item.id === guest.id ? { ...item, dietary: event.target.value } : item) })} />
-            </div>)}
-            {draft.bringPlusOne === "yes" && draft.additionalGuests.length < invitation.additionalGuestAllowance && <button type="button" className="rsvp-add-button" onClick={() => update({ additionalGuests: [...draft.additionalGuests, { id: crypto.randomUUID(), name: "", dietary: "" }] })}>{t(language, "R016")}</button>}
-          </fieldset>}
+            <textarea id="childrenNotes" placeholder={t(language, "R013")} rows={3} maxLength={1000} value={draft.childrenNotes || ""} onChange={event => update({ childrenNotes: event.target.value })} />
+          </section>
           {travelProfile === "traveling" && <><fieldset className="rsvp-form-section" aria-describedby="rsvp-hotel-help">
             <legend>{t(language, "T001")}</legend>
             <p className="rsvp-help" id="rsvp-hotel-help">{t(language, "T002")}</p>
@@ -124,7 +111,6 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
       </form> : <section className="rsvp-review" aria-labelledby="rsvp-review-title">
         <h3 id="rsvp-review-title" ref={heading} tabIndex={-1}>{step === "saved" ? t(language, "C007") : t(language, "C003")}</h3>
         <ul>{response.guests.map(guest => <li key={guest.guestId}><strong>{guest.name}</strong> &mdash; {guest.attending ? t(language, "C008") : t(language, "C009")}{guest.dietary && <span>{t(language, "C011")} {guest.dietary}</span>}</li>)}
-          {response.additionalGuests.map(guest => <li key={guest.id}><strong>{guest.name}</strong> &mdash; {t(language, "C010")}{guest.dietary && <span>{t(language, "C011")} {guest.dietary}</span>}</li>)}
         </ul>
         {response.hotelOffer && <p><strong>{t(language, "C012")}</strong> {response.hotelOffer === "yes" ? t(language, "S011") : t(language, "S012")}</p>}
         {response.venueStay && <p><strong>{t(language, "C013")}</strong> {response.venueStay === "yes" ? t(language, "S011") : t(language, "S012")}</p>}

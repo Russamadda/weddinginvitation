@@ -21,14 +21,15 @@ const legacy = {
 };
 const normalized = normalizeDraft(invitation, legacy);
 assert.equal(normalized.dietary.alex, undefined);
-assert.equal(normalized.additionalGuests[0].dietary, '');
+assert.equal(normalized.additionalGuests.length, 0);
+assert.equal(normalized.bringPlusOne, 'no');
 assert.equal(normalized.hotelOffer, '');
 assert.equal(normalized.venueStay, '');
 assert.equal(normalized.comments, legacy.comments);
 const response = buildResponse(invitation, legacy);
 assert.equal(response.guests[0].attending, true);
 assert.equal(response.guests[0].dietary, '');
-assert.equal(response.additionalGuests[0].dietary, '');
+assert.equal(response.additionalGuests.length, 0);
 assert.equal(response.comments, legacy.comments);
 const current = emptyDraft(invitation);
 current.attendance.alex = 'yes';
@@ -37,5 +38,6 @@ current.additionalGuests = [{ id: 'taylor', name: 'Taylor', dietary: ' Vegan ' }
 current.bringPlusOne = 'yes';
 const currentResponse = buildResponse(invitation, current);
 assert.equal(currentResponse.guests[0].dietary, 'No nuts');
-assert.equal(currentResponse.additionalGuests[0].dietary, 'Vegan');
-console.log('PASS: legacy draft without dietary fields renders safely, preserves answers, and current dietary notes survive normalization.');
+assert.equal(currentResponse.additionalGuests.length, 0);
+assert.equal(context.exports.validateRsvp(invitation, current).additionalGuests, 'Too many additional guests for this invitation.');
+console.log('PASS: legacy draft without dietary fields renders safely, preserves named guests and dietary notes, strips retired plus ones, and rejects unnamed guests.');

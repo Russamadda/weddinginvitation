@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 import Hero from "./Hero";
@@ -28,7 +29,7 @@ export default function HomePage({ inviteToken, greeting, guestCount, language =
           </div>
         </section>
       </main>
-      <footer className="site-footer"><a href="#home">{language === "no" ? "← " : ""}{t(language, "S006")}</a></footer>
+      <footer className="site-footer"><Link href={guestHref("/love-story", inviteToken, language)}>{t(language, "S013")}</Link></footer>
     </>
   );
 }

@@ -40,7 +40,7 @@ async function json(response, status) {
       const draft = {
         attendance: { [invitation.guests[0].id]: 'yes', [invitation.guests[1].id]: 'no' },
         dietary: { [invitation.guests[0].id]: 'Vegetarian', [invitation.guests[1].id]: '' },
-        bringPlusOne: 'yes', additionalGuests: [{ id: 'test-plus-one', name: 'Supabase Test Extra', dietary: 'No nuts' }],
+        bringPlusOne: 'no', additionalGuests: [],
         hotelOffer: profile === 'traveling' ? 'yes' : '', venueStay: profile === 'local' ? 'yes' : '',
         email: profile === 'traveling' ? 'test@example.com' : '', childrenNotes: 'Test child, 2, no allergies', comments: 'Synthetic integration check',
       };
@@ -53,7 +53,7 @@ async function json(response, status) {
       assert.equal(reply.guests[0].attending, true);
       assert.equal(reply.guests[1].attending, false);
       assert.equal(reply.guests[0].dietary, 'Vegetarian');
-      assert.equal(reply.additionalGuests[0].dietary, 'No nuts');
+      assert.equal(reply.additionalGuests.length, 0);
       assert.equal(reply.hotelOffer, profile === 'traveling' ? 'yes' : null);
       assert.equal(reply.venueStay, profile === 'local' ? 'yes' : null);
       assert.equal(reply.email, profile === 'traveling' ? 'test@example.com' : '');

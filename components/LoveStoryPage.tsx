@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 
@@ -27,7 +28,7 @@ export default function LoveStoryPage({ inviteToken, language = "en" }: { invite
           <div className="story-monogram" aria-hidden="true"><span>M</span><span>D</span></div>
         </article>
       </main>
-      <footer className="site-footer story-footer"><a href={guestHref("/", inviteToken, language)}>{language === "no" ? "← " : ""}{t(language, "S006")}</a></footer>
+      <footer className="site-footer story-footer"><Link href={guestHref("/details", inviteToken, language)}>{t(language, "S013")}</Link></footer>
     </>
   );
 }

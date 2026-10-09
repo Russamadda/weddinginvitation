@@ -44,9 +44,9 @@ let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.o
   await guest.locator('#venueStay').waitFor();
   assert.equal(await guest.getByRole('button', { name: 'Local guests', exact: true }).count(), 0);
   assert.equal(await guest.locator('#hotelOffer').count(), 0); assert.equal(await guest.locator('#venueStay').count(), 1);
-  assert.equal(await guest.locator('#childrenNotes').getAttribute('placeholder'), 'Name and dietary restrictions/allergies');
+  assert.equal(await guest.locator('#childrenNotes').getAttribute('placeholder'), 'Names, ages and dietary needs/allergies');
   await guest.locator(`input[name="attendance-${invitation.guests[0].id}"][value="yes"]`).check(); await guest.locator(`input[name="attendance-${invitation.guests[1].id}"][value="no"]`).check();
-  await guest.locator(`#dietary-${invitation.guests[0].id}`).fill('Vegetarian'); await guest.locator('input[name="plusOne"]').nth(1).check(); await guest.locator('#venueStay').check(); await guest.locator('#childrenNotes').fill('Robin, 2, no nuts');
+  await guest.locator(`#dietary-${invitation.guests[0].id}`).fill('Vegetarian'); assert.equal(await guest.locator('input[name="plusOne"]').count(), 0); await guest.locator('#venueStay').check(); await guest.locator('#childrenNotes').fill('Robin, 2, no nuts');
   await guest.getByRole('button', { name: 'Review your reply', exact: true }).click(); assert.equal(await guest.locator('.rsvp-review-count').count(), 0);
   assert.equal(await guest.locator('#rsvp-review-title').evaluate(el => getComputedStyle(el).textAlign), 'center');
   await guest.route('**/api/rsvp/*', route => route.abort()); await guest.getByRole('button', { name: 'Send reply', exact: true }).click(); await guest.locator('.rsvp-review .rsvp-error').waitFor(); assert.equal(await guest.getByText('Your reply has been sent to Marthe and Deivi', { exact: true }).count(), 0);
@@ -57,6 +57,7 @@ let logs = ''; server.stdout.on('data', chunk => logs += chunk); server.stderr.o
   records = (await (await adminContext.request.get(base + '/api/admin/invitations')).json()).invitations; assert.equal(records.length, 2); assert.equal(records.find(record => record.id === invitation.id).response.venueStay, 'no');
   await admin.goto(base + '/admin/replies'); await admin.locator('table').getByText('TestGuest One', { exact: true }).first().waitFor(); await admin.locator('details').first().locator('summary').click(); assert.match(await admin.locator('table').innerText(), /Vegetarian/); assert.match(await admin.locator('table').innerText(), /TestGuest One: Yes/); assert.match(await admin.locator('table').innerText(), /TestGuest Two: No/);
   await admin.screenshot({ path: 'docs/screenshots/admin-replies-desktop.png', fullPage: true }); await admin.setViewportSize({ width: 390, height: 844 }); await admin.screenshot({ path: 'docs/screenshots/admin-mobile.png', fullPage: true }); assert.equal(await admin.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+  assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: { ...reply.draft, additionalGuests: [{ id: 'forged', name: 'Not Invited', dietary: '' }], bringPlusOne: 'yes' } })).status(), 400);
   const draft = reply.draft; const forbidden = { ...draft, attendance: { ...draft.attendance, foreign: 'yes' } }; assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers, data: forbidden })).status(), 400);
   assert.equal((await guestContext.request.post(`${base}/api/rsvp/${invitation.token}`, { headers: { Origin: 'https://invalid.example' }, data: draft })).status(), 400);
   await guest.goto(`${base}/rsvp?invite=${traveler.token}`); assert.equal(await guest.locator('#venueStay').count(), 0); assert.equal(await guest.locator('#hotelOffer').count(), 1);

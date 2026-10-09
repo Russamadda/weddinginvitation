@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 
@@ -15,10 +16,6 @@ export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?
           </div>
         </div>
         <div className="faq-questions">
-          <section aria-labelledby="faq-plus-one">
-            <h2 id="faq-plus-one">{t(language, "F002")}</h2>
-            <p>{language === "no" ? t(language, "F003") : <>Please refer to your invitation for details<br />regarding additional guests.</>}</p>
-          </section>
           <section aria-labelledby="faq-white">
             <h2 id="faq-white">{t(language, "F004")}</h2>
             <p>{t(language, "F005")}</p>
@@ -33,7 +30,7 @@ export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?
           </section>
         </div>
       </main>
-      <footer className="site-footer story-footer"><a href={guestHref("/", inviteToken, language)}>{language === "no" ? "← " : ""}{t(language, "S006")}</a></footer>
+      <footer className="site-footer story-footer"><Link href={guestHref("/rsvp", inviteToken, language)}>{t(language, "S013")}</Link></footer>
     </>
   );
 }
