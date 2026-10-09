@@ -219,11 +219,13 @@ img { display: block; max-width: none; }
 .details-dress-copy p + p { margin-top: 24px; }
 .details-palette { position: absolute; top: 494.075px; left: 286.5492px; display: flex; gap: 10.2275px; }
 .details-palette img { width: 35.33px; height: 35.33px; }
-.details-gifts { height: 651px; background: #dde1e6; }
+.details-gifts { height: auto; min-height: 651px; background: #dde1e6; }
 .details-gifts .details-background { background-position: center 60.004%; }
-.details-gifts h2 { top: 182.76467px; }
-.details-gifts-copy { position: absolute; top: 280.89666px; left: 172.4645px; width: 355.071px; }
-.details-registry { position: absolute; top: 430.163px; left: 252.8175px; width: 194.365px; height: 34.7389px; }
+.details-gifts .details-canvas { height: auto; padding: 182.76467px 24px 100px; }
+.details-gifts h2 { position: relative; top: auto; }
+.details-gifts-copy { position: relative; width: min(100%, 355.071px); margin: 60px auto 0; }
+.details-registry { position: relative; width: fit-content; max-width: 100%; min-height: 34.7389px; padding: 8px 18px; margin: 50px auto 0; }
+.details-bank-info { width: min(100%, 355.071px); margin: 24px auto 0; font-size: 14px; line-height: 20px; color: var(--slate); }
 
 @media (max-width: 700px) {
   .details-section { height: auto; }
@@ -483,4 +485,9 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 }
 @media (max-width: 360px) {
   .guest-site[data-language='lt'] .site-header nav { gap: 8px; font-size: 11px; }
+}
+
+@media (max-width: 700px) {
+  .details-gifts { min-height: 0; }
+  .details-gifts .details-canvas { padding: 90px 24px 100px; }
 }

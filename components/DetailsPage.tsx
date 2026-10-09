@@ -2,6 +2,7 @@ import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 
+const vippsGiftUrl = "https://qr.vipps.no/box/cab15b5e-b04a-4ca3-bde5-89c834d8544b/pay-in";
 const venueWebsite = "https://9vejai.eu/";
 // Navigation link published by the venue on its own website.
 const venueMap = "https://maps.app.goo.gl/5eR1gZciG6s3QGNaA";
@@ -76,9 +77,10 @@ export default function DetailsPage({ inviteToken, language = "en" }: { inviteTo
         <section className="details-section details-gifts" aria-labelledby="gifts-heading">
           <div className="details-background" aria-hidden="true" />
           <div className="details-canvas">
-            <h2 id="gifts-heading">{language !== "en" ? t(language, "D038") : <>Gift <span>registry</span></>}</h2>
-            <p className="details-gifts-copy">{language !== "en" ? t(language, "D039") : <>Your presence at our wedding is the greatest gift of all.<br />For friends and family who have asked, we&apos;ve created a registry with a few things we&apos;d love for our home and future together.</>}</p>
-            <button className="details-button details-registry" disabled title={t(language, "D043")} aria-label={t(language, "A010")}>{t(language, "D042")}</button>
+            <h2 id="gifts-heading">{t(language, "D038")}</h2>
+            <p className="details-gifts-copy">{t(language, "D039")}</p>
+            <a className="details-button details-registry" href={vippsGiftUrl}>{t(language, "D042")}</a>
+            <p className="details-bank-info">{t(language, "D043")}</p>
           </div>
         </section>
       </main>
