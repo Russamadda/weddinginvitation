@@ -21,10 +21,10 @@ export type RsvpDraft = {
   comments: string;
 };
 
-export function invitationGreeting(invitation: Invitation, language: GuestLanguage = invitation.language === "no" ? "no" : "en") {
+export function invitationGreeting(invitation: Invitation, language: GuestLanguage = invitation.language) {
   const names = invitation.guests.map(guest => guest.name);
-  const joined = names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")}${language === "no" ? " og " : " & "}${names[names.length - 1]}`;
-  return `${language === "no" ? "Kjære" : "Dear"} ${joined},`;
+  const joined = names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")}${language === "no" ? " og " : language === "lt" ? " ir " : " & "}${names[names.length - 1]}`;
+  return language === "lt" ? `Kviečiame švęsti kartu: ${joined}` : `${language === "no" ? "Kjære" : "Dear"} ${joined},`;
 }
 
 export function emptyDraft(invitation: Invitation): RsvpDraft {
@@ -43,7 +43,7 @@ export function normalizeDraft(invitation: Invitation, draft: Partial<RsvpDraft>
   };
 }
 
-export function validateRsvp(invitation: Invitation, draft: RsvpDraft, language: GuestLanguage = invitation.language === "no" ? "no" : "en") {
+export function validateRsvp(invitation: Invitation, draft: RsvpDraft, language: GuestLanguage = invitation.language) {
   const errors: Record<string, string> = {};
   for (const guest of invitation.guests) {
     if (!["yes", "no"].includes(draft.attendance[guest.id])) errors[`attendance-${guest.id}`] = t(language, "E001", { name: guest.name });

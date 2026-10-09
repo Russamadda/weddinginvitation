@@ -9,7 +9,7 @@ export default function LoveStoryPage({ inviteToken, language = "en" }: { invite
       <main className="love-story-main">
         <div className="love-story-background" aria-hidden="true" />
         <article className="love-story-content" aria-labelledby="love-story-heading">
-          <h1 id="love-story-heading"><span>{language === "no" ? "Vår" : "our"}</span>{language === "no" ? "kjærlighetshistorie" : "Love Story"}</h1>
+          <h1 id="love-story-heading"><span>{t(language, "L001").split(" ")[0]}</span>{t(language, "L001").split(" ").slice(1).join(" ")}</h1>
           <p className="story-opening">{t(language, "L002")}</p>
           <div className="story-portrait">
             <div className="story-portrait-frame" aria-hidden="true"><img src="/decorations/love-story-portrait-frame.png" alt="" /></div>

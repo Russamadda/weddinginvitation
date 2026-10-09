@@ -8,7 +8,7 @@ export async function guestMetadata(searchParams: GuestSearch, title: MessageId 
   const invitationTitle = guestText(language, "M001");
   return {
     title: guestText(language, title), description: guestText(language, "M007"),
-    openGraph: { type: "website", title: invitationTitle, description: guestText(language, "M008"), locale: language === "no" ? "nb_NO" : "en_GB", images: [{ url: "/images/invitation-envelope.png", width: 1847, height: 1038, alt: guestText(language, "M009") }] },
+    openGraph: { type: "website", title: invitationTitle, description: guestText(language, "M008"), locale: language === "no" ? "nb_NO" : language === "lt" ? "lt_LT" : "en_GB", images: [{ url: "/images/invitation-envelope.png", width: 1847, height: 1038, alt: guestText(language, "M009") }] },
     twitter: { card: "summary_large_image", title: invitationTitle, description: guestText(language, "M008"), images: ["/images/invitation-envelope.png"] },
   };
 }

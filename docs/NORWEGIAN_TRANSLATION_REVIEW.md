@@ -26,7 +26,7 @@ Invitasjonens språkvalg i admin brukes automatisk. Språkvelgeren English/Norsk
 
 Gjestegruppen bestemmer fortsatt overnattingsspørsmålet: reisende får hotelltilbud i Kaunas 3.–4. september; lokale får spørsmål om overnatting på lokalet 4.–5. september. Norsk språk endrer ikke gjestegruppen. De norske tekstene for begge tilfeller er lagt inn.
 
-Admin beholdes på engelsk, siden denne delen av dokumentet ikke var oversatt. Litauisk er fortsatt ikke oversatt og vises foreløpig på engelsk. Ingen databaseskjemaendring er nødvendig.
+Admin beholdes på engelsk, siden denne delen av dokumentet ikke var oversatt. Litauisk er nå implementert; se LITHUANIAN_TRANSLATION_REVIEW.md for språkvalgene og den samlede tekstoversikten. Ingen databaseskjemaendring er nødvendig.
 
 Den norske lenkeforhåndsvisningen heter «Din invitasjon». Konvoluttbildet er beholdt; den engelske teksten som er en del av bildet, er ikke endret i denne runden.
 

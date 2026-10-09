@@ -8,10 +8,11 @@ export default function Header({ currentPage = "home", inviteToken, language = "
     <nav aria-label={t(language, "A001")}>
       {pages.map(([page, href, label]) => <Link key={page} href={page === "home" && currentPage === "home" ? "#home" : guestHref(href, inviteToken, language)} aria-current={currentPage === page ? "page" : undefined}>{t(language, label)}</Link>)}
     </nav>
-    <div className="language-preview" aria-label={language === "no" ? "Språk for forhåndsvisning" : "Preview language"}>
-      <span>{language === "no" ? "Forhåndsvisning" : "Preview"}</span>
+    <div className="language-preview" aria-label={t(language, "S014")}>
+      <span>{t(language, "S015")}</span>
       <Link href={guestHref(path, inviteToken, "en")} scroll={false} aria-current={language === "en" ? "true" : undefined} lang="en">English</Link>
       <Link href={guestHref(path, inviteToken, "no")} scroll={false} aria-current={language === "no" ? "true" : undefined} lang="nb">Norsk</Link>
+      <Link href={guestHref(path, inviteToken, "lt")} scroll={false} aria-current={language === "lt" ? "true" : undefined} lang="lt">Lietuvių</Link>
     </div>
   </header>;
 }

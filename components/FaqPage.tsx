@@ -21,8 +21,8 @@ export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?
             <p>{t(language, "F005")}</p>
           </section>
           <section aria-labelledby="faq-contact">
-            <h2 id="faq-contact">{language === "no" ? t(language, "F006") : <>Who should I contact if I have<br />questions?</>}</h2>
-            <p>{language === "no" ? t(language, "F007") : <>For travel, accommodation, or wedding<br />questions, please contact us.</>}</p>
+            <h2 id="faq-contact">{language !== "en" ? t(language, "F006") : <>Who should I contact if I have<br />questions?</>}</h2>
+            <p>{language !== "en" ? t(language, "F007") : <>For travel, accommodation, or wedding<br />questions, please contact us.</>}</p>
             <address>
               <a href="mailto:deivi.selenis@gmail.com">deivi.selenis@gmail.com</a>
               <a href="tel:+4790820779">+47 90820779</a>

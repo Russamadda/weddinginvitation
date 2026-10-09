@@ -10,7 +10,7 @@ Requires Node 24 or newer; the current environment uses Node 24.14.0. Run `npm r
 
 Enter a guest name and press Add (or Enter), then repeat for each person. Names can be removed before creating the invitation. A name still in the input is included on creation. There is no separate group label to fill in. A couple/group shares an invitation while retaining individual attendance and dietary answers. Choose Local/Traveling, English/Norwegian/Lithuanian. Only the named guests are invited; new invitations have no plus-one allowance. Copy the generated unique invitation link. The link opens Home with a personalized greeting and retains its token through Love Story, Details, FAQ and RSVP. Footer Next links follow that order and preserve the invitation and language.
 
-English and Norwegian are available. Norwegian invitations open in Norwegian automatically; Lithuanian is pending and currently opens in English. A temporary English/Norsk preview switcher is available for reviewing the translations.
+English, Norwegian and Lithuanian are available. Invitations open automatically in their chosen language. A temporary English/Norsk/Lietuvių preview switcher is available for reviewing the translations.
 
 Traveling invitations show only the Kaunas group hotel offer for September 3–4. Local invitations show only the venue overnight stay for September 4–5. RSVP requires a valid invitation; `/rsvp` without one asks guests to open their personal link. Demo RSVP forms, guest-category switches and the demo submission endpoint have been removed; the temporary language preview switcher does not create an invitation or change its category. Historical demo records remain in private storage but cannot be opened or shown in admin.
 
@@ -49,6 +49,6 @@ Supabase integration verification: production build and the isolated SQLite regr
 
 ## Guest languages
 
-English and Norwegian guest pages are implemented. An invitation with language `no` opens in Norwegian automatically. The temporary English/Norsk preview links override the displayed language with `lang=en` or `lang=no`, without editing the stored invitation. The invitation token and selected language follow guest navigation. Local/traveling accommodation logic is independent of language. Lithuanian still falls back to English. The private admin remains in English.
+English, Norwegian and Lithuanian guest pages are implemented. An invitation with language `no` opens in Norwegian automatically. The temporary English/Norsk/Lietuvių preview links override the displayed language with `lang=en`, `lang=no` or `lang=lt`, without editing the stored invitation. The invitation token and selected language follow guest navigation. Local/traveling accommodation logic is independent of language. An invitation with language `lt` opens in Lithuanian automatically; its link preview reads “Jūsų kvietimas”. English previews read “Your invitation”; Norwegian previews read “Din invitasjon”. The private admin remains in English.
 
 Historical additional-guest replies remain readable in admin; this change does not rewrite existing replies or require a schema migration.

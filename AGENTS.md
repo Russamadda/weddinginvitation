@@ -5,7 +5,7 @@
 - Never copy Canva DOM, generated classes or IDs, runtime JavaScript, or generated CSS into production.
 - Implement production UI cleanly in React and standard CSS. Production must not depend on `/Reference`.
 - Visual fidelity takes priority over redesign or interface improvements.
-- Home, Love Story, Details, FAQ, RSVP, invitation links, admin, server reply storage, and envelope link-preview metadata are authorized. English and Norwegian guest translations are authorized and implemented; Lithuanian remains pending translation. The temporary guest language preview switcher is authorized. Admin may store language choices and must identify any unavailable translation.
+- Home, Love Story, Details, FAQ, RSVP, invitation links, admin, server reply storage, and envelope link-preview metadata are authorized. English, Norwegian and Lithuanian guest translations are authorized and implemented. The temporary guest language preview switcher is authorized. Admin may store language choices and must identify any unavailable translation.
 - Do not change sections that already match without a clear reason.
 - Use browser screenshots to verify desktop and mobile layouts and correct visible differences.
 - Avoid unnecessary abstractions, dependencies, generated metadata, and utility files.
