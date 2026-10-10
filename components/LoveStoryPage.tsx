@@ -28,7 +28,7 @@ export default function LoveStoryPage({ inviteToken, language = "en" }: { invite
           <div className="story-monogram" aria-hidden="true"><span>M</span><span>D</span></div>
         </article>
       </main>
-      <footer className="site-footer story-footer"><Link href={guestHref("/details", inviteToken, language)}>{t(language, "S003")}</Link></footer>
+      <footer className="site-footer story-footer"><Link href={guestHref("/details", inviteToken, language)}>{t(language, "S003")} <span className="footer-arrow" aria-hidden="true">→</span></Link></footer>
     </>
   );
 }

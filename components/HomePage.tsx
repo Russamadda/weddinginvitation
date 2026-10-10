@@ -29,7 +29,7 @@ export default function HomePage({ inviteToken, greeting, guestCount, language =
           </div>
         </section>
       </main>
-      <footer className="site-footer"><Link href={guestHref("/love-story", inviteToken, language)}>{t(language, "S002")}</Link></footer>
+      <footer className="site-footer"><Link href={guestHref("/love-story", inviteToken, language)}>{t(language, "S002")} <span className="footer-arrow" aria-hidden="true">→</span></Link></footer>
     </>
   );
 }

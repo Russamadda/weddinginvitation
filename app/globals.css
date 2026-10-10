@@ -479,11 +479,12 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 }
 
 /* A light envelope outline makes RSVP easy to find in the main navigation. */
-.site-header nav .nav-rsvp { position: relative; padding: 4px 12px; border: 1px solid #14243d70; border-radius: 2px; }
-.nav-rsvp::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L50 13 L100 0' fill='none' stroke='%2314243d' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
-.nav-rsvp span { position: relative; background: #9aa5b6; padding: 0 2px; }
+.site-header nav .nav-rsvp { position: relative; padding: 4px 12px; border: 1px solid #14243d70; border-radius: 999px; }
 @media (max-width: 360px) {
   .site-header nav { gap: 8px; font-size: 13px; }
   .site-header nav .nav-rsvp { padding-inline: 8px; }
   .guest-site[data-language='lt'] .site-header nav { gap: 5px; font-size: 12px; }
 }
+
+.site-footer a { display: inline-flex; align-items: center; gap: 10px; }
+.footer-arrow { font-family: Georgia, serif; font-size: .95em; }
