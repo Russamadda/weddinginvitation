@@ -5,7 +5,7 @@ export default function Header({ currentPage = "home", inviteToken, language = "
   const pages = [["home", "/", "S001"], ["love-story", "/love-story", "S002"], ["details", "/details", "S003"], ["faq", "/faq", "S004"], ["rsvp", "/rsvp", "S005"]] as const;
   return <header className={`site-header${currentPage !== "home" ? " story-header" : ""}`} id={currentPage}>
     <nav aria-label={t(language, "A001")}>
-      {pages.map(([page, href, label]) => <Link key={page} href={page === "home" && currentPage === "home" ? "#home" : guestHref(href, inviteToken, language)} aria-current={currentPage === page ? "page" : undefined}>{t(language, label)}</Link>)}
+      {pages.map(([page, href, label]) => <Link key={page} className={page === "rsvp" ? "nav-rsvp" : undefined} href={page === "home" && currentPage === "home" ? "#home" : guestHref(href, inviteToken, language)} aria-current={currentPage === page ? "page" : undefined}><span>{t(language, label)}</span></Link>)}
     </nav>
   </header>;
 }

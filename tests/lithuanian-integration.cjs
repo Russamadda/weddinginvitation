@@ -43,7 +43,7 @@ const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','
    console.log('PASS Lithuanian layout',width,route);
   }
  }
- const routes=['/','/love-story','/details','/faq','/rsvp'];
+ const routes=['/','/love-story','/details','/rsvp'];
  await p.goto(`${base}/?invite=${invite.token}`);
  for(const route of routes.slice(1)){await p.locator('footer a').click();await p.waitForURL(u=>u.pathname===route);const url=new URL(p.url());assert.equal(url.pathname,route);assert.equal(url.searchParams.get('invite'),invite.token);assert.equal(url.searchParams.get('lang'),'lt');}
  for(const profile of ['local','traveling']){

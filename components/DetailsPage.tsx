@@ -84,7 +84,7 @@ export default function DetailsPage({ inviteToken, language = "en" }: { inviteTo
           </div>
         </section>
       </main>
-      <footer className="site-footer story-footer"><Link href={guestHref("/faq", inviteToken, language)}>{t(language, "S013")}</Link></footer>
+      <footer className="site-footer story-footer"><Link href={guestHref("/rsvp", inviteToken, language)}>{t(language, "S005")}</Link></footer>
     </>
   );
 }

@@ -7,7 +7,7 @@ Gjennomgangen gjelder gjeldende versjon før invitasjoner sendes ut. Språkvelge
 - Produksjonsbygg og TypeScript.
 - Opprettelse av enkelt- og gruppeinvitasjoner, unike lenker, personlige hilsener og riktig deg/dere på norsk.
 - Automatisk norsk, engelsk eller litauisk samt konvolutt og korrekt tittel i serverlevert lenkeforhåndsvisning.
-- «Neste»-rekkefølgen, menynavigasjon og invitasjonsnøkkel som beholdes mellom sidene.
+- Bunnlenker med sidenavn (Hjem → Love Story → Detaljer → RSVP), menynavigasjon og invitasjonsnøkkel som beholdes mellom sidene. FAQ er tilgjengelig i menyen.
 - RSVP med ulike individuelle svar, lokale/reisende, barn, allergier, fritekst og hotell-e-post.
 - E-post kreves bare ved ja til hotelltilbudet; et nei til hotelltilbudet gir ikke lagret kontakt-e-post i svaret.
 - Når alle takker nei, blir hotell-, overnattings-, allergi- og barneopplysninger utelatt fra det registrerte svaret, og overnattingsvalg kreves ikke.

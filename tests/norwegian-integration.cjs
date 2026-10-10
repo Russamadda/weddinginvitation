@@ -16,7 +16,7 @@ for(const lang of ['en','no']){
  await p.goto(`${base}/?invite=${invite.token}&lang=${lang}`);
  const glyphs=await p.evaluate(()=>{const g=document.querySelector('.name-and .hero-glyph:last-child');const d=document.querySelector('.name-deivi .hero-glyph');return{clip:getComputedStyle(g).clipPath,end:parseFloat(getComputedStyle(g).animationDelay)+parseFloat(getComputedStyle(g).animationDuration),next:parseFloat(getComputedStyle(d).animationDelay)}});
  assert.equal(glyphs.clip,'none');assert.ok(glyphs.end<glyphs.next,'Every letter of og/and finishes before Deivi');
- for(const route of ['/love-story','/details','/faq','/rsvp']){await p.locator('.site-footer a').click();await p.waitForURL(u=>u.pathname===route);assert.equal(new URL(p.url()).searchParams.get('lang'),lang);assert.equal(new URL(p.url()).searchParams.get('invite'),invite.token);}
+ for(const route of ['/love-story','/details','/rsvp']){await p.locator('.site-footer a').click();await p.waitForURL(u=>u.pathname===route);assert.equal(new URL(p.url()).searchParams.get('lang'),lang);assert.equal(new URL(p.url()).searchParams.get('invite'),invite.token);}
 }
 await p.emulateMedia({reducedMotion:'reduce'});
 for(const width of [320,390,1440]){await p.setViewportSize({width,height:900});for(const route of ['/','/love-story','/details','/faq','/rsvp']){await p.goto(`${base}${route}?invite=${invite.token}&lang=no`);await p.evaluate(()=>document.fonts.ready);assert.equal(await p.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'No horizontal overflow: '+width+route);await p.screenshot({path:`.local-data/norwegian-${width}-${route.replaceAll('/','')||'home'}.png`,fullPage:true});

@@ -22,13 +22,8 @@ a { color: inherit; text-decoration: none; }
 a:focus-visible { outline: 2px solid #1d2e4d; outline-offset: 5px; }
 img { display: block; max-width: none; }
 .site-header { height: calc(84px + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px); background: #9aa5b6; display: grid; place-items: center; }
-.site-header nav { display: flex; align-items: center; gap: 20.484px; color: #1d2e4d; font: 400 13.3333px/18px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
-.site-header nav a { text-align: center; flex-shrink: 0; }
-.site-header nav a:nth-child(1) { width: 47.8929px; }
-.site-header nav a:nth-child(2) { width: 82.3797px; }
-.site-header nav a:nth-child(3) { width: 53.4004px; }
-.site-header nav a:nth-child(4) { width: 28.0102px; }
-.site-header nav a:nth-child(5) { width: 35.4425px; }
+.site-header nav { display: flex; align-items: center; gap: 24px; color: #14243d; font: 400 17px/24px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
+.site-header nav a { text-align: center; flex-shrink: 0; min-height: 36px; display: grid; place-items: center; }
 .hero { height: 893px; position: relative; overflow: hidden; }
 .hero-art { position: absolute; inset: 0; background: url("/images/hero-background.jpg") center 38.943% / 100% auto no-repeat; opacity: .6; }
 .hero-content { position: relative; height: 100%; width: 600px; margin: auto; padding: 32px 24px 128px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 64px; text-align: center; }
@@ -74,15 +69,15 @@ img { display: block; max-width: none; }
 .couple-photo-crop { position: absolute; left: 120.118px; top: 164.179px; width: 138.418px; height: 135.804px; overflow: hidden; }
 .couple-photo-crop img { position: absolute; width: 138.418px; height: 191.284px; top: -27.739px; left: 0; }
 .celebration-line { position: absolute; top: 534.79px; left: 75px; width: 450px; font: 400 32px/44px "Shelley Script", cursive; color: var(--slate); }
-.rsvp-link { position: absolute; left: 130px; top: 627px; width: 340px; height: 86px; color: var(--silver); text-transform: uppercase; }
+.rsvp-link { position: absolute; left: 130px; top: 627px; width: 340px; height: 86px; color: var(--silver); text-transform: uppercase; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
 .rsvp-link img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
-.rsvp-link span { position: absolute; top: 12px; left: 0; width: 100%; font: 400 28px/36px "Cormorant SC", Georgia, serif; }
-.rsvp-link small { position: absolute; top: 50px; left: 0; width: 100%; font: 400 16px/22px "Garamond", Georgia, serif; }
+.rsvp-link span { position: relative; width: 100%; font: 400 28px/36px "Cormorant SC", Georgia, serif; }
+.rsvp-link small { position: relative; width: 100%; font: 400 16px/22px "Garamond", Georgia, serif; }
 .swans-crop { position: absolute; width: 244.503px; height: 138.924px; left: 177.75px; top: 750px; overflow: hidden; }
 .swans-crop img { position: absolute; width: 264.471px; height: 264.471px; left: -9.4293px; top: -64.3496px; }
 .site-footer { height: 49px; background: #e9ecf1; display: grid; place-items: center; color: var(--slate); font-size: 20px; line-height: 28px; }
 
-.story-header nav { color: var(--slate); }
+.story-header nav { color: #14243d; }
 .love-story-main { position: relative; min-height: 2438.35px; }
 .love-story-background { position: absolute; inset: 0; background: url("/images/love-story-background.jpg") center / cover no-repeat; opacity: .04; }
 .love-story-content { position: relative; width: 600px; height: 2438.35px; margin: auto; color: var(--silver); }
@@ -114,7 +109,7 @@ img { display: block; max-width: none; }
 /* Scale the original centered composition, retaining its artwork and line breaks. */
 @media (max-width: 600px) {
   .site-header { height: calc(64px + env(safe-area-inset-top, 0px)); }
-  .site-header nav { gap: 16px; font-size: 12px; }
+  .site-header nav { gap: 12px; font-size: 14px; line-height: 20px; }
   .hero { height: 100lvh; min-height: 540px; }
   .hero-art { background-size: cover; background-position: center; }
   .countdown-artboard, .rsvp-artboard { margin: 0; left: 50%; transform: translateX(-50%) scale(calc(100vw / 600px)); transform-origin: center top; }
@@ -428,8 +423,7 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .guest-site:is([data-language='no'], [data-language='lt']) .invitation-copy { text-wrap: pretty; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link { left: 75px; width: 450px; height: 110px; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link img { height: 110px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link > span { left: 25px; width: 400px; top: 14px; font-size: 24px; line-height: 28px; text-wrap: balance; }
-.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link small { top: 80px; }
+.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link > span { width: 400px; font-size: 24px; line-height: 28px; text-wrap: balance; }
 .guest-site:is([data-language='no'], [data-language='lt']) .swans-crop { top: 775px; }
 .guest-site:is([data-language='no'], [data-language='lt']) .home-rsvp, .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-artboard { height: 950px; }
 /* Translated paragraphs may be longer. Let the page flow grow with the text. */
@@ -472,7 +466,8 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .details-toastmaster-phone { display: block; margin-top: 20px; }
 
 @media (max-width: 600px) {
-  .guest-site[data-language='lt'] .site-header nav { gap: 12px; }
+  .guest-site[data-language='lt'] .site-header nav { gap: 8px; }
+  .guest-site[data-language='lt'] .site-header nav a:nth-child(2) { width: min-content; }
 }
 @media (max-width: 360px) {
   .guest-site[data-language='lt'] .site-header nav { gap: 8px; font-size: 11px; }
@@ -481,4 +476,14 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 @media (max-width: 700px) {
   .details-gifts { min-height: 0; }
   .details-gifts .details-canvas { padding: 90px 24px 100px; }
+}
+
+/* A light envelope outline makes RSVP easy to find in the main navigation. */
+.site-header nav .nav-rsvp { position: relative; padding: 4px 12px; border: 1px solid #14243d70; border-radius: 2px; }
+.nav-rsvp::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .35; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M0 0 L50 13 L100 0' fill='none' stroke='%2314243d' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.nav-rsvp span { position: relative; background: #9aa5b6; padding: 0 2px; }
+@media (max-width: 360px) {
+  .site-header nav { gap: 8px; font-size: 13px; }
+  .site-header nav .nav-rsvp { padding-inline: 8px; }
+  .guest-site[data-language='lt'] .site-header nav { gap: 5px; font-size: 12px; }
 }
