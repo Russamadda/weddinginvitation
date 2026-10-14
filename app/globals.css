@@ -380,13 +380,17 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .rsvp-form input::placeholder, .rsvp-form textarea::placeholder { color: #8a827d; opacity: .75; font-style: italic; }
 .rsvp-invitation-required { max-width: 440px; margin: 35px auto; font-size: 20px; line-height: 28px; text-align: center; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.hero-glyph { display: inline-block; animation: hero-letter-in .35s ease-out both; animation-delay: var(--glyph-delay); }
-@keyframes hero-letter-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* Animate complete words so connected script strokes and descenders paint together. */
+.hero-pending .hero-content { opacity: 0; }
+.hero h1 > span { overflow: visible; }
+.hero-ready h1 > span, .hero-ready .hero-fade {
+  animation: hero-word-in .85s cubic-bezier(.22, .61, .36, 1) backwards;
 }
-.hero-fade { animation: hero-fade-in .75s ease-out 3.2s both; }
-@keyframes hero-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.hero-ready .name-marthe { animation-delay: .12s; }
+.hero-ready .name-and { animation-delay: .95s; }
+.hero-ready .name-deivi { animation-delay: 1.65s; }
+.hero-ready .hero-fade { animation-delay: 2.45s; }
+@keyframes hero-word-in { from { opacity: 0; } to { opacity: 1; } }
 .reveal-ready { opacity: 0; translate: 0 10px; transition: opacity .85s ease, translate .85s cubic-bezier(.22,.61,.36,1); }
 .reveal-visible { opacity: 1; translate: 0 0; }
 .admin-name-entry { display: flex; gap: 10px; }
@@ -399,7 +403,8 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .admin-email { overflow-wrap: anywhere; text-decoration: underline; }
 .admin-page td[data-label='Invitation link'] { min-width: 190px; }
 @media (prefers-reduced-motion: reduce) {
-  .hero-fade, .hero-glyph { animation: none; }
+  .hero-pending .hero-content { opacity: 1; }
+  .hero-ready h1 > span, .hero-ready .hero-fade { animation: none; }
   .reveal-ready { opacity: 1; translate: none; transition: none; }
 }
 @media (max-width: 700px) {
