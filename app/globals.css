@@ -384,12 +384,12 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .hero-pending .hero-content { opacity: 0; }
 .hero h1 > span { overflow: visible; }
 .hero-ready h1 > span, .hero-ready .hero-fade {
-  animation: hero-word-in .85s cubic-bezier(.22, .61, .36, 1) backwards;
+  animation: hero-word-in 1.3s cubic-bezier(.22, .61, .36, 1) backwards;
 }
 .hero-ready .name-marthe { animation-delay: .12s; }
-.hero-ready .name-and { animation-delay: .95s; }
-.hero-ready .name-deivi { animation-delay: 1.65s; }
-.hero-ready .hero-fade { animation-delay: 2.45s; }
+.hero-ready .name-and { animation-delay: 1.45s; }
+.hero-ready .name-deivi { animation-delay: 2.8s; }
+.hero-ready .hero-fade { animation-delay: 4.6s; }
 @keyframes hero-word-in { from { opacity: 0; } to { opacity: 1; } }
 .reveal-ready { opacity: 0; translate: 0 10px; transition: opacity .85s ease, translate .85s cubic-bezier(.22,.61,.36,1); }
 .reveal-visible { opacity: 1; translate: 0 0; }
