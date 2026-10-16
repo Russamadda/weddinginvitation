@@ -59,8 +59,8 @@ img { display: block; max-width: none; }
 .countdown-label { font-size: 6.601px; line-height: 7.661px; text-transform: uppercase; }
 .countdown-caption { position: absolute; left: 174.74px; top: 63px; font: 400 23px/32px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
 .countdown-caption span { position: absolute; white-space: nowrap; left: 80.536px; top: 23.237px; font: 400 30.6665px/42.55px "Shelley Script", cursive; text-transform: none; }
-.home-rsvp { height: 925px; }
-.rsvp-artboard { width: 600px; height: 925px; position: relative; margin: auto; text-align: center; }
+.home-rsvp { height: 1100px; }
+.rsvp-artboard { width: 600px; height: 1100px; position: relative; margin: auto; text-align: center; }
 .envelope-composition { position: absolute; width: 382.778px; height: 464.565px; left: 108.61px; top: 24.2572px; }
 .envelope-crop { position: absolute; inset: 0; overflow: hidden; }
 .envelope-crop img { position: absolute; width: 420.552px; height: 577.767px; left: -18.0522px; top: -47.8384px; }
@@ -73,7 +73,7 @@ img { display: block; max-width: none; }
 .rsvp-link img { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
 .rsvp-link span { position: relative; width: 100%; font: 400 28px/36px "Cormorant SC", Georgia, serif; }
 .rsvp-link small { position: relative; width: 100%; font: 400 16px/22px "Garamond", Georgia, serif; }
-.swans-crop { position: absolute; width: 244.503px; height: 138.924px; left: 177.75px; top: 750px; overflow: hidden; }
+.swans-crop { position: absolute; width: 244.503px; height: 138.924px; left: 177.75px; top: 925px; overflow: hidden; }
 .swans-crop img { position: absolute; width: 264.471px; height: 264.471px; left: -9.4293px; top: -64.3496px; }
 .site-footer { height: 49px; background: #e9ecf1; display: grid; place-items: center; color: var(--slate); font-size: 20px; line-height: 28px; }
 
@@ -120,7 +120,7 @@ img { display: block; max-width: none; }
   .marriage-line { position: static; font-size: clamp(20px, 5.5vw, 28px); line-height: 1.3; }
   .marriage-line time { display: inline-block; margin-top: 6px; font-size: .9em; }
   .countdown { height: calc(100vw * 132 / 600); }
-  .home-rsvp { height: calc(100vw * 925 / 600); }
+  .home-rsvp { height: calc(100vw * 1100 / 600); }
   .love-story-main { min-height: 0; }
   .love-story-content { width: 100%; height: auto; padding: 62.2666px 24px 100px; }
   .love-story-content h1 { position: relative; top: 40px; margin-bottom: 103px; }
@@ -440,8 +440,6 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link { left: 75px; width: 450px; height: 110px; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link img { height: 110px; }
 .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link > span { width: 400px; font-size: 24px; line-height: 28px; text-wrap: balance; }
-.guest-site:is([data-language='no'], [data-language='lt']) .swans-crop { top: 775px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .home-rsvp, .guest-site:is([data-language='no'], [data-language='lt']) .rsvp-artboard { height: 950px; }
 /* Translated paragraphs may be longer. Let the page flow grow with the text. */
 .guest-site:is([data-language='no'], [data-language='lt']) .love-story-main { min-height: 0; }
 .guest-site:is([data-language='no'], [data-language='lt']) .love-story-content { width: min(600px, 100%); height: auto; padding: 62.2666px 24px 100px; }
@@ -471,9 +469,6 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .guest-site:is([data-language='no'], [data-language='lt']) .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
 
 .guest-site:is([data-language='no'], [data-language='lt']) .details-accommodations h2 { font-size: clamp(18px, 5.5vw, 30px); }
-@media (max-width: 600px) {
-  .guest-site:is([data-language='no'], [data-language='lt']) .home-rsvp { height: calc(100vw * 950 / 600); }
-}
 
 @media (min-width: 701px) { .admin-form-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -504,3 +499,12 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 
 .site-footer a { display: inline-flex; align-items: center; gap: 10px; }
 .footer-arrow { font-family: Georgia, serif; font-size: .95em; }
+
+.rsvp-browse-note { position: absolute; top: 765px; left: 60px; width: 480px; color: var(--slate); font: italic 400 24px/32px "Cormorant Garamond", Georgia, serif; text-wrap: balance; }
+.faq-main { display: flex; flex-direction: column; min-height: calc(100svh - 84px); }
+.faq-hero { flex-shrink: 0; }
+.faq-questions { margin: 0 auto; }
+.faq-rsvp { position: relative; margin-top: auto; padding: 24px 24px 40px; }
+.faq-rsvp-button { display: inline-flex; align-items: center; justify-content: center; max-width: 100%; min-height: 48px; padding: 12px 28px; border: 1px solid #92969c; border-radius: 999px; background: #e9ecf1; color: var(--slate); font: 400 18px/24px "Cormorant SC", Georgia, serif; }
+.faq-rsvp-button:hover { background: #dce1e8; }
+@media (max-width: 600px) { .faq-main { min-height: calc(100svh - 64px); } }

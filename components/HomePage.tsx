@@ -25,6 +25,7 @@ export default function HomePage({ inviteToken, greeting, guestCount, language =
               <img src="/decorations/rsvp-frame.svg" alt="" aria-hidden="true" />
               <span>{t(language, "H012")}</span><small>{t(language, "H013")}</small>
             </a>
+            <p className="rsvp-browse-note">{t(language, "H014")}</p>
             <div className="swans-crop" aria-hidden="true"><img src="/decorations/swans.png" alt="" /></div>
           </div>
         </section>

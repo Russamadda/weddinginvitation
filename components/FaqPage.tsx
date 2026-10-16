@@ -29,8 +29,10 @@ export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?
             </address>
           </section>
         </div>
+        <div className="faq-rsvp">
+          <Link className="faq-rsvp-button" href={guestHref("/rsvp", inviteToken, language)}>{t(language, "F008")}</Link>
+        </div>
       </main>
-      <footer className="site-footer story-footer"><Link href={guestHref("/rsvp", inviteToken, language)}>{t(language, "S005")} <span className="footer-arrow" aria-hidden="true">→</span></Link></footer>
     </>
   );
 }
