@@ -49,14 +49,14 @@ const server=spawn(process.execPath,['node_modules/next/dist/bin/next','start','
  for(const profile of ['local','traveling']){
   const fixture=fixtures['lt-'+profile];await p.goto(`${base}/rsvp?invite=${fixture.token}`);
   assert.equal(await p.locator('#plusOne').count(),0);assert.equal(await p.locator('#childrenNotes').count(),1);
-  await p.getByRole('button',{name:messages.lt.C003,exact:true}).click();assert.ok((await p.locator('.rsvp-error').first().innerText()).includes('Pasirinkite'));
+  await p.getByRole('button',{name:messages.lt.C004,exact:true}).click();assert.ok((await p.locator('.rsvp-error').first().innerText()).includes('Pasirinkite'));
   for(const guest of fixture.guests)await p.locator(`input[name="attendance-${guest.id}"][value="yes"]`).check();
   await p.locator(`#dietary-${fixture.guests[0].id}`).fill('Be riešutų');await p.locator('#childrenNotes').fill('Miglė, 4 m., alergija pienui');
   assert.equal(await p.locator('#hotelOffer').count(),profile==='traveling'?1:0);assert.equal(await p.locator('#venueStay').count(),profile==='local'?1:0);
   await p.locator(profile==='local'?'#venueStay':'#hotelOffer').check();
   if(profile==='traveling')await p.locator('#email').fill('synthetic@example.com');
   await p.locator('#comments').fill('Iki pasimatymo!');
-  await p.getByRole('button',{name:messages.lt.C003,exact:true}).click();await p.getByRole('button',{name:messages.lt.C004,exact:true}).click();await p.getByRole('heading',{name:messages.lt.C007,exact:true}).waitFor();
+  await p.getByRole('button',{name:messages.lt.C004,exact:true}).click();await p.getByRole('heading',{name:messages.lt.C018,exact:true}).waitFor();
   await p.reload();assert.equal(await p.locator('#childrenNotes').inputValue(),'Miglė, 4 m., alergija pienui');assert.equal(await p.locator(`#dietary-${fixture.guests[0].id}`).inputValue(),'Be riešutų');
  }
  assert.deepEqual(errors,[],'No browser errors');

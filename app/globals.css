@@ -281,6 +281,8 @@ img { display: block; max-width: none; }
 .rsvp-form-wrap { width: min(100%, 420px); margin: auto; font-size: 16px; line-height: 22px; }
 .rsvp-greeting { font: 400 25px/34px 'Cormorant SC', Georgia, serif; text-align: center; margin-bottom: 34px; overflow-wrap: anywhere; }
 .rsvp-form-section { margin: 0 0 32px; border: 0; padding: 0; min-width: 0; }
+.rsvp-fields { border: 0; padding: 0; margin: 0; min-width: 0; }
+.rsvp-submit:disabled { cursor: wait; opacity: .7; }
 .rsvp-form h3, .rsvp-form-section > legend, .rsvp-review h3 { font: 400 21px/28px 'Cormorant SC', Georgia, serif; margin: 0 0 10px; padding: 0; }
 .rsvp-help { font-style: italic; margin: 0 0 16px; }
 .rsvp-email-help { font-size: 14px; line-height: 20px; font-style: italic; margin-top: 8px; }
@@ -312,6 +314,14 @@ img { display: block; max-width: none; }
 .rsvp-review p { margin-bottom: 16px; }
 .rsvp-review-comments { white-space: pre-wrap; }
 .rsvp-review .rsvp-add-button { width: 100%; margin-top: 12px; }
+.rsvp-success-mark { display: block; width: 80px; height: 80px; margin: 0 auto 24px; fill: none; stroke: var(--slate); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rsvp-success-mark circle { stroke-dasharray: 220; animation: rsvp-circle-in .45s ease-out backwards; }
+.rsvp-success-mark path { stroke-dasharray: 50; animation: rsvp-check-in .4s ease-out .3s backwards; }
+.rsvp-success-content { animation: rsvp-thanks-in .5s ease-out .8s backwards; }
+.rsvp-success-message { text-align: center; }
+@keyframes rsvp-circle-in { from { stroke-dashoffset: 220; opacity: 0; } to { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes rsvp-check-in { from { stroke-dashoffset: 50; } to { stroke-dashoffset: 0; } }
+@keyframes rsvp-thanks-in { from { opacity: 0; } to { opacity: 1; } }
 .rsvp-page-contact { margin-top: 60px; text-align: center; font-size: 14px; line-height: 19px; }
 .rsvp-page-contact p { margin-bottom: 18px; }
 .rsvp-page-contact a { display: block; }
@@ -403,6 +413,7 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .admin-email { overflow-wrap: anywhere; text-decoration: underline; }
 .admin-page td[data-label='Invitation link'] { min-width: 190px; }
 @media (prefers-reduced-motion: reduce) {
+  .rsvp-success-mark circle, .rsvp-success-mark path, .rsvp-success-content { animation: none; }
   .hero-pending .hero-content { opacity: 1; }
   .hero-ready h1 > span, .hero-ready .hero-fade { animation: none; }
   .reveal-ready { opacity: 1; translate: none; transition: none; }

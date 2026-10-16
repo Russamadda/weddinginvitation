@@ -10,9 +10,10 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
   const [storedDraft, setDraft] = useState(() => initialDraft ? normalizeDraft(invitation, initialDraft) : emptyDraft(invitation));
   const draft = normalizeDraft(invitation, storedDraft);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [step, setStep] = useState<"edit" | "review" | "saved">("edit");
+  const [step, setStep] = useState<"edit" | "saved">("edit");
   const [saveError, setSaveError] = useState("");
   const [sending, setSending] = useState(false);
+  const submission = useRef(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const allDeclining = invitation.guests.every(guest => draft.attendance[guest.id] === "no");
   const response = buildResponse(activeInvitation, draft);
@@ -25,8 +26,9 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
     setSaveError("");
   }
 
-  function review(event: FormEvent<HTMLFormElement>) {
+  async function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (submission.current) return;
     const nextErrors = validateRsvp(activeInvitation, draft, language);
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length) {
@@ -34,11 +36,7 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
       document.getElementById(id)?.focus();
       return;
     }
-    setStep("review");
-  }
-
-  async function save() {
-    if (sending) return;
+    submission.current = true;
     setSending(true); setSaveError("");
     try {
       const result = await fetch(`/api/rsvp/${encodeURIComponent(inviteToken)}`, {
@@ -50,7 +48,7 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
       setStep("saved");
     } catch (error) {
       setSaveError(error instanceof Error ? guestError(language, error.message) : t(language, "E012"));
-    } finally { setSending(false); }
+    } finally { submission.current = false; setSending(false); }
   }
 
   function error(id: string) {
@@ -60,7 +58,8 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
   return (
     <div className="rsvp-form-wrap">
       <h2 className="rsvp-greeting">{invitationGreeting(invitation, language)}</h2>
-      {step === "edit" ? <form className="rsvp-form" onSubmit={review} noValidate>
+      {step === "edit" ? <form className="rsvp-form" onSubmit={save} noValidate aria-busy={sending}>
+        <fieldset className="rsvp-fields" disabled={sending}>
         <section className="rsvp-form-section" aria-labelledby="rsvp-attendance-title">
           <h3 id="rsvp-attendance-title">{t(language, "R005").replace("du/dere", invitation.guests.length === 1 ? "du" : "dere")}</h3>
           <p className="rsvp-help">{t(language, "R006")}</p>
@@ -107,9 +106,17 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
           <label htmlFor="comments">{t(language, "C002")}</label><textarea id="comments" rows={3} maxLength={2000} value={draft.comments} onChange={event => update({ comments: event.target.value })} />
         </section>
         {Object.keys(errors).length > 0 && <p className="rsvp-error" role="alert">{t(language, "E010")}</p>}
-        <button className="rsvp-submit" type="submit">{t(language, "C003")}</button>
+        {saveError && <p className="rsvp-error" role="alert">{saveError}</p>}
+        <button className="rsvp-submit" type="submit" disabled={sending}>{sending ? t(language, "C005") : t(language, "C004")}</button>
+        </fieldset>
       </form> : <section className="rsvp-review" aria-labelledby="rsvp-review-title">
-        <h3 id="rsvp-review-title" ref={heading} tabIndex={-1}>{step === "saved" ? t(language, "C007") : t(language, "C003")}</h3>
+        <svg className="rsvp-success-mark" viewBox="0 0 80 80" aria-hidden="true">
+          <circle cx="40" cy="40" r="35" />
+          <path d="m23 40 11 11 23-24" />
+        </svg>
+        <div className="rsvp-success-content">
+        <h3 id="rsvp-review-title" ref={heading} tabIndex={-1}>{t(language, "C018")}</h3>
+        <p className="rsvp-success-message" role="status">{t(language, "C007")}</p>
         <ul>{response.guests.map(guest => <li key={guest.guestId}><strong>{guest.name}</strong> &mdash; {guest.attending ? t(language, "C008") : t(language, "C009")}{guest.dietary && <span>{t(language, "C011")} {guest.dietary}</span>}</li>)}
         </ul>
         {response.hotelOffer && <p><strong>{t(language, "C012")}</strong> {response.hotelOffer === "yes" ? t(language, "S011") : t(language, "S012")}</p>}
@@ -117,9 +124,8 @@ export default function RsvpForm({ invitation, inviteToken, initialDraft, langua
         {response.email && <p><strong>{t(language, "C014")}</strong> {response.email}</p>}
         {response.childrenNotes && <p className="rsvp-review-comments"><strong>{t(language, "C015")}</strong> {response.childrenNotes}</p>}
         {response.comments && <p className="rsvp-review-comments"><strong>{t(language, "C016")}</strong> {response.comments}</p>}
-        {saveError && <p className="rsvp-error" role="alert">{saveError}</p>}
-        {step === "review" && <button type="button" className="rsvp-submit" disabled={sending} onClick={() => void save()}>{sending ? t(language, "C005") : t(language, "C004")}</button>}
         <button type="button" className="rsvp-add-button" disabled={sending} onClick={() => { setStep("edit"); setSaveError(""); }}>{t(language, "C006")}</button>
+        </div>
       </section>}
     </div>
   );
