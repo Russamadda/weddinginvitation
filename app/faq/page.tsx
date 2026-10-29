@@ -5,6 +5,6 @@ import { guestMetadata } from "@/lib/guest-metadata";
 
 export async function generateMetadata({ searchParams }: { searchParams: GuestSearch }) { return guestMetadata(searchParams, "M004"); }
 export default async function Page({ searchParams }: { searchParams: GuestSearch }) {
-  const { token, language } = await guestContext(searchParams);
-  return <GuestLanguage language={language}><FaqPage inviteToken={token} language={language} /></GuestLanguage>;
+  const { token, language, photoOverride } = await guestContext(searchParams);
+  return <GuestLanguage language={language} photoOverride={photoOverride}><FaqPage inviteToken={token} photoOverride={photoOverride} language={language} /></GuestLanguage>;
 }

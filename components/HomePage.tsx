@@ -5,7 +5,7 @@ import Hero from "./Hero";
 import HomeIntro from "./HomeIntro";
 import Countdown from "./Countdown";
 
-export default function HomePage({ inviteToken, greeting, guestCount, language = "en" }: { inviteToken?: string; greeting?: string; guestCount?: number; language?: GuestLanguage }) {
+export default function HomePage({ inviteToken, greeting, guestCount, photoOverride, language = "en" }: { inviteToken?: string; photoOverride?: string; greeting?: string; guestCount?: number; language?: GuestLanguage }) {
   return (
     <>
       <Header language={language} inviteToken={inviteToken} />
@@ -18,7 +18,7 @@ export default function HomePage({ inviteToken, greeting, guestCount, language =
             <div className="envelope-composition">
               <div className="envelope-crop" aria-hidden="true"><img src="/decorations/envelope.png" alt="" /></div>
               <div className="photo-frame-crop" aria-hidden="true"><img src="/decorations/photo-frame.png" alt="" /></div>
-              <div className="couple-photo-crop"><img src="/images/couple-photo.jpg" alt={t(language, "A003")} /></div>
+              <div className="couple-photo-crop"><img src={photoOverride ?? "/images/couple-photo.jpg"} alt={photoOverride ? "Fiskekake" : t(language, "A003")} /></div>
             </div>
             <p className="celebration-line">{t(language, "H011").replace("deg/dere", guestCount === 1 ? "deg" : "dere")}</p>
             <a className="rsvp-link" href={guestHref("/rsvp", inviteToken, language)}>

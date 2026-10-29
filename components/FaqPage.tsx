@@ -2,7 +2,7 @@ import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 
-export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?: string; language?: GuestLanguage }) {
+export default function FaqPage({ inviteToken, photoOverride, language = "en" }: { inviteToken?: string; photoOverride?: string; language?: GuestLanguage }) {
   return (
     <>
       <Header currentPage="faq" inviteToken={inviteToken} language={language} />
@@ -12,7 +12,7 @@ export default function FaqPage({ inviteToken, language = "en" }: { inviteToken?
           <h1>{t(language, "F001")}</h1>
           <div className="faq-bouquet">
             <div className="faq-bouquet-frame" aria-hidden="true"><img src="/decorations/faq-bouquet-frame.png" alt="" /></div>
-            <div className="faq-bouquet-photo"><img src="/images/faq-bouquet.jpg" alt={t(language, "A011")} /></div>
+            <div className="faq-bouquet-photo"><img src={photoOverride ?? "/images/faq-bouquet.jpg"} alt={photoOverride ? "Fiskekake" : t(language, "A011")} /></div>
           </div>
         </div>
         <div className="faq-questions">

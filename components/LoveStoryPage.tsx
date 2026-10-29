@@ -2,7 +2,7 @@ import Link from "next/link";
 import { guestHref, guestText as t, type GuestLanguage } from "@/lib/guest-language";
 import Header from "./Header";
 
-export default function LoveStoryPage({ inviteToken, language = "en" }: { inviteToken?: string; language?: GuestLanguage }) {
+export default function LoveStoryPage({ inviteToken, photoOverride, language = "en" }: { inviteToken?: string; photoOverride?: string; language?: GuestLanguage }) {
   return (
     <>
       <Header currentPage="love-story" inviteToken={inviteToken} language={language} />
@@ -13,7 +13,7 @@ export default function LoveStoryPage({ inviteToken, language = "en" }: { invite
           <p className="story-opening">{t(language, "L002")}</p>
           <div className="story-portrait">
             <div className="story-portrait-frame" aria-hidden="true"><img src="/decorations/love-story-portrait-frame.png" alt="" /></div>
-            <div className="story-portrait-photo"><img src="/images/love-story-couple.jpg" alt={t(language, "A006")} /></div>
+            <div className="story-portrait-photo"><img src={photoOverride ?? "/images/love-story-couple.jpg"} alt={photoOverride ? "Fiskekake" : t(language, "A006")} /></div>
           </div>
           <p className="story-cafeteria">{t(language, "L003")}</p>
           <p className="story-friends">{t(language, "L004")}</p>
@@ -23,7 +23,7 @@ export default function LoveStoryPage({ inviteToken, language = "en" }: { invite
           <p className="story-gratitude">{t(language, "L008")}</p>
           <div className="story-rings">
             <div className="story-rings-frame" aria-hidden="true"><img src="/decorations/love-story-ring-frame.png" alt="" /></div>
-            <div className="story-rings-photo"><img src="/images/love-story-rings.jpg" alt={t(language, "A007")} /></div>
+            <div className="story-rings-photo"><img src={photoOverride ?? "/images/love-story-rings.jpg"} alt={photoOverride ? "Fiskekake" : t(language, "A007")} /></div>
           </div>
           <div className="story-monogram" aria-hidden="true"><span>M</span><span>D</span></div>
         </article>

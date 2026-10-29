@@ -11,7 +11,7 @@ function Divider({ dark = false }: { dark?: boolean }) {
   return <img className="details-divider" src={`/decorations/divider-${dark ? "navy" : "cream"}.svg`} alt="" aria-hidden="true" />;
 }
 
-export default function DetailsPage({ inviteToken, language = "en" }: { inviteToken?: string; language?: GuestLanguage }) {
+export default function DetailsPage({ inviteToken, photoOverride, language = "en" }: { inviteToken?: string; photoOverride?: string; language?: GuestLanguage }) {
   return (
     <>
       <Header currentPage="details" inviteToken={inviteToken} language={language} />
@@ -23,7 +23,7 @@ export default function DetailsPage({ inviteToken, language = "en" }: { inviteTo
             <p className="details-date"><time dateTime="2027-09-04">{t(language, "D002")}</time></p>
             <figure className="details-venue-photo">
               <div className="details-venue-frame" aria-hidden="true"><img src="/decorations/photo-frame.png" alt="" /></div>
-              <div className="details-villa-crop"><img src="/images/venue-villa.jpg" alt={t(language, "A008")} /></div>
+              <div className="details-villa-crop"><img src={photoOverride ?? "/images/venue-villa.jpg"} alt={photoOverride ? "Fiskekake" : t(language, "A008")} /></div>
               <figcaption><a href={venueWebsite} target="_blank" rel="noopener noreferrer">{t(language, "D028")}</a><br />{t(language, "D044")}</figcaption>
             </figure>
             <div className="details-ceremony"><p>{t(language, "D003")}</p><p className="details-arrival">{t(language, "D045")}</p></div>

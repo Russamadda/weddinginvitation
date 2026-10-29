@@ -10,5 +10,6 @@ export const guestContext = cache(async (searchParams: GuestSearch) => {
   const language: GuestLanguage = lang === "en" || lang === "no" || lang === "lt" ? lang : record?.language ?? "en";
   if (!invite) return { token: undefined, record: null, language };
   if (!record) notFound();
-  return { token: invite, record, language };
+  const photoOverride = invite === "qhcUQeVtTS-aOSR54L8J_ISUn-8xn5_q" ? "/images/fiskekake.jpg" : undefined;
+  return { token: invite, record, language, photoOverride };
 });

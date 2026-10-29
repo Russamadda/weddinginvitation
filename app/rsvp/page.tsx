@@ -9,10 +9,10 @@ import RsvpForm from "@/components/RsvpForm";
 export async function generateMetadata({ searchParams }: { searchParams: GuestSearch }) { return guestMetadata(searchParams, "M005"); }
 
 export default async function Page({ searchParams }: { searchParams: GuestSearch }) {
-  const { token, record, language } = await guestContext(searchParams);
+  const { token, record, language, photoOverride } = await guestContext(searchParams);
 
   return (
-    <GuestLanguage language={language}>
+    <GuestLanguage language={language} photoOverride={photoOverride}>
       <Header currentPage="rsvp" inviteToken={token} language={language} />
       <main className="rsvp-page">
         <div className="rsvp-page-background" aria-hidden="true" />

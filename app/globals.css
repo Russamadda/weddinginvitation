@@ -25,7 +25,7 @@ img { display: block; max-width: none; }
 .site-header nav { display: flex; align-items: center; gap: 24px; color: #14243d; font: 400 17px/24px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
 .site-header nav a { text-align: center; flex-shrink: 0; min-height: 36px; display: grid; place-items: center; }
 .hero { height: 893px; position: relative; overflow: hidden; }
-.hero-art { position: absolute; inset: 0; background: url("/images/hero-background.jpg") center 38.943% / 100% auto no-repeat; opacity: .6; }
+.hero-art { position: absolute; inset: 0; background: var(--invitation-photo, url("/images/hero-background.jpg")) center 38.943% / 100% auto no-repeat; opacity: .6; }
 .hero-content { position: relative; height: 100%; width: 600px; margin: auto; padding: 32px 24px 128px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 64px; text-align: center; }
 .hero h1 { font: 400 60px/84px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
 .hero h1 > span { display: block; width: 100%; }
@@ -79,7 +79,7 @@ img { display: block; max-width: none; }
 
 .story-header nav { color: #14243d; }
 .love-story-main { position: relative; min-height: 2438.35px; }
-.love-story-background { position: absolute; inset: 0; background: url("/images/love-story-background.jpg") center / cover no-repeat; opacity: .04; }
+.love-story-background { position: absolute; inset: 0; background: var(--invitation-photo, url("/images/love-story-background.jpg")) center / cover no-repeat; opacity: .04; }
 .love-story-content { position: relative; width: 600px; height: 2438.35px; margin: auto; color: var(--silver); }
 .love-story-content h1 { position: absolute; top: 102.2667px; width: 100%; text-align: center; font: 400 26.6665px/37px "Cormorant SC", Georgia, serif; text-transform: uppercase; }
 .love-story-content h1 span { position: absolute; top: -40px; left: 0; width: 100%; font: 400 33.333px/46px "Shelley Script", cursive; text-transform: none; }
@@ -143,7 +143,7 @@ img { display: block; max-width: none; }
 }
 /* Details: fixed centered desktop measurements, fluid text on small screens. */
 .details-section { position: relative; overflow: hidden; background: var(--cream); }
-.details-background { position: absolute; inset: 0; background: url('/images/details-leaves.jpg') center 57.643% / cover no-repeat; opacity: .06; }
+.details-background { position: absolute; inset: 0; background: var(--invitation-photo, url('/images/details-leaves.jpg')) center 57.643% / cover no-repeat; opacity: .06; }
 .details-canvas { position: relative; width: 700px; height: 100%; margin: auto; text-align: center; font: 400 17.3333px/24px 'EB Garamond', Georgia, serif; }
 .details-canvas h1, .details-canvas h2 { position: absolute; width: 100%; margin: 0; font: 400 33.3333px/46px 'Cormorant SC', Georgia, serif; text-transform: uppercase; }
 .details-canvas h1 span, .details-canvas h2 span { font-family: 'Shelley Script', cursive; text-transform: none; }
@@ -165,7 +165,7 @@ img { display: block; max-width: none; }
 .details-ceremony { position: absolute; top: 770.55168px; left: 178.288px; width: 343.424px; }
 .details-map { position: absolute; top: 1040px; left: 278.592px; width: 142.816px; height: 34.7389px; }
 .details-travel { height: 1016px; background: var(--brown); color: #fffdf0; }
-.details-travel .details-background { background-image: url('/images/details-swans.jpg'); background-position: center; opacity: .1; }
+.details-travel .details-background { background-image: var(--invitation-photo, url('/images/details-swans.jpg')); background-position: center; opacity: .1; }
 .details-travel h2 { top: 111.80567px; }
 .details-travel h3 { font: 400 26.6667px/37px 'Shelley Script', cursive; }
 .details-by-car { position: absolute; top: 171.86235px; left: 221.9125px; width: 256.175px; }
@@ -191,7 +191,7 @@ img { display: block; max-width: none; }
 .details-timeline-note { position: absolute; top: 604.728px; width: 100%; }
 .details-timeline-note p { margin-top: 13.80048px; font-size: 13.3333px; line-height: 18px; text-transform: uppercase; }
 .details-accommodations { height: 859px; background: #e9ecf1; }
-.details-accommodations .details-background { background-image: url('/images/details-flowers.jpg'); background-position: center; opacity: .1; }
+.details-accommodations .details-background { background-image: var(--invitation-photo, url('/images/details-flowers.jpg')); background-position: center; opacity: .1; }
 .details-accommodations h2 { top: 142.39367px; }
 .details-stays { position: absolute; left: 15.861px; top: 262.647px; display: flex; gap: 90.845px; }
 .details-stay { width: 288.714px; }
@@ -247,7 +247,7 @@ img { display: block; max-width: none; }
 }
 /* FAQ: original artwork and typography, with closer question groups. */
 .faq-main { position: relative; min-height: calc(100svh - 134px); overflow: hidden; color: var(--silver); background: var(--cream); text-align: center; }
-.faq-background { position: absolute; inset: 0; background: url('/images/love-story-background.jpg') center / cover no-repeat; opacity: .04; }
+.faq-background { position: absolute; inset: 0; background: var(--invitation-photo, url('/images/love-story-background.jpg')) center / cover no-repeat; opacity: .04; }
 .faq-hero { position: relative; height: 310px; }
 .faq-hero h1 { position: absolute; top: 30px; width: 100%; font: 400 33.3332px/46px 'Pinyon Script', cursive; }
 .faq-bouquet { position: absolute; top: 92.561px; left: calc(50% - 157.287px); width: 314.574px; height: 218.768px; }
@@ -270,7 +270,7 @@ img { display: block; max-width: none; }
 }
 /* RSVP: original cream stationery, monogram, and subdued form controls. */
 .rsvp-page { position: relative; overflow: hidden; background: var(--cream); }
-.rsvp-page-background { position: absolute; inset: 0; background: url('/images/rsvp-background.jpg') center / cover no-repeat; opacity: .06; }
+.rsvp-page-background { position: absolute; inset: 0; background: var(--invitation-photo, url('/images/rsvp-background.jpg')) center / cover no-repeat; opacity: .06; }
 .rsvp-page-content { position: relative; width: min(100% - 40px, 460px); margin: auto; padding: 48px 0 70px; }
 .rsvp-page-monogram { position: relative; width: 60px; height: 86px; margin: 0 auto 40px; color: var(--silver); font-family: 'Pinyon Script', cursive; }
 .rsvp-page-monogram span { position: absolute; top: -5px; left: 3px; font-size: 56px; line-height: 77px; }
@@ -508,3 +508,6 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 .faq-rsvp-button { display: inline-flex; align-items: center; justify-content: center; max-width: 100%; min-height: 48px; padding: 12px 28px; border: 1px solid #92969c; border-radius: 999px; background: #e9ecf1; color: var(--slate); font: 400 18px/24px "Cormorant SC", Georgia, serif; }
 .faq-rsvp-button:hover { background: #dce1e8; }
 @media (max-width: 600px) { .faq-main { min-height: calc(100svh - 64px); } }
+
+/* Only the server-selected invitation gets alternate photos; frames keep their artwork. */
+.guest-site[data-photo-override] :is(.couple-photo-crop, .story-portrait-photo, .story-rings-photo, .details-villa-crop, .faq-bouquet-photo) img { inset: 0; width: 100%; height: 100%; object-fit: cover; }
