@@ -24,7 +24,7 @@ export async function findInvitation(token: string): Promise<StoredInvitation | 
 export async function createInvitation(value: unknown) {
   const data = value as Record<string, unknown>;
   if (!data || !Array.isArray(data.names) || !data.names.length || data.names.length > 20 || data.names.some(name => typeof name !== "string" || !name.trim() || name.trim().length > 100)) throw new Error("Enter 1–20 guest names, up to 100 characters each.");
-  if (!["traveling", "local"].includes(String(data.travelProfile)) || !["en", "no", "lt"].includes(String(data.language))) throw new Error("Choose a valid guest category and language.");
+  if (!["traveling", "local"].includes(String(data.travelProfile)) || !["en", "no", "lt", "ru"].includes(String(data.language))) throw new Error("Choose a valid guest category and language.");
   const names = (data.names as string[]).map(name => name.trim());
   if (new Set(names.map(name => name.toLowerCase())).size !== names.length) throw new Error("Guest names must be distinct. Use full names to distinguish people sharing a first name.");
   if (data.label !== undefined && (typeof data.label !== "string" || data.label.length > 150)) throw new Error("Group label must be at most 150 characters.");

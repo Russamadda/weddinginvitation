@@ -4,7 +4,7 @@ export type Attendance = "" | "yes" | "no";
 export type Invitation = {
   id: string;
   guests: { id: string; name: string }[];
-  language: "en" | "no" | "lt";
+  language: GuestLanguage;
   travelProfile: TravelProfile;
   additionalGuestAllowance: number;
 };
@@ -23,8 +23,8 @@ export type RsvpDraft = {
 
 export function invitationGreeting(invitation: Invitation, language: GuestLanguage = invitation.language) {
   const names = invitation.guests.map(guest => guest.name);
-  const joined = names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")}${language === "no" ? " og " : language === "lt" ? " ir " : " & "}${names[names.length - 1]}`;
-  return language === "lt" ? `Kviečiame švęsti kartu: ${joined}` : `${language === "no" ? "Kjære" : "Dear"} ${joined},`;
+  const joined = names.length === 1 ? names[0] : `${names.slice(0, -1).join(", ")}${language === "no" ? " og " : language === "lt" ? " ir " : language === "ru" ? " и " : " & "}${names[names.length - 1]}`;
+  return language === "ru" ? `Приглашаем вас, ${joined}!` : language === "lt" ? `Kviečiame švęsti kartu: ${joined}` : `${language === "no" ? "Kjære" : "Dear"} ${joined},`;
 }
 
 export function emptyDraft(invitation: Invitation): RsvpDraft {

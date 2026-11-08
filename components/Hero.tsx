@@ -22,9 +22,9 @@ export default function Hero({ language = "en" }: { language?: GuestLanguage }) 
       <div className="hero-art" aria-hidden="true" />
       <div className="hero-content">
         <h1 id="couple-names" aria-label={t(language, "H001")}>
-          <span className="name-marthe" aria-hidden="true">Marthe</span>
-          <span className="name-and" aria-hidden="true">{language === "no" ? "og" : language === "lt" ? "ir" : "and"}</span>
-          <span className="name-deivi" aria-hidden="true">Deivi</span>
+          <span className="name-marthe" aria-hidden="true">{language === "ru" ? "Марте" : "Marthe"}</span>
+          <span className="name-and" aria-hidden="true">{language === "no" ? "og" : language === "lt" ? "ir" : language === "ru" ? "и" : "and"}</span>
+          <span className="name-deivi" aria-hidden="true">{language === "ru" ? "Дейви" : "Deivi"}</span>
         </h1>
         <p className="marriage-line hero-fade">{t(language, "H002")}<br /><time dateTime="2027-09-04" aria-label={t(language, "A005")}>{t(language, "H003")}</time></p>
       </div>

@@ -7,7 +7,7 @@ export type GuestSearch = Promise<{ invite?: string; lang?: string }>;
 export const guestContext = cache(async (searchParams: GuestSearch) => {
   const { invite, lang } = await searchParams;
   const record = invite ? await findInvitation(invite) : null;
-  const language: GuestLanguage = lang === "en" || lang === "no" || lang === "lt" ? lang : record?.language ?? "en";
+  const language: GuestLanguage = lang === "en" || lang === "no" || lang === "lt" || lang === "ru" ? lang : record?.language ?? "en";
   if (!invite) return { token: undefined, record: null, language };
   if (!record) notFound();
   const photoOverride = invite === "qhcUQeVtTS-aOSR54L8J_ISUn-8xn5_q" ? "/images/fiskekake.jpg" : undefined;

@@ -18,7 +18,7 @@ export default async function Page({ searchParams }: { searchParams: GuestSearch
         <div className="rsvp-page-background" aria-hidden="true" />
         <div className="rsvp-page-content">
           <div className="rsvp-page-monogram" aria-hidden="true"><span>M</span><span>D</span></div>
-          <h1>RSVP</h1>
+          <h1>{language === "ru" ? t(language, "R001") : "RSVP"}</h1>
           <p className="rsvp-page-intro"><strong>{t(language, "R002").replace("deg/dere", record?.guests.length === 1 ? "deg" : "dere")}</strong><br />{t(language, "R003")}</p>
           {record && token ? <RsvpForm key={record.id} language={language} invitation={publicInvitation(record)} inviteToken={token} initialDraft={record.draft || undefined} /> : <p className="rsvp-invitation-required">{t(language, "R004")}</p>}
           <div className="rsvp-page-contact">

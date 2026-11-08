@@ -435,40 +435,40 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 }
 
 /* Layout for translated guest text. */
-.guest-site:is([data-language='no'], [data-language='lt']) .site-header nav a { width: auto; }
-.guest-site:is([data-language='no'], [data-language='lt']) .invitation-copy { text-wrap: pretty; }
-.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link { left: 75px; width: 450px; height: 110px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link img { height: 110px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .rsvp-link > span { width: 400px; font-size: 24px; line-height: 28px; text-wrap: balance; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .site-header nav a { width: auto; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .invitation-copy { text-wrap: pretty; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .rsvp-link { left: 75px; width: 450px; height: 110px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .rsvp-link img { height: 110px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .rsvp-link > span { width: 400px; font-size: 24px; line-height: 28px; text-wrap: balance; }
 /* Translated paragraphs may be longer. Let the page flow grow with the text. */
-.guest-site:is([data-language='no'], [data-language='lt']) .love-story-main { min-height: 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .love-story-content { width: min(600px, 100%); height: auto; padding: 62.2666px 24px 100px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .love-story-content h1 { position: relative; top: 40px; margin-bottom: 103px; font-size: clamp(21px, 5vw, 26.6665px); }
-.guest-site:is([data-language='no'], [data-language='lt']) .love-story-content p { position: relative; top: auto; left: auto; width: min(378.983px, 100%); margin: 0 auto; }
-.guest-site:is([data-language='no'], [data-language='lt']) :is(.story-portrait, .story-rings, .story-monogram) { position: relative; top: auto; left: auto; margin-left: auto; margin-right: auto; }
-.guest-site:is([data-language='no'], [data-language='lt']) .story-portrait { margin-top: 76.96833px; margin-bottom: 76.96867px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .love-story-content :is(.story-friends, .story-hometown, .story-looking-back, .story-next-chapter, .story-gratitude) { margin-top: 38px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .story-rings { margin-top: 87.34333px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .story-monogram { margin-top: 75.541px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-section { height: auto; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-canvas { width: min(700px, 100%); height: auto; padding: 90px 24px 100px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-canvas :is(h1, h2) { position: relative; top: auto; font-size: 30px; }
-.guest-site:is([data-language='no'], [data-language='lt']) :is(.details-date, .details-ceremony, .details-formal, .details-gifts-copy) { position: relative; top: auto; left: auto; width: min(100%, 355.071px); margin: 60px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-venue-photo { position: relative; left: auto; top: auto; margin: 75px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) :is(.details-map, .details-registry) { position: relative; left: auto; top: auto; margin: 50px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) :is(.details-by-car, .details-traveling, .details-speeches) { position: relative; top: auto; left: auto; width: min(100%, 508.944px); margin: 45px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-by-car { max-width: 256.175px; margin-top: 28px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-speeches { max-width: 389.591px; }
-.guest-site:is([data-language='no'], [data-language='lt']) :is(.details-friday, .details-saturday, .details-sunday, .details-timeline-note) { position: relative; top: auto; left: auto; width: 100%; margin: 50px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-timeline h3 { line-height: 20px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-timeline h3 + p { margin-top: 10px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-stays { position: relative; top: auto; left: auto; justify-content: center; gap: 48px; margin-top: 65px; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-stay { width: min(288.714px, 100%); min-width: 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-stay-note { position: relative; top: auto; left: auto; width: min(100%, 320px); margin: 75px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-dress-copy { position: relative; top: auto; left: auto; width: min(100%, 275.505px); margin: 45px auto 0; }
-.guest-site:is([data-language='no'], [data-language='lt']) .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .love-story-main { min-height: 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .love-story-content { width: min(600px, 100%); height: auto; padding: 62.2666px 24px 100px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .love-story-content h1 { position: relative; top: 40px; margin-bottom: 103px; font-size: clamp(21px, 5vw, 26.6665px); }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .love-story-content p { position: relative; top: auto; left: auto; width: min(378.983px, 100%); margin: 0 auto; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) :is(.story-portrait, .story-rings, .story-monogram) { position: relative; top: auto; left: auto; margin-left: auto; margin-right: auto; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .story-portrait { margin-top: 76.96833px; margin-bottom: 76.96867px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .love-story-content :is(.story-friends, .story-hometown, .story-looking-back, .story-next-chapter, .story-gratitude) { margin-top: 38px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .story-rings { margin-top: 87.34333px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .story-monogram { margin-top: 75.541px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-section { height: auto; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-canvas { width: min(700px, 100%); height: auto; padding: 90px 24px 100px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-canvas :is(h1, h2) { position: relative; top: auto; font-size: 30px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) :is(.details-date, .details-ceremony, .details-formal, .details-gifts-copy) { position: relative; top: auto; left: auto; width: min(100%, 355.071px); margin: 60px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-venue-photo { position: relative; left: auto; top: auto; margin: 75px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) :is(.details-map, .details-registry) { position: relative; left: auto; top: auto; margin: 50px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) :is(.details-by-car, .details-traveling, .details-speeches) { position: relative; top: auto; left: auto; width: min(100%, 508.944px); margin: 45px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-by-car { max-width: 256.175px; margin-top: 28px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-speeches { max-width: 389.591px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) :is(.details-friday, .details-saturday, .details-sunday, .details-timeline-note) { position: relative; top: auto; left: auto; width: 100%; margin: 50px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-timeline h3 { line-height: 20px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-timeline h3 + p { margin-top: 10px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-stays { position: relative; top: auto; left: auto; justify-content: center; gap: 48px; margin-top: 65px; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-stay { width: min(288.714px, 100%); min-width: 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-stay-note { position: relative; top: auto; left: auto; width: min(100%, 320px); margin: 75px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-dress-copy { position: relative; top: auto; left: auto; width: min(100%, 275.505px); margin: 45px auto 0; }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-palette { position: relative; top: auto; left: auto; justify-content: center; margin-top: 40px; }
 
-.guest-site:is([data-language='no'], [data-language='lt']) .details-accommodations h2 { font-size: clamp(18px, 5.5vw, 30px); }
+.guest-site:is([data-language='no'], [data-language='lt'], [data-language='ru']) .details-accommodations h2 { font-size: clamp(18px, 5.5vw, 30px); }
 
 @media (min-width: 701px) { .admin-form-grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -511,3 +511,16 @@ html:has(.admin-page), body:has(.admin-page) { background: #f2f5f9; }
 
 /* Only the server-selected invitation gets alternate photos; frames keep their artwork. */
 .guest-site[data-photo-override] :is(.couple-photo-crop, .story-portrait-photo, .story-rings-photo, .details-villa-crop, .faq-bouquet-photo) img { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Allison lacks Cyrillic; use the existing Cyrillic-capable script font. */
+.guest-site[data-language='ru'] .invitation-copy { font-family: "Shelley Script", cursive; }
+
+/* Keep Russian navigation readable within narrow invitation screens. */
+@media (max-width: 600px) {
+  .guest-site[data-language='ru'] .site-header nav { gap: 8px; font-size: 12px; }
+  .guest-site[data-language='ru'] .site-header nav a:nth-child(2) { width: min-content; }
+}
+@media (max-width: 360px) {
+  .guest-site[data-language='ru'] .site-header nav { gap: 3px; font-size: 11px; }
+  .guest-site[data-language='ru'] .site-header nav .nav-rsvp { padding-inline: 4px; }
+}

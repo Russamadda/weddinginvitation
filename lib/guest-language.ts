@@ -1,6 +1,6 @@
 import messages from "./guest-messages.json";
 
-export type GuestLanguage = "en" | "no" | "lt";
+export type GuestLanguage = "en" | "no" | "lt" | "ru";
 export type MessageId = keyof typeof messages.en;
 export function guestText(language: GuestLanguage, id: MessageId, values: Record<string, string | number> = {}) {
   return messages[language][id].replace(/\{(\w+)\}/g, (placeholder, key: string) => String(values[key] ?? placeholder));
